@@ -21,6 +21,10 @@ override_dh_auto_install:
 			--root $(CURDIR)/debian/python3-wsme; \
 	done
 
+override_dh_clean:
+	dh_clean -O--buildsystem=python_distutils
+	rm -rf .test_sphinxext build
+
 ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
 override_dh_auto_test:
 #	set -e && for pyvers in $(PYTHON3S); do \

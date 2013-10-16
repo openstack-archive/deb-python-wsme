@@ -2,7 +2,12 @@ python-wsme (0.5b6-1) unstable; urgency=low
 
   * New upstream release (Closes: #725652).
   * Removes now useless MANIFEST.in patch (that file is gone upstream...).
-  * Switched back to pristine-tar type of Git repo.
+  * Switched back to pristine-tar type of Git repo:
+    - Adds extend-diff-ignore = "^[^/]*[.]egg-info/" in debian/source/option,
+    since the upstream tarballs now includes an egg-info which is modified at
+    build time.
+    - Changes debian/gbp.conf
+  * Cleans cleanly.
 
  -- Thomas Goirand <zigo@debian.org>  Thu, 17 Oct 2013 00:04:46 +0800
 
