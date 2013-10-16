@@ -2,6 +2,7 @@ python-wsme (0.5b6-1) unstable; urgency=low
 
   * New upstream release (Closes: #725652).
   * Removes now useless MANIFEST.in patch (that file is gone upstream...).
+  * Switched back to pristine-tar type of Git repo.
 
  -- Thomas Goirand <zigo@debian.org>  Thu, 17 Oct 2013 00:04:46 +0800
 
