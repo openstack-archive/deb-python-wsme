@@ -8,6 +8,7 @@ python-wsme (0.5b6-1) unstable; urgency=low
     build time.
     - Changes debian/gbp.conf
   * Cleans cleanly.
+  * Adds upstream patch (not released): Fix_SyntaxWarning_under_Python_3.patch.
 
  -- Thomas Goirand <zigo@debian.org>  Thu, 17 Oct 2013 00:04:46 +0800
 

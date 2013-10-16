@@ -1,0 +1,38 @@
+Description: Fix SyntaxWarning under Python 3
+Author: Julien Danjou <julien@danjou.info>
+Origin: upstream, https://review.openstack.org/#/c/52159/
+Date: Wed, 16 Oct 2013 16:48:02 +0000 (+0200)
+X-Git-Url: https://review.openstack.org/gitweb?p=stackforge%2Fwsme.git;a=commitdiff_plain;h=619840f26efc7a8ccd4989dfbff1ef6a28118263
+Change-Id: I60cf7bc796b5cb4927cd92477e3eb26379f06316
+
+diff --git a/wsme/tests/test_utils.py b/wsme/tests/test_utils.py
+index a1da20a..c07f9da 100644
+--- a/wsme/tests/test_utils.py
++++ b/wsme/tests/test_utils.py
+@@ -60,21 +60,21 @@ class TestUtils(unittest.TestCase):
+ 
+     def test_validator_with_valid_code(self):
+         valid_code = 404
+-        assert (
++        self.assertTrue(
+             utils.is_valid_code(valid_code),
+             "Valid status code not detected"
+         )
+ 
+     def test_validator_with_invalid_int_code(self):
+         invalid_int_code = 648
+-        assert (
+-            not utils.is_valid_code(invalid_int_code),
++        self.assertFalse(
++            utils.is_valid_code(invalid_int_code),
+             "Invalid status code not detected"
+         )
+ 
+     def test_validator_with_invalid_str_code(self):
+         invalid_str_code = '404'
+-        assert (
+-            not utils.is_valid_code(invalid_str_code),
++        self.assertFalse (
++            utils.is_valid_code(invalid_str_code),
+             "Invalid status code not detected"
+         )
