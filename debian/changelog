@@ -1,0 +1,57 @@
+python-wsme (0.5b6-1) unstable; urgency=low
+
+  * New upstream release (Closes: #725652).
+  * Removes now useless MANIFEST.in patch (that file is gone upstream...).
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 17 Oct 2013 00:04:46 +0800
+
+python-wsme (0.5b5-4) unstable; urgency=low
+
+  * Patches MANIFEST.in to include stuff in wsme/rest.
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 07 Oct 2013 18:29:09 +0000
+
+python-wsme (0.5b5-3) unstable; urgency=low
+
+  * Adds support for Python 3.
+  * Adds multiple new (build-)depends.
+
+ -- Thomas Goirand <zigo@debian.org>  Sat, 05 Oct 2013 00:55:03 +0800
+
+python-wsme (0.5b5-2) unstable; urgency=low
+
+  * Added missing build-depends: python3-pbr.
+
+ -- Thomas Goirand <zigo@debian.org>  Sat, 05 Oct 2013 00:40:33 +0800
+
+python-wsme (0.5b5-1) unstable; urgency=low
+
+  * New upstream release.
+  * Switched to git upstream tags instead of tarballs, and now using
+    openstack-pkg-tools.
+  * Added support for Python3.
+  * Fixed debian/copyright (new authors, s/MIT/Expat/).
+  * Added export OSLO_PACKAGE_VERSION=$(VERSION) in debian/rules.
+  * Added new and missing (build-)depends.
+  * Now calling nosetests on build.
+  * Added lots of build-depends for the nosetests.
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 03 Oct 2013 14:11:18 +0800
+
+python-wsme (0.5b2-2) unstable; urgency=low
+
+  * Uploading to unstable.
+
+ -- Thomas Goirand <zigo@debian.org>  Sun, 12 May 2013 12:15:15 +0000
+
+python-wsme (0.5b2-1) experimental; urgency=low
+
+  * New upstream release (Closes: #706238).
+
+ -- Thomas Goirand <zigo@debian.org>  Sat, 27 Apr 2013 13:06:20 +0800
+
+python-wsme (0.5b1-1) experimental; urgency=low
+
+  * Initial release (Closes: #701521).
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 09 Oct 2012 11:55:15 +0000

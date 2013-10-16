@@ -1,0 +1,97 @@
+Source: python-wsme
+Section: python
+Priority: optional
+Maintainer: PKG OpenStack <openstack-devel@lists.alioth.debian.org>
+Uploaders: Julien Danjou <acid@debian.org>,
+           Thomas Goirand <zigo@debian.org>,
+           Mehdi Abaakouk <sileht@sileht.net>
+Build-Depends: debhelper (>= 9),
+               openstack-pkg-tools,
+               python-all (>= 2.6.6-3~),
+               python-d2to1,
+               python-pbr (>= 0.5.21),
+               python-setuptools,
+               python3-all,
+               python3-d2to1,
+               python3-pbr (>= 0.5.21),
+               python3-setuptools
+Build-Depends-Indep: python-cherrypy3,
+                     python-flask,
+                     python-lxml,
+                     python-nose,
+                     python-pecan,
+                     python-simplegeneric,
+                     python-six,
+                     python-sphinx,
+                     python-suds,
+                     python-testtools,
+                     python-transaction,
+                     python-webob,
+                     python-webtest,
+                     python3-lxml,
+                     python3-nose,
+                     python3-simplegeneric,
+                     python3-six,
+                     python3-testtools,
+                     python3-webob
+# python-cornice, python-colander
+Standards-Version: 3.9.4
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/python-wsme.git
+Vcs-Git: git://anonscm.debian.org/openstack/python-wsme.git
+Homepage: http://pythonhosted.org/WSME/
+
+Package: python-wsme
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: python-jinja2,
+         python-simplegeneric,
+         python-simplejson,
+         python-six,
+         python-webob,
+         ${misc:Depends},
+         ${python:Depends}
+Recommends: ${python:Recommends}
+Description: Web Services Made Easy: implement multi-protocol webservices - Python 2.x
+ Web Service Made Easy (WSME) simplify the writing of REST web services by
+ providing simple yet powerful typing which removes the need to directly
+ manipulate the request and the response objects.
+ .
+ WSME can work standalone or on top of your favorite Python web (micro)
+ framework, so you can use both your preferred way of routing your REST requests
+ and most of the features of WSME that rely on the typing system like:
+ .
+  * Alternate protocols, including ones supporting batch-calls
+  * Easy documentation through a Sphinx extension
+ .
+ WSME is originally a rewrite of TGWebServices with focus on extensibility,
+ framework-independance and better type handling.
+ .
+ This package provides the Python 2.x module.
+
+Package: python3-wsme
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: python3-jinja2,
+         python3-simplegeneric,
+         python3-simplejson,
+         python3-six,
+         python3-webob,
+         ${misc:Depends},
+         ${python3:Depends}
+Recommends: ${python3:Recommends}
+Description: Web Services Made Easy: implement multi-protocol webservices - Python 3.x
+ Web Service Made Easy (WSME) simplify the writing of REST web services by
+ providing simple yet powerful typing which removes the need to directly
+ manipulate the request and the response objects.
+ .
+ WSME can work standalone or on top of your favorite Python web (micro)
+ framework, so you can use both your preferred way of routing your REST requests
+ and most of the features of WSME that rely on the typing system like:
+ .
+  * Alternate protocols, including ones supporting batch-calls
+  * Easy documentation through a Sphinx extension
+ .
+ WSME is originally a rewrite of TGWebServices with focus on extensibility,
+ framework-independance and better type handling.
+ .
+ This package provides the Python 3.x module.
