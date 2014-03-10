@@ -1,6 +1,8 @@
 python-wsme (0.6-2) experimental; urgency=medium
 
   * New upstream release.
+  * Removed debian/patches/Fix_SyntaxWarning_under_Python_3.patch now applied
+    upstream.
 
  -- Thomas Goirand <zigo@debian.org>  Mon, 10 Mar 2014 17:58:30 +0800
 
