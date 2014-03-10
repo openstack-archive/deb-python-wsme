@@ -3,9 +3,16 @@ import datetime
 import decimal
 import inspect
 import logging
+import re
 import six
 import sys
+import uuid
 import weakref
+
+try:
+    import ipaddress
+except ImportError:
+    import ipaddr as ipaddress
 
 from wsme import exc
 
@@ -136,6 +143,139 @@ class BinaryType(UserType):
 binary = BinaryType()
 
 
+class IntegerType(UserType):
+    """
+    A simple integer type. Can validate a value range.
+
+    :param minimum: Possible minimum value
+    :param maximum: Possible maximum value
+
+    Example::
+
+        Price = IntegerType(minimum=1)
+
+    """
+    basetype = int
+    name = "integer"
+
+    def __init__(self, minimum=None, maximum=None):
+        self.minimum = minimum
+        self.maximum = maximum
+
+    @staticmethod
+    def frombasetype(value):
+        return int(value) if value is not None else None
+
+    def validate(self, value):
+        if self.minimum is not None and value < self.minimum:
+            error = 'Value should be greater or equal to %s' % self.minimum
+            raise ValueError(error)
+
+        if self.maximum is not None and value > self.maximum:
+            error = 'Value should be lower or equal to %s' % self.maximum
+            raise ValueError(error)
+
+        return value
+
+
+class StringType(UserType):
+    """
+    A simple string type. Can validate a length and a pattern.
+
+    :param min_length: Possible minimum length
+    :param max_length: Possible maximum length
+    :param pattern: Possible string pattern
+
+    Example::
+
+        Name = StringType(min_length=1, pattern='^[a-zA-Z ]*$')
+
+    """
+    basetype = six.string_types
+    name = "string"
+
+    def __init__(self, min_length=None, max_length=None, pattern=None):
+        self.min_length = min_length
+        self.max_length = max_length
+        if isinstance(pattern, six.string_types):
+            self.pattern = re.compile(pattern)
+        else:
+            self.pattern = pattern
+
+    def validate(self, value):
+        if not isinstance(value, self.basetype):
+            error = 'Value should be string'
+            raise ValueError(error)
+
+        if self.min_length is not None and len(value) < self.min_length:
+            error = 'Value should have a minimum character requirement of %s' \
+                    % self.min_length
+            raise ValueError(error)
+
+        if self.max_length is not None and len(value) > self.max_length:
+            error = 'Value should have a maximum character requirement of %s' \
+                    % self.max_length
+            raise ValueError(error)
+
+        if self.pattern is not None and not self.pattern.search(value):
+            error = 'Value should match the pattern %s' % self.pattern
+            raise ValueError(error)
+
+        return value
+
+
+class IPv4AddressType(UserType):
+    """
+    A simple IPv4 type.
+    """
+    basetype = six.string_types
+    name = "ipv4address"
+
+    @staticmethod
+    def validate(value):
+        try:
+            ipaddress.IPv4Address(value)
+        except ipaddress.AddressValueError:
+            error = 'Value should be IPv4 format'
+            raise ValueError(error)
+
+
+class IPv6AddressType(UserType):
+    """
+    A simple IPv6 type.
+    """
+    basetype = six.string_types
+    name = "ipv6address"
+
+    @staticmethod
+    def validate(value):
+        try:
+            ipaddress.IPv6Address(value)
+        except ipaddress.AddressValueError:
+            error = 'Value should be IPv6 format'
+            raise ValueError(error)
+
+
+class UuidType(UserType):
+    """
+    A simple UUID type.
+
+    This type allows not only UUID having dashes but also UUID not
+    having dashes. For example, '6a0a707c-45ef-4758-b533-e55adddba8ce'
+    and '6a0a707c45ef4758b533e55adddba8ce' are distinguished as valid.
+    """
+    basetype = six.string_types
+    name = "uuid"
+
+    @staticmethod
+    def validate(value):
+        try:
+            uuid.UUID(value)
+        except (TypeError, ValueError, AttributeError):
+            error = 'Value should be UUID format'
+            raise ValueError(error)
+
+
 class Enum(UserType):
     """
     A simple enumeration type. Can be based on any non-complex type.
@@ -161,7 +301,7 @@ class Enum(UserType):
 
     def validate(self, value):
         if value not in self.values:
-            raise ValueError("Invalid value (should be one of: %s)" %
+            raise ValueError("Value should be one of: %s" %
                              ', '.join(map(six.text_type, self.values)))
         return value
 
@@ -307,7 +447,8 @@ class wsattr(object):
             mandatoryvalue = wsattr(int, mandatory=True)
 
     """
-    def __init__(self, datatype, mandatory=False, name=None, default=Unset):
+    def __init__(self, datatype, mandatory=False, name=None, default=Unset,
+                 readonly=False):
         #: The attribute name in the parent python class.
         #: Set by :func:`inspect_class`
         self.key = None  # will be set by class inspection
@@ -320,6 +461,8 @@ class wsattr(object):
         #: Default value. The attribute will return this instead
         #: of :data:`Unset` if no value has been set.
         self.default = default
+        #: If True value cannot be set from json/xml input data
+        self.readonly = readonly
 
         self.complextype = None
 
@@ -372,7 +515,7 @@ class wsattr(object):
 
     #: attribute data type. Can be either an actual type,
     #: or a type name, in which case the actual type will be
-    #: determined when needed (generaly just before scaning the api).
+    #: determined when needed (generally just before scanning the api).
     datatype = property(_get_datatype, _set_datatype)
 
 
@@ -390,7 +533,7 @@ def sort_attributes(class_, attributes):
     3 mechanisms are attempted :
 
     #.  Look for a _wsme_attr_order attribute on the class_. This allow
-        to define an arbitrary order of the attributes (usefull for
+        to define an arbitrary order of the attributes (useful for
         generated types).
 
     #.  Access the object source code to find the declaration order.
@@ -530,6 +673,41 @@ class Registry(object):
         self._complex_types.append(weakref.ref(class_))
         return class_
 
+    def reregister(self, class_):
+        """Register a type which may already have been registered.
+        """
+        self._unregister(class_)
+        return self.register(class_)
+
+    def _unregister(self, class_):
+        """Remove a previously registered type.
+        """
+        # Clear the existing attribute reference so it is rebuilt if
+        # the class is registered again later.
+        if hasattr(class_, '_wsme_attributes'):
+            del class_._wsme_attributes
+        # FIXME(dhellmann): This method does not recurse through the
+        # types like register() does. Should it?
+        if isinstance(class_, list):
+            at = ArrayType(class_[0])
+            try:
+                self.array_types.remove(at)
+            except KeyError:
+                pass
+        elif isinstance(class_, dict):
+            key_type, value_type = list(class_.items())[0]
+            self.dict_types = set(
+                dt for dt in self.dict_types
+                if (dt.key_type, dt.value_type) != (key_type, value_type)
+            )
+        # We can't use remove() here because the items in
+        # _complex_types are weakref objects pointing to the classes,
+        # so we can't compare with them directly.
+        self._complex_types = [
+            ct for ct in self._complex_types
+            if ct() is not class_
+        ]
+
     def lookup(self, typename):
         log.debug('Lookup %s' % typename)
         modname = None
@@ -632,3 +810,26 @@ class File(Base):
         if self._file is None and self._content:
             self._file = six.BytesIO(self._content)
         return self._file
+
+
+class DynamicBase(Base):
+    """Base type for complex types for which all attributes are not
+    defined when the class is constructed.
+
+    This class is meant to be used as a base for types that have
+    properties added after the main class is created, such as by
+    loading plugins.
+
+    """
+
+    @classmethod
+    def add_attributes(cls, **attrs):
+        """Add more attributes
+
+        The arguments should be valid Python attribute names
+        associated with a type for the new attribute.
+
+        """
+        for n, t in attrs.items():
+            setattr(cls, n, t)
+        cls.__registry__.reregister(cls)
