@@ -1,4210 +1,699 @@
-commit 8f46a0ce7124003cff0e2be689a20a9b6ca3890c
-Merge: b45d1f1 d987b06
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Wed Oct 16 13:33:24 2013 +0000
-
-    Merge "Add changes entry for 0.5b6"
-
-commit d987b06b96ce616aee0cdcb8751041f51468cb4a
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Oct 16 14:18:19 2013 +0200
-
-    Add changes entry for 0.5b6
-    
-    Change-Id: I1324420192e056415d59be3f4e4ad9e9c55052a1
-
-commit b45d1f16f179f9448ebb0c8dc4d5daba47d226e5
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Sep 18 16:37:31 2013 +0200
-
-    json: convert value to string before encoding
-    
-    If the JSON sent is not really a string, it's safer to try to convert it
-    to a string before calling the encode method. This way we can accept
-    integer as potentially valid strings.
-    
-    Change-Id: Iad0b48f597a8c062cdb05c9bbb5342df15583edf
-
-commit b7875ffbb758871c23525001f9eadbfdf32843f9
-Merge: b011b2c 0638106
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Tue Oct 15 10:26:06 2013 +0000
-
-    Merge "Run Flask tests by default"
-
-commit b011b2c83fbfc5905591f3d6e80103a6fc8be626
-Merge: 5b283a6 b67405d
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Mon Oct 14 14:19:23 2013 +0000
-
-    Merge "Validate body when using Pecan"
-
-commit 5b283a613fbb2340377e2e4484964fa1dcb836f3
-Merge: 3b52161 8a0c4e6
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Mon Oct 14 14:18:41 2013 +0000
-
-    Merge "Return a ClientSideError if unable to convert data"
-
-commit 0638106e57114dcddb1041e5ee91ca56ab5cd82d
-Author: Julien Danjou <julien@danjou.info>
-Date:   Fri Oct 11 17:57:49 2013 +0200
-
-    Run Flask tests by default
-    
-    Change-Id: I122e642b43ed3498535663d3ed7a26cf5790ecfd
-
-commit 3b52161a60ac9d3027ce940293b52343a3fb9377
-Merge: 1c7fb09 71c8bcf
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Fri Oct 11 15:50:16 2013 +0000
-
-    Merge "Enable and fix Sphinx tests"
-
-commit 1c7fb090720b87363ea1529d9eda4ab75f1447cb
-Merge: 9546c10 572194c
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Thu Oct 10 18:57:49 2013 +0000
-
-    Merge "Remove MANIFEST.in"
-
-commit b67405d486a0d09abde6423818734bbb5a978bc4
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Oct 9 17:07:40 2013 +0200
-
-    Validate body when using Pecan
-    
-    This makes sure that when the body is decoded we run the validation
-    process on it.
-    
-    Fixes-Bug: #1220678
-    
-    Change-Id: I765a6ce8c8097ef0e0a734804242e9fcee4ffbcf
-
-commit 572194cf50b0049bcb2d7c67bc4cb4a41e690f5b
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Oct 9 17:12:19 2013 +0200
-
-    Remove MANIFEST.in
-    
-    We don't need this anymore as pbr use `git ls-files' when available to
-    build the list of files to include.
-    
-    Change-Id: I9113d7c249002bc4f6b0a15a871aee6088ddac72
-
-commit 8a0c4e66c92d8037bb5b101632032dbabfbed809
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Oct 9 14:47:20 2013 +0200
-
-    Return a ClientSideError if unable to convert data
-    
-    This makes thing works at least for Pecan.
-    
-    Change-Id: I7b02813258d9b8c2eea13e4215a3d711ec2e56ed
-
-commit 9546c1025057bf7d94ef3469a6bd26907fc7ca10
-Author: Yuriy Zveryanskyy <yzveryanskyy@mirantis.com>
-Date:   Wed Oct 9 11:26:29 2013 +0300
-
-    Add custom error code to ClientSideError
-    
-    Added custom error status code for ClientSideError
-    exception instead of hardcoded value 400.
-    Fixed case when user exception with client error code
-    formatted as server error.
-    Pecan extension fixed.
-    
-    Change-Id: I2663db0aa88538b722eb2783d130585b0fc2335b
-
-commit a84d744794f4548469907ccf274f9bafbb5ac56a
-Author: Julien Danjou <julien@danjou.info>
-Date:   Tue Oct 8 15:51:41 2013 +0200
-
-    doc: remove useless validate import
-    
-    Change-Id: Ic9cf28809867d73c56689fd6b94dc307c7b283d3
-
-commit 71c8bcf5d093e3ae3202c9c98acadeef701be347
-Author: Julien Danjou <julien@danjou.info>
-Date:   Mon Oct 7 14:25:28 2013 +0200
-
-    Enable and fix Sphinx tests
-    
-    This remove the Sphinx environment and makes sure we run its test for
-    all Python version. This therefore fixes the test for Python 3.3.
-    
-    Change-Id: Iba431e837d2b23761905155ff65ae909774ce0b2
-
-commit e3b324e1e45f363d4702d414c04adf7b4f3ed3a9
-Merge: 664c214 cce52e1
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Mon Oct 7 07:44:57 2013 +0000
-
-    Merge "pecantest: remove useless config.py"
-
-commit 664c214dbf2dd33e8fd6a78ca828c02bb1a91c1c
-Author: Mehdi Abaakouk <mehdi.abaakouk@enovance.com>
-Date:   Mon Sep 30 17:33:57 2013 +0200
-
-    Handle [] {} for body in rest protocols
-    
-    This change allow to use [] or {} for the definition of the body in rest
-    protocols.
-    
-    Fixes bug #1233219
-    
-    Change-Id: Ib96f0487dd7d78bd657f6d4b3facbd8b611f8702
-
-commit 259fea952998f9b07d64448318ae6186b4372549
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Sep 18 13:45:06 2013 +0200
-
-    types: fix error return when None is in Enum
-    
-    Whe None is set as a valid value in an Enum, the error string that is
-    meant to be returned is built with a join() call on valid values.
-    However, that doesn't work as None isn't not a string.
-    Calling map(str, values) fixes this problem.
-    
-    Also, if the value is invalid, the error code returned is 500 as if it
-    was the server fault. 400 should be returned instead, so rather than
-    raising a ValueError we raise an InvalidInput error.
-    
-    Change-Id: I92695594676da2a247cef4e1e8fe277aa0972dea
-
-commit 6bb3227165fe199de58a66b3699aee595b1076af
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Tue Oct 1 15:20:24 2013 -0400
-
-    Add a test environment against pecan's development (master) branch.
-    
-    Change-Id: Id4c6a61be6a8ee9fa7d8ec1551c12ca448aa458f
-
-commit cce52e14314cf76ced4cc5fe00a3be063c396d26
-Author: Julien Danjou <julien@danjou.info>
-Date:   Thu Sep 26 17:59:56 2013 +0200
-
-    pecantest: remove useless config.py
-    
-    Change-Id: I3370715d12209528fe63d5bd9bb7b7e78c935351
-
-commit abcdd7affa4ecde6c6d3ee2fd50f801c02168841
-Author: Julien Danjou <julien@danjou.info>
-Date:   Thu Sep 26 12:12:20 2013 +0200
-
-    Include Pecan tests in default Python environment
-    
-    - Makes sure we always run Pecan test and that there's no regression.
-      There's no real need to split them out as they are not invasive.
-      Also that reduces the number of environment a bit.
-    - This also fixes Pecan tests on python2.6
-    - This also fixes Pecan tests on python3.3
-    - This also enables Pecan tests on python3.2
-    
-    Change-Id: I57070b0bd785fb3d445f432973f15825abccbdd5
-
-commit 7301adc75d57aba6dd5a3c527116be4fbcafd05d
-Merge: 4fd56a3 33d7aab
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Mon Sep 23 10:09:00 2013 +0000
-
-    Merge "Add a test case for wsattr default"
-
-commit 4fd56a3f1a7f8391018521df0526ae5faac162e6
-Merge: 17adf7d a04748e
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Mon Sep 23 10:01:56 2013 +0000
-
-    Merge "Minor code cleanups"
-
-commit 33d7aabf418b7be4bf21ce2fa311e8fd0a54eb17
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Sep 18 17:25:46 2013 +0200
-
-    Add a test case for wsattr default
-    
-    Change-Id: Icb3a9456a52c74af004c749ba247df1ddaf73d19
-    Fixes-Bug: #1227039
-
-commit 17adf7d4c6a5c593f7ab96915477acebf0302775
-Merge: dae6299 2af9917
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Sun Sep 22 14:59:00 2013 +0000
-
-    Merge "Handle mandatory attributes"
-
-commit dae62991576703822dc80c8dbe2b0439e3077b44
-Merge: 012c5de 1c37ea4
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Sun Sep 22 14:31:54 2013 +0000
-
-    Merge "Remove various usage of sys.exc_info()"
-
-commit 012c5de3bfea8dffb6cbc4dac277d4ea981e0011
-Merge: 15c0526 62725bb
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Sun Sep 22 14:25:20 2013 +0000
-
-    Merge "Add improved support for HTTP response codes in cornice apps."
-
-commit 2af9917e6ba7664d814ee171bc167421eccb9758
-Author: Julien Danjou <julien@danjou.info>
-Date:   Tue Sep 17 19:10:23 2013 +0200
-
-    Handle mandatory attributes
-    
-    Change-Id: I68019e8e7d4b0c7a4fae8f97dcc7475c9e519cdb
-    Fixes-Bug: #1227004
-    Fixes-Bug: #1227038
-
-commit 1c37ea475ee1a0973dffb5fa1e93040c11d831c5
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Sep 18 16:52:03 2013 +0200
-
-    Remove various usage of sys.exc_info()
-    
-    Change-Id: I7454264b82e808c68dd182e7ce43db756651a00b
-
-commit a04748e868f21b8c9a3e9bd8d8582ad22b1e2040
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Sep 18 11:18:28 2013 +0200
-
-    Minor code cleanups
-    
-    Change-Id: I338656e8f131b36aae342af94f1c2cedad14ae2b
-
-commit 15c05263c3166f1321b46174f2c0705194a36192
-Author: Doug Hellmann <doug.hellmann@dreamhost.com>
-Date:   Mon Sep 16 11:08:04 2013 -0500
-
-    update the b5 release date
-    
-    Change-Id: Id86cfc6485c4167568f9893ad1bd2d36a4951ac4
-
-commit 62725bb77398b513b996c8cdf97c41cabc0dc960
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Fri Sep 6 18:02:49 2013 -0400
-
-    Add improved support for HTTP response codes in cornice apps.
-    
-    Change-Id: I35efe85794e761877edd06722952292a3cac5d85
-
-commit 85bcf74e99e3632beba65205633b46408fc3a9a6
-Author: Doug Hellmann <doug.hellmann@dreamhost.com>
-Date:   Wed Sep 11 12:09:34 2013 -0400
-
-    Remove version number from setup.cfg
-    
-    pbr looks at the git tag for the version, so we do not
-    want a hard-coded value in the setup.cfg
-    
-    pbr handles dev tagging automatically, so don't do
-    that via setup.cfg
-    
-    pbr recursively finds packages, so we do not need to
-    list them explicitly in setup.cfg
-    
-    Change-Id: I59a3e9d789c97f2cb9b6c487c553127af5a36b9f
-
-commit 945d55c630a5cb363cb6e4c6032980a4b683a8f1
-Author: Doug Hellmann <doug.hellmann@dreamhost.com>
-Date:   Wed Sep 11 11:07:59 2013 -0400
-
-    Update tox config to allow packaging jobs to work
-    
-    Add a "venv" environment for pass-through commands like
-    what the packaging job uses.
-    
-    Change-Id: I473d330fc7e8e149f674d21f22ccfc0e1855e88f
-
-commit 0dfb6e2853aacd3dd9dcd2454888e332035ad18d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 11 11:32:00 2013 +0200
-
-    The cornice adapter will not make it in 0.5b3
-    
-    Change-Id: I6a27c2d1411678e9ebd1abb26799c4a12a4fdaff
-
-commit 4b1ca367f7a494c1c090de97a29d4f7064ea9a6c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 9 10:46:44 2013 +0200
-
-    Completed Changelog
-    
-    Change-Id: Id94c3c5bc84e28cd9849b0ec54416ee3d0707c9d
-
-commit 0aba00b1ef345e40d25c6ec717c2c869e75af3fc
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Fri Sep 6 15:06:35 2013 -0400
-
-    Add improved support for HTTP response codes in TG 1.x apps.
-    
-    Change-Id: I829ab360e13ae88a47e810079c739eac1d925139
-
-commit d8a70a300ed0364617e0a141d9ca6cd4bcad9037
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Fri Sep 6 12:59:31 2013 -0400
-
-    Add improved support for HTTP response codes in flask apps.
-    
-    Change-Id: If9894b262c58c597d7f7ae0cf6cb5de6783d364d
-
-commit 3c4b0d0531d05dcba7877c0c0bf4594bd4d5f7a5
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Thu Sep 5 16:21:07 2013 -0400
-
-    Require the ordereddict package for py26.
-    
-    Change-Id: If594a480ecb38974259ecf3df7ca9c30e2128501
-
-commit f91767bf1efda4ba6ac236d497f639d188351127
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Thu Sep 5 10:56:35 2013 -0400
-
-    pep8 fixes, including a declaration in tox.ini for running flake8
-    
-    Change-Id: I2adc6a5cbd76edd16e6079046b67b8fc10bf1671
-
-commit 72c20e7ea14dedd881ad81507fa35373202c5b49
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Wed Sep 4 16:41:27 2013 -0400
-
-    Remove py25 and add 26 support to tox.
-    
-    Change-Id: Ic178eaf7a4c30e2969cb504de0ef9a09e58c155c
-
-commit 1647ade1a28d0b4190a191bb377d21f04d3071b0
-Merge: 00e0801 c367489
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Wed Sep 4 19:37:29 2013 +0000
-
-    Merge "Remove a deprecated flag from tox.ini."
-
-commit c367489c1fcb2f5cd959959c607d83df05f9cc64
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Wed Sep 4 10:13:04 2013 -0400
-
-    Remove a deprecated flag from tox.ini.
-    
-    http://tox.readthedocs.org/en/latest/config.html#confval-downloadcache=path
-    
-    Change-Id: Ib4f10b48db460ae0a537d9e646e1135753506cdb
-
-commit 00e0801cd7afa136c16c2deb501a092e7944137c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 4 12:21:41 2013 +0200
-
-    Changelog for version 0.5b3
-    
-    Change-Id: I6f0e0210fa939c40cd06c34b60be1f7a36370ead
-
-commit 45de8afa495f7d13d6aadfbeaee4a1733afc792e
-Merge: 8b73a96 59df6e1
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Tue Sep 3 14:47:40 2013 +0000
-
-    Merge "Switch to pbr"
-
-commit 8b73a963c35471c5d0c14648fd4ace29f4ad0f1d
-Author: Julien Danjou <julien@danjou.info>
-Date:   Mon Sep 2 11:18:40 2013 +0200
-
-    Fix BaseMeta with six >= 1.4.0
-    
-    A change in six broke this code; sometimes there is no bases at all.
-    
-    Change-Id: I7b86f6e4aac61cfd313e42bc26b5e6b27e4e9555
-
-commit d18d0534e1f0cab8ef2cd4cb0e84dd1c16f0039b
-Merge: 2edf9fb 651ad18
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Fri Aug 30 02:53:39 2013 +0000
-
-    Merge "Fix for returned status code and .gitignore"
-
-commit 651ad18bdde92e550eee68aa7522288a5de94cdd
-Author: 119Vik <vitalij_ua@ukr.net>
-Date:   Wed Aug 21 11:59:39 2013 +0300
-
-    Fix for returned status code and .gitignore
-    
-    For this purposes I added addiitional processing of original
-    exceptions at wsme/wsmeext/pecan.py. For exception's validation
-    special validator was added to wsme/wsmeext/utils.py. Also
-    functionality was reworked to be compatible with python3.3
-    
-    Fixes bug#1214073
-    Change-Id: Ib1cd0b274bda11f62298848ebcd55b3f6641757c
-
-commit 2edf9fb0aab9add6735bf3425f87bd9d9f78ebdc
-Merge: fbd2395 a8eacfc
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Wed Aug 21 16:39:27 2013 +0000
-
-    Merge "Add a py33 tox target"
-
-commit a8eacfc26c4222b6b38cf3f9dccdaaed51ae425a
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Aug 21 13:52:30 2013 +0200
-
-    Add a py33 tox target
-    
-    Change-Id: I0b918caa1669e9a980b8abd510c5ccb0a3aa7d5e
-
-commit fbd23952778a93e88f2337a309b812264b10b6fa
-Merge: e95d28f 2f28ce3
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Wed Aug 21 13:12:29 2013 +0000
-
-    Merge "Fix attributes sorting based on source code"
-
-commit e95d28f964aa911471ca6fea0025aec2f75afd2f
-Merge: cfaaa4f 3f8f4ed
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Wed Aug 21 13:12:29 2013 +0000
-
-    Merge "Sort set in type exception"
-
-commit 2f28ce391ad4a1b57e44aab75bed2a1583141e74
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Aug 21 13:51:27 2013 +0200
-
-    Fix attributes sorting based on source code
-    
-    In Python 3.3, when looking for the source code of line with inspect,
-    sometimes it returnes the class AType that is defined line 155 of
-    test_types.py, which breaks the test.
-    Renaming this AType class to ABCDType, which is a unique name, fix the
-    problem.
-    
-    Change-Id: I54e4a3b5a2df1158dfed0832fe7ab3a9e577ab72
-
-commit 3f8f4ed43f65e012558fefa685a92ad944e03c98
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Aug 21 12:56:38 2013 +0200
-
-    Sort set in type exception
-    
-    The values are stored in a set, therefore they are not sorted when used
-    in the exception message. Later, the unit test might fail because it
-    checks for the exact message expected, and that may depends on the order
-    Python decided to return the set. Let's sort it each time to be sure the
-    message we can expect.
-    
-    Change-Id: I9e9c1270ea408f9e217320e30902cb74e690fce8
-
-commit 59df6e10f8b9ba8e860f424d99673615cfad9604
-Author: Julien Danjou <julien@danjou.info>
-Date:   Wed Aug 21 12:15:49 2013 +0200
-
-    Switch to pbr
-    
-    Change-Id: I607df2ed82cc7a6497e295daaf5330fd2558bea9
-
-commit cfaaa4f068aad86fa8fcaf9f39c4faa69e9cf42f
-Merge: 98d1ce5 217d670
-Author: Jenkins <jenkins@review.openstack.org>
-Date:   Wed Aug 21 10:16:06 2013 +0000
-
-    Merge "Fix a little syntax error."
-
-commit 98d1ce5f6a08abfa03d282a3d6af9401245b4407
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Aug 20 23:26:55 2013 +0200
-
-    Setup a .gitignore file
-    
-    It is based on the former .hgignore
-    
-    Change-Id: I397dadabe97e342f3e92956e3549fcf77a30cc85
-
-commit 217d67073bc230a9808bdf28c8b60de17eee7074
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Aug 20 23:24:43 2013 +0200
-
-    Fix a little syntax error.
-    
-    Change-Id: I4a608dc3d96215cc76814e2812d4f0e2e3f97c97
-
-commit 9246e4d4be4210ab43091642231354ca6b908803
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Tue Aug 20 14:56:12 2013 -0400
-
-    Update README and package metadata to reflect gerrit review process.
-    
-    Change-Id: I6418f723d064160518a5070c2ddf1d52a3e01258
-
-commit 43d55e039e9e116e482ab5ef607732e1e7624ed8
-Author: Ryan Petrello <lists@ryanpetrello.com>
-Date:   Tue Aug 20 14:41:06 2013 -0400
-
-    Add .gitreview file.
-    
-    Change-Id: I10ebf072efaacd3a325a2d3cd98b528e0e79b6c5
-
-commit 22787cd8d00e6b9b4cf9fb37d21534d2dda2d0cf
-Merge: f9fe028 206f915
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Aug 11 16:10:13 2013 +0200
-
-    Merged in sileht/wsme/sileht/unicode-clientsideerror (pull request #16)
-    
-    Support unicode message in ClientSideError
-
-commit 206f9156b2c0694fa89a916ca2493c6210834f16
-Author: Mehdi Abaakouk <mehdi.abaakouk@enovance.com>
-Date:   Tue Aug 6 12:16:10 2013 +0200
-
-    Support unicode message in ClientSideError
-    
-    This change add support to unicode message in ClientSideError.
-    Before the change a UnicodeEncodeError is raised when a unicode string is used
-    in a ClientSideError Exception:
-    
-    Traceback (most recent call last):
-      File "/data/os_dev/stack-master/wsme/.tox/py27/local/lib/python2.7/site-packages/nose/case.py", line 197, in runTest
-        self.test(*self.arg)
-      File "/data/os_dev/stack-master/wsme/wsme/tests/test_exc.py", line 16, in test_unicode_clientside_error
-        assert e.faultstring == u("\u30d5\u30a1\u30b7\u30ea")
-      File "/data/os_dev/stack-master/wsme/wsme/exc.py", line 12, in faultstring
-        return str(self)
-    UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-3: ordinal not in range(128)
-    
-    --HG--
-    branch : sileht/unicode-clientsideerror
-
-commit f9fe028eff15aee2bc86b1698f8f8e992c215de6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Aug 2 14:04:43 2013 +0200
-
-    Fix issue #11 in the pecan adapter
-
-commit 8b235ef79a3317d9919be7af3c9e6119cff630e7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Aug 2 13:24:06 2013 +0200
-
-    Add a unittest to reproduce issue #11
-
-commit 8cfea4a0a1d6257568f686d0d5c362ef3d439867
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jun 21 01:52:53 2013 +0200
-
-    Require a python2.5 compatible version of Jinja2
-
-commit 579772807ef9f1066bb28aa625f01539d2e95825
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jun 21 00:22:23 2013 +0200
-
-    The Response object can now carry error details. Not sure about this though, it needs refinements
-
-commit 82d97971fcc6fd499aba056e4701e8e8f46dc93e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon May 13 18:57:54 2013 +0200
-
-    Fix inner null objects in the extdirect protocol
-
-commit d05fb583eb94ea4fcb3302a7151ef2bad02ed957
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon May 13 18:14:11 2013 +0200
-
-    Fix returning objects with object attributes set to 'None'
-
-commit 9cb0b58db611afbd832a3a91084812a171f4ee16
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 4 18:37:55 2013 +0200
-
-    More --nologcapture to run tests so that suds does not get in the way
-
-commit df58de02aa2dbf056d0cb09598e27bdfd234865a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 4 18:26:50 2013 +0200
-
-    use --nologcapture to avoid a nasty failure when suds do some logging
-
-commit cab152874cd20a9e9748acdeb9020a43d6905950
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 4 18:25:29 2013 +0200
-
-    Use assertEquals so we see what is the wrong value if any
-
-commit 87536918397d264f05eb2ac38c37c84dedcc93ec
-Merge: 4cb45f1 4c581aa
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed May 1 11:59:26 2013 +0200
-
-    Merged in asalkeld/wsme-2 (pull request #15)
-    
-    pecan: Make it possible to use the Response to return non-default status codes.
-
-commit 4c581aac489979c043efc2ba2e780e5beef879c8
-Author: Angus Salkeld <asalkeld@redhat.com>
-Date:   Tue Apr 30 15:26:06 2013 +1000
-
-    Test changing the default status_code in pecan
-
-commit 6e5cb63d7adb6c07fbe614ffa1935562a2355a0b
-Author: Angus Salkeld <asalkeld@redhat.com>
-Date:   Tue Apr 30 15:15:32 2013 +1000
-
-    Add a test to make sure we can use the Response from pecan
-
-commit 4cb45f1d440e6ff06604d11625c190559f9c82f6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 29 11:07:37 2013 +0200
-
-    Change version to 0.5b3 (may change to 0.5 directly)
-
-commit 6ff590844ef80923ba26d6ff907905ef15228b12
-Author: Angus Salkeld <asalkeld@redhat.com>
-Date:   Wed Apr 24 13:48:28 2013 +1000
-
-    pecan: Make it possible to use the Response to return non-default status codes.
-    
-    This is copied from the flask extension.
-
-commit cd8931b7458ffdf92101f428309259736633f39f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 18 19:55:18 2013 +0200
-
-    Added tag 0.5b2 for changeset d3e5eee0b150
-
-commit 7c0c2f40d42e4d98e611b6c64ddc007d37ae2c0b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 18 19:55:09 2013 +0200
-
-    Prepare next release
-
-commit 33a9488aa273633d4e93b55893c332c8e81907ce
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 18 19:33:54 2013 +0200
-
-    Install mini-doc now use pip
-
-commit 6b1a94b09235691a27c5046efb0dec63decfc640
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 17 17:51:44 2013 +0200
-
-    wsmeext.cornice now handle errors properly
-
-commit 72d245ad5f202bebc3c0590ec55b397eda785920
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 17 16:50:17 2013 +0200
-
-    Tests cornice resource
-
-commit 6ed766c594bc4b999934fb1aca67826cc02dd1fb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 17 16:48:50 2013 +0200
-
-    Include missing files
-
-commit 814e87ea72e2d6062118aa4bd34ef52a1951e0bb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 17 16:03:56 2013 +0200
-
-    wsmeext.cornice.signature can now decorate resource class methods
-
-commit cffcee226ce29961240317c54a4664b6a50b5ca1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 16 15:42:23 2013 +0200
-
-    Pecan adapter: Debug mode (which returns the exception tracebacks to the
-    client) can be enabled by the pecan application configuration.
-
-commit 0fd4d502794dab160d9fab4e514bb2dd21280697
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Apr 14 20:37:36 2013 +0200
-
-    Explicitely ignore the routines when scanning a class
-
-commit f510026ff7e0b0c49402f2ea755a3fae15c6b4e0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Apr 12 16:23:09 2013 +0200
-
-    Fix a problem when a complex type has a 'attr' attribute, due to the DataHolder
-    __slots__ list construction, which leads to a DataHolder having a wsattr.
-
-commit e7e4910246a88de9dd20e4b350147cb42c83023e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Apr 12 12:54:17 2013 +0200
-
-    Please flake8
-
-commit 018594d262a93ac83097a1e5517b9224fd1e935a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Apr 12 12:51:56 2013 +0200
-
-    Changed the way datas of complex types are stored. In previous versions, an
-    attribute was added to the type for each attribute, its name being the
-    attribute name prefixed with '_'.
-    
-    Starting with this version, a single attribute _wsme_dataholder is added to
-    the instance.
-    
-    The motivation behind this change is to avoid adding too many attributes to
-    the object and potential collisions with user attributes.
-
-commit c182b89425a5be93641cd8f5bb00ea1e88f23a79
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 11 11:40:13 2013 +0200
-
-    Allow a wsme.types.Base child class to override the default 'wsattr' class by having a __wsattrclass__ class attribute
-
-commit 525aa12a609c482cc7b2ef78556b6d61f1b228e7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 10 12:03:15 2013 +0200
-
-    If dateutil is present, dateutil.parser is used to aparse the iso dates
-
-commit 3bbd6544bcc8cba3fad6d88ce15337e85b1983d7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 10 12:02:42 2013 +0200
-
-    The rest encodings now use the parse_iso[date|time] functions of wsme.utils
-
-commit dfaaeaae48a7011c4b59f7bb4343577c4b649d24
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 10 11:59:48 2013 +0200
-
-    Fix ClientSideError constructor
-
-commit c1c8e709adf63f732d6a320440e29906748a95ac
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 10 11:41:52 2013 +0200
-
-    The cornice adapter now handle the url matched parameters
-
-commit 0f0d9e901d95146f0a85fc1f395127429ae23a70
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 10 11:41:19 2013 +0200
-
-    Fix the ClientSideError constructor so that it is propertly displayed in the backtrace
-
-commit a8d0e8e79e7917fbe0589eeb66acafa7ad19e138
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 9 13:10:57 2013 +0200
-
-    Small documentation improvements
-
-commit 6b0441d154499184c21f521ce93c1c5c055b8590
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 9 11:56:40 2013 +0200
-
-    Use a cyrilic unicode sample in the demo instead of japanese so that the pdf build is easier.
-
-commit 20690279b18c4292d14c5b5973483e09225bafd9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 9 11:26:23 2013 +0200
-
-    Add a chapter on the use of HostRequest
-
-commit 6b8349696d4a0dcceb23c5c307279e94182e3a27
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 8 23:27:15 2013 +0200
-
-    Improve the documentation
-    
-    --HG--
-    extra : rebase_source : 24b7ddcbfb6fb739787292db49148d3234d6f67a
-
-commit f9c262758ead42ff52736b7ed01682e8d1b4998e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 8 16:13:15 2013 +0200
-
-    Add the last change to the changelog
-
-commit b2e760894ed10ad69c95d1657b39314966b7f5bd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 8 15:45:08 2013 +0200
-
-    Move the missing argument verification in a wsme.runtime module so that it can be used in all adapters
-
-commit d78a48c7ba05049386da4f6177c518019eb947a8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 4 21:50:20 2013 +0200
-
-    Move the function documentation code to a separate function.
-
-commit 83bc4b596b1980744697792645dfdfea2b108f59
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 2 16:19:30 2013 +0200
-
-    A new HostRequest type can be used to have the host framework request object passed to the exposed functions
-
-commit c1f08c40db6bece986cd04bf670443655d85f7cd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 28 23:30:06 2013 +0100
-
-    Create some (incomplete) tests for the cornice adapter and fix it
-
-commit 6f9bb4d14fd877cd671171983029ee0a2ab73214
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Thu Mar 28 12:44:52 2013 +0000
-
-    Add tests and fix check ordering in flask.py
-
-commit 1e699bf14327e20bb2462c659e2f280a11069cca
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Thu Mar 28 12:36:27 2013 +0000
-
-    Backed out changeset d6facd75c051
-
-commit 575efa2a7c03a31486ea836dac0e7e9639afcfad
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Thu Mar 28 12:31:18 2013 +0000
-
-    Fix typo
-
-commit dfc7f874b30bd6487038a284706601d974a3e014
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Thu Mar 28 12:26:40 2013 +0000
-
-    Fix typo
-
-commit 0222cbab00085de4777d49a8ca0c9e60611d7bc1
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Thu Mar 28 12:23:32 2013 +0000
-
-    Re-iterate status_code code
-
-commit 3d69ac33d86ea4025cadbfcf82907741ce309f03
-Merge: f266882 6955678
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Thu Mar 28 13:08:03 2013 +0100
-
-    Merged cdevienne/wsme into default
-
-commit 6955678e9714975e35760671c519f6c67c5c54ff
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 28 11:38:20 2013 +0100
-
-    Document the Flask adapter
-
-commit d6e36463b15a664b3da5678b3f16ac37caa80f26
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 28 11:24:15 2013 +0100
-
-    Fix array parameters support in the Flask adapter
-
-commit f2668824b336e9934bd4ffabe2c030327308284b
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Wed Mar 27 00:31:15 2013 +0000
-
-    Fixup support for content types in other places then Headers.
-
-commit 3944c29c9673cd1a128785015b2c56add28abf7e
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Wed Mar 27 00:13:16 2013 +0000
-
-    Support override of response format via request.dataformat
-
-commit 2a1e50e6ef06f5e5bdc361af7f665fee468ec8ff
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Tue Mar 26 23:35:27 2013 +0000
-
-    Add support for passing status_code or getting it from request
-
-commit 59a3123cdeba7d68ce4729ea6c056564a196fed1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 26 15:08:20 2013 +0100
-
-    Fix the way the TG adapter calls wsme.rest.args.get_args
-
-commit 0fa0177eef32632d429ef34674fff7c0febf54c5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 26 14:55:12 2013 +0100
-
-    Fix the way the pecan adapter calls wsme.rest.args.get_args
-
-commit bfd1bfb4ffdf5ed804c5b8013b9c144e4cdf344c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 26 14:29:18 2013 +0100
-
-    Various fixes for the flask adapter
-
-commit 07adf31cd7dd0f0856f9edd0b8dd6c369fc42619
-Author: Endre Karlson <endre.karlson@gmail.com>
-Date:   Tue Mar 26 11:11:11 2013 +0000
-
-    Add more tests
-
-commit 606278be9361aaaefb60d1cea19d4d8d30eb8de1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 18:41:30 2013 +0100
-
-    Downgrade webtest for tg11 and tg15 tests that are python2.5 based
-
-commit 773e5c88f28a3bf069cc9dc947cde6a549459d0d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 18:06:19 2013 +0100
-
-    Readd webtest for python 3
-
-commit 63e6e3ebe14145d33def9403640b8d1c71874e3f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 17:33:45 2013 +0100
-
-    More python2.5 workaround
-
-commit 32534774c5a31e70dd551da79076ba7b1cee9d81
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 16:51:49 2013 +0100
-
-    Workaround issues with python2.5 environment tests
-
-commit e5a5465bb669a9f70227e6cf5c52f94c01cacd0b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 16:23:23 2013 +0100
-
-    Fix the serverside error test
-
-commit 6a8f3a8a9dcceae2653a4bba69afdde8000993ba
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 16:11:48 2013 +0100
-
-    flask is now part of the default test suite
-
-commit 78c33285062d25d94f16ad07cd79df82fcbf96c1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 16:07:02 2013 +0100
-
-    Test & fix Server-side errors
-
-commit 4ba5ce042ae1bbaae9776687955476702cd6b182
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 15:52:32 2013 +0100
-
-    Flask simple call now works
-
-commit 5f99ad0edd3d781f4aad8c9efe2e3754797c7fcc
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 14:43:14 2013 +0100
-
-    Remove ipdb
-
-commit 737b794e07ecf861a8e24d968494dd24094b63bd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Mar 25 12:40:45 2013 +0100
-
-    New flask adapter + test (run "tox -e flask" to test)
-
-commit 6a062fa5af2b3e550658359eccfa2ce6c48bc642
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 15 16:03:47 2013 +0100
-
-    update the Changelog for next version + update version number
-
-commit daec0a54f1fae1e934aac9b31e74299668f2043f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 15 15:35:37 2013 +0100
-
-    Fix a bug when the only parameter of a function is a 'body' parameter
-
-commit d71b762ae347c1bd0e732d34b03919a44aa15aee
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 15 14:33:25 2013 +0100
-
-    Add a test to reproduce the bug reported by Endre Karlson
-
-commit 9ee2d2f9a21119039e00fdb0f456793cbd49aef3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 15 14:05:49 2013 +0100
-
-    Add a test for the body= parameter of wsexpose
-    
-    --HG--
-    extra : rebase_source : fc9479a0aa0de8485440a70e86971666fea56fb8
-
-commit 5c87210733c8a9efbd54a805fb691900f72edc6b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 8 21:52:38 2013 +0100
-
-    Re add the dev and build tags on version
-
-commit dfeaea4f7725c325117eadd3fa750722b97759c9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 8 21:42:39 2013 +0100
-
-    Don't use the validate decorator in the first-page example
-    
-    --HG--
-    extra : rebase_source : 153daebe942416e88c82099eb362aeb757d7d6e7
-
-commit a1ec8103a78b3da6017aa3ab7dee4dfcbfcdc21f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 8 21:40:07 2013 +0100
-
-    Remove the WSME-Soap dependency.
-    
-    --HG--
-    extra : rebase_source : 6d49a6828f2ebf78d0f9a664966e327ed8d6c6ac
-
-commit 85455b6d948f59d00079f3096cb19a13e20d53a7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 8 17:06:26 2013 +0100
-
-    Add missing modules to the packages list
-
-commit 2bd3bf6644f2d00a99e8930eaab46fe4282997c5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Feb 8 16:35:27 2013 +0100
-
-    Made the summary shorter (see issue #6)
-
-commit 7b6e44973aa877875ceb88e0b4b87358ab338b02
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Feb 4 11:26:08 2013 +0100
-
-    Add a google analytics id
-
-commit 536fafe28397176d467232dc28df4f79d646d2bd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 18:19:28 2013 +0100
-
-    Added tag 0.5b1 for changeset 359199eb4e09
-
-commit 85c88281c99bc1a882cbfe410fb822fa23a942fa
-Merge: 8e1ce52 e289248
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 18:02:26 2013 +0100
-
-    Merging a dead branch (messed up with 'amend')
-
-commit 8e1ce52f7f18184d375fb60138997d06c514165e
-Merge: dc52aee 143bbb1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 17:59:43 2013 +0100
-
-    Merging a dead branch (messed up with 'amend')
-    
-    --HG--
-    rename : wsme/pecan.py => wsmeext/pecan.py
-
-commit dc52aee9f4823a7d900a4546b9c15c09f5ffeb03
-Merge: 7285223 16f75d1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 17:59:10 2013 +0100
-
-    Merging a dead branch (messed up with 'amend')
-
-commit 7285223f62bc8f627665cb8fa0835355c15b2c50
-Merge: 8a75450 3c6d56e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 17:57:59 2013 +0100
-
-    Merging a dead branch (messed up with 'amend')
-
-commit 8a75450ed54aa51ee2196d89fe52b8381548ab99
-Merge: a3de72c 4cd7cc0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 17:56:55 2013 +0100
-
-    Merging a dead branch (messed up with 'amend')
-
-commit a3de72cefeae450fc3e0835bc9094ab0c922e18e
-Merge: 705af82 8d6360c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 17:50:13 2013 +0100
-
-    Merging a dead branch (messed up with 'amend')
-
-commit 705af827c3613d49276e78718335c8592b8fb2da
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 17:04:07 2013 +0100
-
-    Update the changelog and add a requirements file to give readthedoc a try
-
-commit 4cd7cc032e1c9a62cca9b7e8aad7e13aa1486570
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 16:07:08 2013 +0100
-
-    amends 9c4e1f9a0c129cbb690bdd0459530c793aa3273b
-
-commit 24eebd8428c0226f586e39a015bde2acd3c5625e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 16:07:08 2013 +0100
-
-    Document the tg1x and cornice adapters
-
-commit c96f9360c59aeb16716b6f9ae2bf12ba103da9cf
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 15:48:35 2013 +0100
-
-    Document the tg1x and cornice adapters
-
-commit 0a77e3c30744c891bd9b8b684becc5b4b5c31902
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 00:30:37 2013 +0100
-
-    Start documenting the new integration approach.
-
-commit 5f5dd7fe5e0d20060e1c1c6a1cc85d74a705f1c3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 00:30:04 2013 +0100
-
-    Rewrite a bit the introduction text
-
-commit be1d43118273784960a3f9512efd1dbf993550df
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 30 00:29:42 2013 +0100
-
-    Now use the awesome 'Cloud' sphinx theme
-
-commit 6d6b8e0ffb6ab452bd708e92336fec8367f33ff0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Jan 26 22:11:59 2013 +0100
-
-    Do not test py25 with std json
-
-commit e0a6a53cc8ede5657281d18618d10a03b7aed169
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Jan 26 21:33:16 2013 +0100
-
-    Do not test py32 with sqlalchemy 0.5 anymore
-
-commit 861a9466762f0c91d2aaf4e337e509399bcab329
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 25 23:43:59 2013 +0100
-
-    Update the dependencies in the documentation
-
-commit 07e52bbfc8348206b4da7c1f962e28738fdb9f31
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 25 23:02:19 2013 +0100
-
-    Don't install wsme-sqlalchemy and wsme-extdirect to build the doc anymore
-
-commit f807817e5f324b0601ae471125ecca1ca6ca7b79
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 25 22:56:13 2013 +0100
-
-    Merge in wsme-extdirect
-
-commit 2f27d2b7fd64420877c105063d4c67c0c563edf6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 25 21:50:19 2013 +0100
-
-    Fix a python3 w/o lxml issue with binary serialization in the soap protocol
-
-commit ef71f6e3924b0142305c7e2d9a9508d8e189754f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 25 19:28:28 2013 +0100
-
-    Merged in wsme-sqlalchemy
-
-commit e88fbb0d9534851045261c2f83b75c21d4716f8a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 25 19:27:13 2013 +0100
-
-    Add missing dependencies
-
-commit 3ecb245858d0cc0d96826bafc661765c7341761e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 25 17:40:32 2013 +0100
-
-    Now use toxgen to produce the tox.ini file
-
-commit f69c81b264f134b6a75305b066fa911cbeafff76
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 25 09:43:23 2013 +0100
-
-    Add missing __init__.py in wsmeext.tests
-
-commit 03b038b6bf72db67e7f3edb94d815d60be293c9a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 24 22:26:42 2013 +0100
-
-    Merge in wsme-soap
-
-commit 0bc6faea5dd59fadc518ec14850359b34e1e98ee
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Jan 18 16:58:00 2013 -0500
-
-    add tests for file property of File
-
-commit 31497bff37170cfe7ad0defd333d822251a94879
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Jan 18 16:53:33 2013 -0500
-
-    fix binary type tests for python 3
-
-commit a896345971b5da84b57f90d6c381787e57b3b385
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Jan 18 16:45:51 2013 -0500
-
-    add tests for file types and fix a python 3 issue with handling files coming from fieldstorage objects
-
-commit 003fed76a37c30241d9f4b69798d98d3bf3ca19e
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Jan 18 16:17:44 2013 -0500
-
-    add tests for weakref conversions for type references
-
-commit 1deb93688e80049825ff376e6cdfa1d196f67929
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Jan 18 16:01:14 2013 -0500
-
-    test invalid float values
-
-commit c8b20e6498dcacc7279ddb6f2490ef58399e3449
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Jan 18 15:58:24 2013 -0500
-
-    add tests for binary encoding and decoding
-
-commit dcafb0e36bef7682a72ebe4655e1ef8e52e83de9
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Jan 18 15:51:33 2013 -0500
-
-    add tests for ArrayType validation
-
-commit 3c6d56eb644f9cc0b5fa04fd9123bdb6b23a72e3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 12:18:43 2013 +0100
-
-    amends a32bd89f8984b13f22a9fe5b66b881c91308e459
-
-commit d43138433926bd1a2227b62a008fab26222d74c2
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 12:18:43 2013 +0100
-
-    tox -e doc now produce the zipped html documentation too
-
-commit 87834ecbca3500669733fb6c63fb07325e82fc7c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 12:16:19 2013 +0100
-
-    tox -e doc now produce the zipped html documentation too
-
-commit a23771ded4ac3b5d55f77c77141581ddef529cef
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 11:42:24 2013 +0100
-
-    Tell about the __body__ parameter in the changelog
-
-commit 8d6360c20d65cd325bb987b7d778555a090a7735
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 11:05:05 2013 +0100
-
-    Fix the wsmeext.sphinxext module name
-
-commit bfccf11cb58897478b1573b934178a0c8a0988a1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 11:05:05 2013 +0100
-
-    Fix the wsmeext.sphinxext module name
-    
-    --HG--
-    extra : rebase_source : 028505829909b5b6445b40e67aa1e70a9f46e1a5
-
-commit ab62b62d98df841e99db49b5de185f740f55714b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 11:04:40 2013 +0100
-
-    Add a 'doc' testenv that builds the documentation
-
-commit c32a19e298abbf34f914ccb8a015b613e3560a28
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 11:04:40 2013 +0100
-
-    Add a 'doc' testenv that builds the documentation
-    
-    --HG--
-    extra : rebase_source : 8d95436155f065848450afd016b3b2d177bc4c91
-
-commit 5118d80848ee2aed21f66149b56dc83fd5f7749d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 11:02:56 2013 +0100
-
-    Complete the changelog for version 0.5b1
-
-commit a354027a6412b52346c0a615dfe9754cdeb9777d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 11:02:56 2013 +0100
-
-    Complete the changelog for version 0.5b1
-    
-    --HG--
-    extra : rebase_source : 4f9235d5f27e0e61e9491660cf9911c8b84e5de3
-
-commit 5f8c8b54255fc376589b1ebe5aa7ece25890cad0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 09:53:13 2013 +0100
-
-    Set version to 0.5b1
-
-commit bfc0a088cc3ec61fbddbba1fd825285e3eb62db1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 09:53:13 2013 +0100
-
-    Set version to 0.5b1
-    
-    --HG--
-    extra : rebase_source : 2d2a38da4b5f9c4eb2a93efb5945ac45713425bd
-
-commit fe291282aac50f3b46571cadfc8426db712b907d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 01:11:19 2013 +0100
-
-    Use nosetests --with-coverage instead of coverage run for testenv that tests wsmeext submodules (I have issues with the namespace module)
-
-commit 2f2663820989eb80135f6ce638a8b6cf29f8d9b9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jan 18 00:02:47 2013 +0100
-
-    Simplify __body__ extraction from params
-
-commit c69d002acba2e74a10567f2371fdf329012998dc
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 23:22:50 2013 +0100
-
-    Fix unicode values read from json input on python 2.5
-
-commit a29633c8468708081ecdaae7f96d63f7d5a9685a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 23:21:24 2013 +0100
-
-    Don't read the body if content_length is 0-like
-
-commit b7ede0b27fdee9e873323963aa242127007788b6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 23:20:46 2013 +0100
-
-    Choose float values that have no rounding issue on python 2.5 for the float multiplication test
-
-commit b33177ab70733bf18d329c7370485f8abf034dc1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 22:57:05 2013 +0100
-
-    Python 3 compatibility
-
-commit 02551de6de900b3cb66cfc1c61f4c93d88139963
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 22:50:10 2013 +0100
-
-    Rename the body argument to __body__ in tests + now tests for request body single argument
-
-commit 23bac07fee3558620ea020892b0bc106b0df2a25
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 22:49:00 2013 +0100
-
-    Now rely on wsme.rest.args to parse the parameters, which avoids a lot of code duplication
-
-commit f3bb716b0ed7da916f71792362ed044f8da02349
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 22:48:04 2013 +0100
-
-    Now handle __body__ parameter, which needed to add a mimetype parameter to the different args_from_* functions
-
-commit 16f75d19e4ff9db68d86c49d4abdc8ab3e275715
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 21:24:16 2013 +0100
-
-    amends 1ea5bc68101a7f4075553df49fe58ba0b250316b
-
-commit 4c6381a66895d9748f93c37af0f6f856619f3f48
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 21:24:16 2013 +0100
-
-    Add a test for multiply exposed functions
-
-commit d8355f1cdfe6117ae53558aa40471e42e82e88f8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 21:21:16 2013 +0100
-
-    Add a test for multiply exposed functions
-
-commit c984a33c7c6be9007322cb9cb3c5acc50b06d4c3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 16:16:06 2013 +0100
-
-    Don't use assertIn as it is supported from python 2.7 only
-
-commit 2ea0724fcb1d9ebba2bd38010499e76abded29a9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 16:05:26 2013 +0100
-
-    Use assertEquals(a, b) instead of assert a == b
-
-commit 8736089dc91db47b7f2262c0cf0e589a97a03a28
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 13:15:25 2013 +0100
-
-    Moved non-core features to the wsmeext namespace package
-    
-    --HG--
-    rename : wsme/cornice.py => wsmeext/cornice.py
-    rename : wsme/pecan.py => wsmeext/pecan.py
-    rename : wsme/sphinxext.py => wsmeext/sphinxext.py
-    rename : wsme/tg1.py => wsmeext/tg1.py
-    rename : wsme/tg11.py => wsmeext/tg11.py
-    rename : wsme/tg15.py => wsmeext/tg15.py
-
-commit bd184770a3559293c8eb42c3974ea507cb7cf44f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 12:01:55 2013 +0100
-
-    Pecan adapter is now at 100% of code coverage
-
-commit 98a89b808bd7f318cf01bee038c2a92ad1687390
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 11:55:43 2013 +0100
-
-    Fix code coverage for pecan tests
-
-commit 4cf2c37ae182dbcecdd5497bbf838fd0ed16a135
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 11:26:06 2013 +0100
-
-    Improve code coverage for the TG 1.5 adapter
-
-commit d346db3e8c5d9b5cde7b00888b54056e57c41185
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 11:18:58 2013 +0100
-
-    Code cleaning + better code coverage of the TG1.1 adapter
-
-commit af79bd4f37593c518a8eca770f14304ac1250fb1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 17 11:18:18 2013 +0100
-
-    Show missing lines in coverage reports
-
-commit 0c320363ad080cc5cc64e44dba8ff8fb425b5a48
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 16 21:39:49 2013 +0100
-
-    Now generate coverage reports for individual testenv
-    
-    --HG--
-    extra : rebase_source : f01f2d4a18d467a73333f61f1b553a1de8122937
-
-commit 5ca0186863b4b7e7d471ec570d7f05b2068a02d7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 16 21:40:45 2013 +0100
-
-    Fix the tg 1.x tests
-    
-    --HG--
-    extra : rebase_source : 2a19a7022e1d99042de403a5c310dda994b5650a
-
-commit 825686b1e6ccdc44494d14dd3e709027957a201d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 16 21:29:53 2013 +0100
-
-    Ignore all the tests reports
-    
-    --HG--
-    extra : rebase_source : 928fc36f69f5b12eebf02510e484da187fe88384
-
-commit 366bec59ae3a81c862736374ef1da74fed45f82f
-Merge: 24675e4 6b51ec0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jan 15 14:24:16 2013 +0100
-
-    Merged in cmcdaniel/wsme/empty_strings3 (pull request #11: restxml empty string fixes)
-
-commit 6b51ec0dd0d83c1fed298e50cb8d3d7347c4284b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jan 15 12:07:26 2013 +0100
-
-    Fix Python 3 compatibility
-    
-    --HG--
-    branch : empty_strings3
-
-commit 6ffa578b1bae4fb189dbcb39094fc8396ae72d77
-Author: Craig McDaniel <craigmcd@gmail.com>
-Date:   Wed Jan 9 14:41:58 2013 -0500
-
-    restxml empty string fixes
-    
-    --HG--
-    branch : empty_strings3
-
-commit 24675e4a8e8fa5e3e1706e7df4500a2b131bc9e9
-Merge: d5ff7c0 5380134
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 3 13:33:16 2013 +0100
-
-    Merged in cmcdaniel/wsme/json_strictness (pull request #8: rest protocol detection: test Accept header first; use startswith for Content-Type match)
-
-commit 5380134951396af87e93b004780bde14737ac34c
-Author: Craig McDaniel <craigmcd@gmail.com>
-Date:   Wed Jan 2 16:57:45 2013 -0500
-
-    rest protocol detection: test Accept header first; use startswith for Content-Type match
-    
-    --HG--
-    branch : json_strictness
-
-commit d5ff7c08938399d3ecd39821ede51a85bcab2022
-Merge: 76bfc4c 62b0035
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jan 1 11:24:32 2013 +0100
-
-    Merged in cmcdaniel/wsme/bool_fromsoap (pull request #7: Handle bool from xml properly; add setbool and getbool unit tests.)
-
-commit 62b0035ea760fcff27f03a71a40db5d1d2959306
-Author: Craig McDaniel <craigmcd@gmail.com>
-Date:   Mon Dec 31 11:28:02 2012 -0500
-
-    Handle bool from xml properly; add setbool and getbool unit tests.
-    
-    --HG--
-    branch : bool_fromsoap
-
-commit 76bfc4cc704961c5914c3690250bf75ee2787384
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Dec 19 15:11:52 2012 +0100
-
-    Add a new parameter 'ignore_extra_args' to the @signature decorator (and its frontends @wsexpose)
-
-commit 73afdb0a8785f3659d79810a1106cd7ef867af82
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Dec 19 15:00:57 2012 +0100
-
-    Fix the TG 1.x adapters, the resquest.params are now needed by the get_args function.
-
-commit e68c9e99b6286fa71067dcf32f1780ed02164c43
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Dec 18 10:26:17 2012 +0100
-
-    Now supports non-indexed arrays of objects as GET parameters
-
-commit 9aa7055f552b33b40a60f9d7459794745232b7e8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Dec 18 10:09:09 2012 +0100
-
-    Fix array as input GET parameters in the pecan adapter
-
-commit 2758202d77a4815f9ca7a6ab17e8767c6b711038
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Dec 11 11:42:35 2012 +0100
-
-    Update the changelog.
-
-commit be32f92fbb8e6fbbcdf205b3e77b41b8112a520a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Dec 11 11:24:21 2012 +0100
-
-    Mention the additional protocols in the intro
-
-commit 7813805913843477c1d153e3469dd1179122ccb8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Dec 11 09:56:58 2012 +0100
-
-    Better mentionning of the framework independance.
-
-commit f9b76d3a5df7a9996600531d5724c819f7d85558
-Merge: ab68986 c1440ff
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Dec 11 09:25:50 2012 +0100
-
-    Merged in dhellmann/wsme-sphinx (pull request #5)
-
-commit ab68986efc95eba8c1e4b30ab8acb4fc1bd7e509
-Author: Angus Salkeld <asalkeld@redhat.com>
-Date:   Tue Dec 11 12:47:35 2012 +1100
-
-    Move the check for an empty body up.
-    
-    So if you have a client that always sets the Accept json
-    but you are doing a GET and the body is empty, then we get
-    an exception.
-
-commit c1440fff51a5200054638a3624231b6ea0b2c429
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Dec 7 17:23:29 2012 -0500
-
-    Add samples_slot option to TypeDocumenter
-    
-    Allow the output of the TypeDocumenter to come in different
-    orders, depending on the sample-slot option. Default to
-    showing samples after the rendered docstring, but also
-    allow it to come before the docstring by setting the
-    option to 'before-docstring'. Use 'none' to disable the
-    sample output for a type entirely.
-
-commit c5c7f6df37baa48d38bacbc70cd5b0aedd96a1f4
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Dec 7 16:15:49 2012 -0500
-
-    Fixes for sphinxext
-    
-    Restore check that restricts the use of FunctionDocumenter
-    to nodes under a ServiceDocumenter to prevent it from being
-    used for classes not related to the web service.
-    
-    Replace direct uses of __name__ with datatypename().
-    
-    Fix a problem that showed up when get_doc() does not find
-    any docstrings for a function.
-    
-    Use for:else instead of checking a sentinal variable after
-    a search loop.
-
-commit e1f82b01ceac8533f52866ae6cb464a7ae5eb033
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Dec 7 16:12:48 2012 -0500
-
-    Add sample() method to ArrayType and DictType
-    
-    Update ArrayType and DictType so they have sample()
-    methods for the sphinxext code to use when documenting
-    nested types.
-
-commit 23a276058d8c67d175f227d8d966b2411b2d91f1
-Author: Doug Hellmann <doug.hellmann@dreamhost.com>
-Date:   Fri Dec 7 16:09:14 2012 -0500
-
-    Roll back previous change to the root XML tag name for sample data.
-
-commit bd36dc2f35df2f5625ca5086f23628480adf682a
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Dec 7 15:48:49 2012 -0500
-
-    Copy properties to decorator
-    
-    Use functools.wraps() to copy the docstring and name
-    from the decorated function to the closure so
-    the autodoc code gets the right values.
-
-commit 2277370fca77f8014d29f40c4939ae478f50cdd9
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Fri Dec 7 12:01:20 2012 -0500
-
-    Fix error handling tests for pecan
-    
-    The debug middleware always returns a 200 status, so
-    disable it.
-    
-    The actual response status is the full string, not just
-    the number, so look for that.
-
-commit 38f5dd2bfd338f95f4140e1148e0bc255d6ea973
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Dec 6 16:52:21 2012 +0100
-
-    Add a test for client-side errors
-
-commit 4edbd4bb8fa1e9d41e5e7d19bfffc09886bac73c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Dec 6 16:51:51 2012 +0100
-
-    Allow adapters to use the format_exception function, and use it in the Pecan adapter. /\!\ the response status is not properly changed by the decorator yet.
-
-commit bd95dafa7b6b55eba80a1b48dbefb5aa7468063c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Dec 6 16:18:01 2012 +0100
-
-    Allow the method autodocumenter (.. autofunction) to work without a Service parent (ie without a WSRoot). Added the path & method parameters that NOT considered for now.
-
-commit dcd2d9233fdfc87e2e89d8b321db8034974036a2
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Dec 6 15:19:19 2012 +0100
-
-    PEP8
-
-commit 6af9b928786a990b2161f54f89ca226a7c1028dc
-Author: Doug Hellmann <doug.hellmann@dreamhost.com>
-Date:   Wed Dec 5 19:22:14 2012 -0500
-
-    Update datetypename() to work with DictType and ArrayType instances.
-    
-    --HG--
-    extra : source : cef0a57e57255c4437922d3c2b0a81c84ad29b07
-
-commit dbd435a2fe38415a212b924cdf55706b5fc2c343
-Merge: ac7b972 aedf967
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Dec 5 22:33:36 2012 +0100
-
-    Merged in dhellmann/wsme-validate (pull request #2)
-
-commit 322dca63c5df3e6b8771069ff12d32cb8eb15b23
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Wed Dec 5 13:06:58 2012 -0500
-
-    show the docstring for a type before the formatted sample values
-    
-    --HG--
-    extra : source : e5fa8d5e8dc27b91fca92e8b3a109981f2ed37b0
-
-commit 4fb26f6f2d2a19cd43ae12132222b7c8d1ac01d6
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Wed Dec 5 13:06:25 2012 -0500
-
-    use tag name 'result' for sample data to match data returned by services
-    
-    --HG--
-    extra : source : d6ac5de7ab98151eae6e99462c7d15141515ecf0
-
-commit aedf967cf5ec0ed739d8f6a3fe02738b89b5082c
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Wed Dec 5 10:51:50 2012 -0500
-
-    tighten up validate_value logic and allow string promotion to integers
-
-commit 15a239350eb2d1919e234676f2d063106b53f355
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Wed Dec 5 10:51:26 2012 -0500
-
-    ignore all coverage output files
-
-commit d940f3f3ae2900309d6d22ec4e205928d5caa5e6
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Wed Dec 5 10:32:24 2012 -0500
-
-    restrict the types that can be promoted to float
-
-commit ffaaa28b37015ab78d6ccfaf2399612c23b6330b
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Wed Dec 5 10:28:08 2012 -0500
-
-    ignore emacs temporary files
-
-commit ac7b9727dbcf53316f9403f0e7c1f67e6e65a136
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Dec 2 23:24:50 2012 +0100
-
-    Fix samples for functions parameters and return types
-
-commit 00467305428572f2cad92195d642a94804347ea4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Dec 2 22:39:45 2012 +0100
-
-    Fix xml & json samples by autotype
-
-commit 143bbb189ba64a7d137baf609f3a144309c99ea6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Nov 29 22:24:39 2012 +0100
-
-    resolve types in pecan.wsexpose. It is a temporary solution.
-
-commit 67bf6c3dc48df782ffe06604296cbf6489b2d8cb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Nov 29 22:24:39 2012 +0100
-
-    resolve types in pecan.wsexpose. It is a temporary solution.
-    
-    --HG--
-    extra : rebase_source : a6835042f14fb016722323496ba8b826a2a8aa9d
-
-commit cbb5caf4bfe2279224e1d6a07640dd775c424bae
-Merge: 7def85c 5c496a3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Nov 29 22:18:11 2012 +0100
-
-    Merged in dhellmann/wsme-validate (pull request #1)
-
-commit 7def85c238c7f93ab4e21c09d6f832205b6e4937
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Nov 29 21:58:42 2012 +0100
-
-    Fix the encode_result call
-
-commit 5c496a30785805892f4a90a51821fa853f0bd1b1
-Author: Doug Hellmann <doug.hellmann@gmail.com>
-Date:   Thu Nov 29 15:12:40 2012 -0500
-
-    allow type promotion to float
-
-commit 33d852b2e4a038291037078e83502640bcc7f7d1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Nov 29 00:13:51 2012 +0100
-
-    Use the new encode_result functions of the rest encoding modules
-
-commit e2892482caced9ec5a8b5258009ef1930b49a9c1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 28 22:40:53 2012 +0100
-
-    Add unittests for returning array and dict of objects as attributes.
-
-commit cda8563e5ad42c2552f0f1526996d1768abe96d7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 28 22:40:53 2012 +0100
-
-    Add unittests for returning array and dict of objects as attributes.
-    
-    --HG--
-    extra : rebase_source : 0a126ca6ff81fa858adfea2a27c469c8faf045b6
-
-commit a8be9c213c7f923725304e4aac6dc07ef1778690
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 28 22:21:39 2012 +0100
-
-    Fix the __eq__ operator for ArrayType
-
-commit 71b667a5e10ec9260f2c84109574fb7884ce09a0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 28 22:21:39 2012 +0100
-
-    Fix the __eq__ operator for ArrayType
-    
-    --HG--
-    extra : rebase_source : d7ad32012a9b93aa898b5c673e46cdf0047211e8
-
-commit cf0b4c4ea3b7986d982546df947752d8e249b7a1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 28 21:02:58 2012 +0100
-
-    Remove useless imports
-
-commit 440a3b47ea47a8e1f71b2f9abb3b550a59414f56
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 28 21:02:58 2012 +0100
-
-    Remove useless imports
-    
-    --HG--
-    extra : rebase_source : c781c864c9e33de3b4c811cf317e44eb0021554f
-
-commit fda0ddd8300e2459c2bc1712693b8c5eb1d408c2
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 28 22:35:17 2012 +0100
-
-    Adapter for turbogears 1.1
-
-commit 374e11be1c06497d98265470deff8d94b2dc1cc4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 26 16:38:50 2012 +0100
-
-    Adding a tg 2.1 test case (not enabled for now)
-
-commit d3f1ba48841b2f6b95df9e51a1aa145a07834060
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 26 13:55:27 2012 +0100
-
-    Reorganise the tg1x adapters, and make the tg 1.5 adapter able to handle multiprotocol on 'native' rest
-
-commit 39cc2ffc8f131679d9e561c0ab3712f482a8e7ed
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 26 01:27:37 2012 +0100
-
-    The tg1 adapter can now expose rest functions outside the WSRoot _and_ enable other other protocols. Soap is tested.
-
-commit ade5325e13b37e5110ff17376de983aee4ab1679
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 26 01:25:51 2012 +0100
-
-    Change the scan_api interface. It now yield the original function and static args (typically the 'self' attribute). Thanks to that the lookup_function method of WSRoot can access functions outside the WSRoot.
-
-commit 15417d2ac06f79afc3af45db3eb2226d6b064757
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Nov 8 16:14:42 2012 +0100
-
-    Fix the module names
-
-commit c1ba69fa280407f81e0bccc33044459940193df9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Nov 8 15:02:59 2012 +0100
-
-    args_from_body now ignore empty bodies.
-
-commit 25b0efaf3a4eee4ab09c0445de06758f71ca94ef
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 7 22:37:35 2012 +0100
-
-    Python <2.7 compat
-
-commit c5d74a335380993622bec98d026dd3004036752a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 7 21:56:27 2012 +0100
-
-    Python 3 compat
-
-commit 74bb6b0bc3b42e3a8626db2af7a772274c06267e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 7 21:29:46 2012 +0100
-
-    Remove the parse_arg tests (parse_arg does not exist anymore), fix the json nest_result option handling, and fix the encode_sample tests and implementations.
-
-commit c3891c477e45e60051b038c0acaf9f321b06f3af
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 7 18:19:11 2012 +0100
-
-    Rework the rest implementation. We now have a single protocol that can manupulate different dataformat thanks to the helpers provided by the xml, json and args modules (which will be used by the adapters too). Some corner cases still don't pass the unittest, and some code cleaning is required.
-
-commit eaa6cc8083b87103c156b49f4efd2389effec01b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Nov 6 22:37:33 2012 +0100
-
-    Add a test for the pecan adapter
-
-commit ddd2ba251e7093d33855d7615d1988f1f6c83f8c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Nov 6 22:34:03 2012 +0100
-
-    Move around the REST implementation : wsme.protocols.commons -> wsme.rest.args, wsme.protocols.rest -> wsme.rest.protocol, wsme.protocols.restxml/json -> wsme.rest.xml/json, wsme.protocols.__init__ -> wsme.protocol.
-    
-    --HG--
-    rename : wsme/protocols/__init__.py => wsme/protocol.py
-    rename : wsme/protocols/commons.py => wsme/rest/args.py
-    rename : wsme/protocols/restjson.py => wsme/rest/json.py
-    rename : wsme/protocols/rest.py => wsme/rest/protocol.py
-    rename : wsme/protocols/restxml.py => wsme/rest/xml.py
-
-commit 4826c8b7edacb3fb8e927535e69842338c364abc
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 5 23:35:45 2012 +0100
-
-    Start working on a better tg 1.1 integration. Need to rework the rest implementation to make it easier (especially the body parsing)
-
-commit 3080528319065cf359a57729ac36ac950613cb0e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 5 22:12:20 2012 +0100
-
-    Don't use wsme.release anymore
-
-commit c8b0b3b7a63f3602f8267fcb32e89e0f019e1052
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 31 16:02:05 2012 +0100
-
-    Change version to avoid dependencies problems in the CI
-
-commit b12a25a816c8832506a87f7812713b75a8105fc8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 31 12:23:31 2012 +0100
-
-    Make DummyProtocol inherit from Protocol because it now needs a 'iter_routes' function
-
-commit d3b62687205660745ea914cab7423e56774b1e12
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 31 12:09:48 2012 +0100
-
-    wsme.protocols.expose now accept templated paths, and can expose a single function several times
-
-commit 21b5ccc6325dd10277604b0d6da33ac0c07ec804
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 31 11:44:30 2012 +0100
-
-    Introduce a new decoratore wsme.protocol.expose, which replaces the clumsy former pexpose
-
-commit 4747aa82f13a9085c71aac0e6853d46aea232046
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 31 10:48:01 2012 +0100
-
-    Reorganise the decorators. expose and validate are now in wsme.rest, and ws.api.signature becomes the raw decorator to declare a function signature. Got rid of the 'pexpose' decorator, which will be replaced later by a better way.
-
-commit 983ba099d72f4070cf5a8ca3ad0991d449af06bf
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 26 14:56:32 2012 +0200
-
-    The pecan adapter is now tested
-
-commit e19613fd322c39eff8072f8d18db1a442d4b3615
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 26 14:53:47 2012 +0200
-
-    Make json the default format
-
-commit d282fda3051da4355b2a818a6044946d8056c02b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 26 11:43:40 2012 +0200
-
-    Rename WSRoot.scan_api to WSRoot._scan_api to avoid infinite recursion by scan_api
-
-commit 21ea8a9b177c32fa7dd5c5ffac406fcca58ada54
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 25 21:35:08 2012 +0200
-
-    Start working on adding protocols when used as a cornice complement
-
-commit e4b852292ff53a147b7a6e86e87b3ced6d0d4da4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 24 21:17:59 2012 +0200
-
-    Cornice extension: Fix function args preparation, and choose the renderer based on the 'Accept' header
-
-commit 0b2cf8df04a021d7f8a91a0d0fd0e7b1096a9add
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 23 12:28:48 2012 +0200
-
-    Adapter for cornice
-
-commit 61b3d3d88c29bb7af1673de411590e97b9e0fe98
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 23 12:22:14 2012 +0200
-
-    Split get_args in several functions to make adapters implementation easier
-
-commit b45a949b79bec025f2dbe36dd4dd2e6a6aad8a31
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 16 14:51:11 2012 +0200
-
-    Add a paramter 'multiple_expose' to the expose decorator
-
-commit 31b5e0d23d82551962f482482b3490fc4f1816e8
-Merge: 4cab7ad 16d09b3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 16 13:45:38 2012 +0200
-
-    merge
-
-commit 4cab7ad2568ec90a850e35ee327e0970eb9bf464
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 16 13:12:42 2012 +0200
-
-    Added tag 0.4 for changeset f06e004ca8e4
-
-commit ac93de57c7728c72e98af8f2bf2b25ba213b0dbd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 16 11:12:11 2012 +0200
-
-    Add a test for one item long text arrays
-
-commit 4cf7c1cc4e307afb1eb02373e2e7dc78e4b3f1e3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 15 16:31:25 2012 +0200
-
-    Get WSME version from the package, not wsme.release
-
-commit 5a7b30567441044291f0a7543d68e4c5ad75494e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 15 16:01:59 2012 +0200
-
-    Update the changelog
-
-commit eb96b0482221b4553b9ec72b0b9565ab60599ea8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 15 16:00:57 2012 +0200
-
-    Fix the sample include line numbers
-
-commit 179126dba6b7d21ef36f52e1f9e106d888641115
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 15 15:51:33 2012 +0200
-
-    Remove the b1 tag, 0.4 is about to be released
-
-commit 16d09b37da7e7560a6b98136e936277bd914697a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 15 14:30:46 2012 +0200
-
-    Move the imports to avoid cross-import problems (all this needs some rework)
-
-commit 318c6d6b836b2f9020ad45bb2f4c28659cdfd8e9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 15 14:29:56 2012 +0200
-
-    Add a default value to FunctionDefinition.body_type
-
-commit f081d8a370a5bf1b9c748c4d8377c2498f52ad08
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 15 14:03:35 2012 +0200
-
-    Rest protocols can now take parameters from url + a parameter from the body by adding a parameter body= to expose()
-
-commit 0f0116be7870490447bbfa794c118205e8eca120
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 14 01:40:27 2012 +0200
-
-    Add an adapter for pecan.
-
-commit a5e63f0aed0ea7b78b2d5d07c9e15ec1fa8db6fd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 14 01:39:19 2012 +0200
-
-    Add a helper function for adapters that need to convert a function arguments
-
-commit 5a840a4bd8528ec0a2dad0e699b25627ff993b13
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 13 21:14:26 2012 +0200
-
-    Get rid of the function wrapper. The only case it was needed is for exposing a function several times, but this case can be handled differently. I may reintroduce it as an option.
-
-commit 97f1b197cecca6c8bc1f4d44cf5c91eb9d32a668
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 13 21:08:17 2012 +0200
-
-    Introduce a new decorator: 'sig', which combines expose and validate in a single decorator.
-
-commit 7cad370657f84f9a7c42b5656723861684b5cb98
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 6 21:18:05 2012 +0200
-
-    Now use six.with_metaclass to create the Base type in a python 2/3 compatible way
-
-commit be16f847380b17aa26629798920db31188b53f0d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 24 22:10:10 2012 +0200
-
-    spore.getdesc does not take a request anymore but only the host url (it makes the tests simplier)
-
-commit 9d03f6f1f1a050baa84d16938bce7f86384d0a17
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Sep 23 16:17:28 2012 +0200
-
-    Add a little demo of a SPORE client to call a function of the demo program
-
-commit a02b367a90519ed8c70a09d1606c09e1496a182e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Sep 23 16:16:51 2012 +0200
-
-    Fix the spore 'base_url' attribute
-
-commit 740cbea766afa6fd9a227c25721f556fd73e7a38
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Sep 23 16:16:27 2012 +0200
-
-    Fix the request headers log
-
-commit db45239e050e6699a2c49fe4156b100c42481c9f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Sep 22 22:53:45 2012 +0200
-
-    Test SPORE crud function descriptions
-
-commit 2f75b3dd612d978457afc50766bc9cb3bec6bc3b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Sep 22 22:53:11 2012 +0200
-
-    Python 3 compat
-
-commit 0f5aeeedd580cce2970127d4b7e69c4a6427d343
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Sep 22 22:47:31 2012 +0200
-
-    Fix the spore test, as some functions were added by restjson
-
-commit 9605e9eaae3d7bf2db7299e313f9136884a820bc
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Sep 22 22:30:56 2012 +0200
-
-    Initial implementation of SPORE description of the api (fetch /api.spore to get it)
-
-commit eb58bd228026bf14366bc9e5aee57e591a687b2e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 19 23:14:29 2012 +0200
-
-    Fix test_default_usertype
-
-commit a80f3af917dce591a8a8275737047079b5c4a0eb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 19 23:13:56 2012 +0200
-
-    Test text to bytes auto-conversion
-
-commit 81ebb79e66e9c70cef9960a38a809d94a09b9f01
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 19 23:10:00 2012 +0200
-
-    text and bytes attributes now convert values from/to bytes/text when needed (ascii only conversion)
-
-commit 5258fd3cc58ffe27ce17562ee0f212a8e1766ab8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 17 23:33:28 2012 +0200
-
-    Remove the now useless test_release (the release module was removed)
-
-commit e295d01c164af646095ab1189e370ac69c92242c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 17 23:25:13 2012 +0200
-
-    Still need to specify the requires int the setup.py, as d2to1 does not seem to handle python_version dependant metadata
-
-commit 8d61bd983e688c6095c42660aa1680629d0686c9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 17 23:03:19 2012 +0200
-
-    Now using d2to1, which simplifies a lot the setup.py
-    
-    --HG--
-    extra : rebase_source : 1c80ea35061f668ba6d2b72c753e83aaac0e4532
-
-commit b4090ee56299e35b19a9a643b1a8d2b7318a3e03
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 14 15:38:17 2012 +0200
-
-    Added tag 0.4b1 for changeset 5ad01afed877
-
-commit cc1192b6d9a87b7be5d283be4546f84570716f45
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 14 11:32:02 2012 +0200
-
-    Update the change log (preparing release 0.4b1
-
-commit 3d27316575dda1b44e5a32f1038fbd75d0af8ae4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 14 10:54:10 2012 +0200
-
-    To avoid any array or dict duplication, use set() instead of list() for the registry array_types and dict_types attributes
-
-commit 110db71c8e98a23d57afb9958ac7d7c986a5320c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 14 10:49:04 2012 +0200
-
-    Fix ArrayType __eq__ operator so that array types are not duplicated in the registry.
-
-commit 1512c3902fe9049965956dfe0cbce21754698cb8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Sep 13 23:13:41 2012 +0200
-
-    Add more list corner cases to test the soap behavior with empty arrays
-
-commit b8de4600e0ace95a32bb26e041f1c5eea3f51798
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Sep 13 23:07:16 2012 +0200
-
-    Allow 'None' to be set on an Array attribute
-
-commit 39e5762873eb4088fad2c43053ceaf76244e60a6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Sep 13 22:27:40 2012 +0200
-
-    Mention the new wsme.types.Base type in the changelog
-
-commit 8d376b15741fb152df0f66a249c4b1b530609231
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 7 15:32:15 2012 +0200
-
-    Fix the demo so that we can use the soap client again, and changed the function names in the client (the soap function naming scheme just changed)
-
-commit d04f10c83582f10d8bce287df4fa1ab1d180df10
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 7 15:29:15 2012 +0200
-
-    Fix the array and dict registering. The register() function has to be rethought, as resolve_type is doing more, and the ArrayType and DictType are in the game.
-
-commit 150dbd2de8be87b57f5e4aba820e7d44aede5e7a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Aug 24 18:05:32 2012 +0200
-
-    Mention the wsme.wsgi replacement by wsme.WSRoot.wsgiapp in the changelog
-
-commit 4d9a539086434b4f38857763e8ba773a76053e0f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Aug 24 12:09:55 2012 +0200
-
-    Python 3 compatibility
-
-commit b49f992d1d2499662e6cc0fd6f02be9c2795175d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Aug 24 10:45:58 2012 +0200
-
-    Fix the Enum constructor, and document the change
-
-commit 3ada92fbf1c7c3bb84e6d8d9a3ee254d6385f12f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Aug 24 10:37:08 2012 +0200
-
-    Documents the File type
-
-commit f1eedeed192f55926e11c25130599b03e50ce367
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Aug 24 10:05:06 2012 +0200
-
-    Rename FileType to File, and make it a complex type instead of a native one.
-
-commit 2ec135137dccf20bd9d512638478eed6d619c1bf
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Aug 23 23:25:21 2012 +0200
-
-    Rest protocols should now accept multipart/form-data posts (see issue #4)
-
-commit 3f3b0a08df7b752ccdec20445339ace5a5439699
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Aug 23 23:22:44 2012 +0200
-
-    New type: FileType. Supports file inputs in forms + documents and demonstrate it in the demo. Should solve issue #4.
-
-commit 53669cb93580f0a09f03b9a0fd1a980f0b589749
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Aug 18 00:48:55 2012 +0200
-
-    Mention wsme.types.Base
-
-commit 0439f96bf5c074578e5ddb8ec675c9740a270de9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Aug 18 00:23:24 2012 +0200
-
-    The Base type for complex types now has a constructor that takes attribute values as kwargs
-
-commit 26c3ec6523b8f21d1ad3500cc97e562afdfccae4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Aug 12 15:17:38 2012 +0200
-
-    Now use WSRoot.wsgiapp() instead of wsme.wsgi.adapt()
-
-commit 3b1168ef26a7eeb95be9fe0ddf7a9242a932e3f5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Aug 12 15:07:02 2012 +0200
-
-    Change the wsgi example to match the new way of obtaining a wsgi app from a WSRoot.
-    Add a bottle integration example
-
-commit 3223c648ed3eeb91f9026204381abc2cdd0de012
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Aug 12 15:06:14 2012 +0200
-
-    completing the wsgiapp docstring
-
-commit 1858e8ec2d39e43100917d151505cea532e34cb0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Aug 12 15:05:56 2012 +0200
-
-    funcproxy now copy the function name
-
-commit 55e222702262b458fb56a36af8be2b48f2db76d9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Aug 12 14:27:00 2012 +0200
-
-    Remove the wsgi adapter, it is now a function on WSRoot
-
-commit 752d48955ccf5166bd83c50ed8addaeb0654a594
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Aug 9 23:24:09 2012 +0200
-
-    Fix a problem with protocol specific paths
-
-commit 9d7b2895a5b4d9899dd06d199618c38df401373e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jul 11 17:14:14 2012 +0200
-
-    Rest protocols now make use of the http method to select the function is needed
-
-commit 3aa41ec7b1ab36b2c9065649cc1212805e499a55
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jul 11 17:10:20 2012 +0200
-
-    Use request.content_lenght to check for a request.body existence before accessing it
-
-commit 92f1e760143197546509f22fe991cec68146d067
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jun 29 22:09:40 2012 +0200
-
-    Little english mistake fix
-
-commit 72f813fa6e2aab3a4e5ef04539204ae61a2ecd8d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Jun 29 18:02:42 2012 +0200
-
-    resolve_type now always returns regular datatypes, never weak refs. Generally speaking weakrefs should remain inside the registry.
-
-commit d1d36e66bc71b43258a448d289beef9258f3f61c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jun 27 17:19:34 2012 +0200
-
-    Registry.lookup does not return weakrefs anymore. resolve_type does it instead
-
-commit 624a8f618677496768fe5f6090284330f660bf1b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jun 27 16:39:43 2012 +0200
-
-    Python 3 compatibility
-
-commit 2665d3a0c93ad0754cb03d4ee6d6f0b691978c51
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jun 27 16:36:15 2012 +0200
-
-    Adapt tests and fix remaining issues with the list/dict handling changes
-
-commit 740868ed824ff3e0b69b6d0b9f4045fbeb0b073e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jun 27 15:54:34 2012 +0200
-
-    Fix various bugs revealed by the soap unit tests
-
-commit 583de2045d076e6aed69d5face55451e73676566
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jun 27 12:48:42 2012 +0200
-
-    Improve dict and array types handling by introducing DictType and ArrayType. Nested structures should have a better behavior.
-
-commit 40c2b105d20ce5f7bc660c764213bd6165db1293
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jun 26 23:51:32 2012 +0200
-
-    Fix the list of complex types handling (dicts are not ok yet, and lists still not complet imo)
-
-commit 963290f4d92a7c22675720f2c920c1f6ac517456
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jun 26 23:48:39 2012 +0200
-
-    Test attributes which are lists of complex types
-
-commit f1fb1b71ab9e070a39ff3a04f159cfed323dd3e4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jun 26 18:11:39 2012 +0200
-
-    Got lost in metaclass __new__/__init__ choice. Yet another attempt using both (needed by wsme-sqlalchemy)
-
-commit 4b09476b0923265a2df2520dfdee20258ff004b8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jun 26 14:21:33 2012 +0200
-
-    My last commit was a mistake : it is better to use __new__, so that the class registering is done the later.
-
-commit 1ddeb79c0936485a93ce3871fbf60572a35473a6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jun 26 11:43:47 2012 +0200
-
-    Use the metaclass __init__ instead of __new__ so that the class inspection occurs later, making it possible to add attributes in a sub-metaclass __new__ of __init__
-
-commit d57bdec058b45f1f6a50aaceb3f154c1eec79ad8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Jun 5 20:44:37 2012 +0200
-
-    Use py2 & py3 compatible metaclass
-
-commit 938c6f5e134031061a3349f3b19a620ec383c982
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Jun 4 19:22:32 2012 +0200
-
-    Attempting a on-demand resolution of datatypes references, so we don't need to call resolve_references anymore. It works with python 2, but not yet python 3 (some weakref issues)
-
-commit 520341238e1f44cac37771f79911317c0cd44acf
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue May 22 14:40:36 2012 +0200
-
-    Add a type Registry.
-    It mainly allow to have easy cross-referenced types by setting the attribute datatype to the class name instead of the class instance.
-    It may allow to have separate registry for different apis in the future
-
-commit f2203742f949cf8d43ec8c0721156f351f595cb7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 19 15:27:05 2012 +0200
-
-    Update the demo to reproduce issue #3
-
-commit 17e113ea0f27e0c949bdcc4ccabb10c32700117f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri May 18 13:38:17 2012 +0200
-
-    Completing the Changelog
-
-commit d59ad524e667dcd4c9d9c6190f097bc4767b95cb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri May 18 12:11:04 2012 +0200
-
-    Add a test for unset attributes
-
-commit 00c042aa737868a468a5c3641fe175c5fe598560
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri May 18 12:02:35 2012 +0200
-
-    Add tests for the sphinx extension, raising the total coverage over 95%
-
-commit eaa46bdd342f07902fbdeea8d15e0d5ff2f0572f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri May 18 11:58:25 2012 +0200
-
-    Fix Unset attributes serialisation
-
-commit 6ead929ca496ea5e568954aea841150dfb1b6004
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri May 18 11:56:41 2012 +0200
-
-    Reproduce a bug with unset attributes serialisation to xml
-
-commit 4c798215c9d0343272a6be9c3ce419c87e5f15e0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri May 18 10:44:39 2012 +0200
-
-    Introduce an adapter for tg 1.5 + unittest. It needs more realistic tests though.
-    
-    --HG--
-    rename : tests/test_tg1.py => tests/test_tg15.py
-    rename : wsme/tg1.py => wsme/tg15.py
-
-commit c3ea49a3b040dd1e5252ead1a2ae577e037b8b32
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri May 11 14:40:26 2012 +0200
-
-    Add a b1 version tag
-    
-    --HG--
-    extra : rebase_source : 637fbf8294dbe0881c87b4bfeea547303dc8ec96
-
-commit 5598064ed1984e2abf95678fbf531070183dcdcb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon May 14 23:29:54 2012 +0200
-
-    Now test the tg1 adapter
-
-commit fb600003d61337b2db223298d4e606564f53371c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun May 13 00:20:32 2012 +0200
-
-    Improve code coverage
-
-commit ad36bf1d54a9c4d0a7a35b0222d2538e313a279d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun May 13 00:20:23 2012 +0200
-
-    Simplifie the tox steps (no need for an initial clean)
-
-commit a2361f2f0306c226330bd7336a69227112d5a994
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 12 23:33:23 2012 +0200
-
-    Now cover wsme.protocols.__init__
-
-commit 4aaa8797b67deea9663285bc481b1e137b4133e6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 12 23:26:45 2012 +0200
-
-    Now tests wsme.release
-
-commit 223a2bc7be80cde105947f3ee744b21facfa0815
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 12 23:24:31 2012 +0200
-
-    restjson is now 100% covered by tests
-
-commit 9ba78f4366c64df0a5f98eea568e33159f78f3fd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 12 23:21:46 2012 +0200
-
-    Add --show-missing to the coverage report
-
-commit d81c322244e1176fa2651d7995f54941d4399cbc
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 12 22:51:51 2012 +0200
-
-    Add wsme.tests to the egg dist
-
-commit d83d3c6c09e402ce9cfa678fad0bd7750e4e0560
-Merge: 766e505 cd31c1e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat May 12 22:31:59 2012 +0200
-
-    merge
-
-commit cd31c1e2beed101fa445d3d4c4b6afc9c436326a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri May 11 14:22:46 2012 +0200
-
-    Set version to 0.4, and update the documentation
-
-commit 766e5057acf646d8930c9da5967d8f536f8d72f5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu May 3 20:02:22 2012 +0200
-
-    tox now combine code coverage results
-
-commit 582e9d11f5d8e8e9878a00acd4d6921f656425d2
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 26 11:18:33 2012 +0200
-
-    Point to the jenkins general dashboard instead of the wsme job
-
-commit fb9134139cd032e03ece1d42e630cdb6d531846e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 26 10:24:50 2012 +0200
-
-    Make the webob requirements more precise depending on the python version
-    Add Python 3.2 to the classifiers
-
-commit 5239a8fc93c3e2dc4bbfb8f6d9431efc6d102ad8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 26 00:55:54 2012 +0200
-
-    webob 1.2b4 is not out yet...
-
-commit 0b3601b8533e08512f6c9bcde7fb0bcf34fb77b1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 26 00:45:03 2012 +0200
-
-    Require the latest WebOb for python 3
-
-commit 4aae5cc528084e6d01faf9316e2ea53f89b425dd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 26 00:26:08 2012 +0200
-
-    Completed the python 3 port
-
-commit f475504e989e2be39f0dd3a23ff5761b3aad713c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 26 00:03:25 2012 +0200
-
-    Python 3 port in progress
-
-commit ae413cd49a5cba5043925b5b547b0fdd22541fb8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 25 23:45:16 2012 +0200
-
-    Remove debug print statement
-
-commit ec34f2445044e6ccdb6cd4458490b2bb33c12ef2
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 25 23:41:39 2012 +0200
-
-    Fix the binary type decoding
-
-commit b84b026c29a3f8c8dbdfcf0a39fedfd1ab00486d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 25 23:33:35 2012 +0200
-
-    Clarified the bytes/text types handling. Now all the restjson tests pass on python 2 and 3.
-
-commit 8b14babe71abd2357eb13353533f2ade6b0125ab
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 25 22:35:39 2012 +0200
-
-    The syntax is now python 3.2 compliant. A lot of tests still fail, I need to rethink how unicode / non-unicode are handled.
-
-commit d3967dcd4e2968d9794e1505389d6dd0528915c8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 12:46:55 2012 +0200
-
-    Remove a debug print statement
-
-commit 2ef74e85b5238c23e67ef5ae44abe7fb7b19d722
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 12:46:31 2012 +0200
-
-    Porting restjson to Python 3.2 (in progress)
-
-commit 423c422aca4614dff295c2cd628c3c206a89e9ba
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 11:36:35 2012 +0200
-
-    Python 3.2 port
-
-commit 4a92dc4ccae1e256ec6bdde9a9c866928cc8fe7a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 11:01:47 2012 +0200
-
-    Python 3.2 port
-
-commit 5615ed51b49188975d6f0f558a96c38c6e103099
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 10:59:31 2012 +0200
-
-    Python 3.2 compat
-
-commit 633c09bbc5053679e609c006974e87014607f713
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 10:57:22 2012 +0200
-
-    Python 3.2 compat
-
-commit dc517811d313a522c2e281f47a4b7bb6c1c501dd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 10:57:12 2012 +0200
-
-    Reduce the default envlist
-
-commit 6d92008e46d850ee034d59de72d7f92bfde12220
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 10:47:27 2012 +0200
-
-    test_types unit tests now successfully pass under python 3.2
-
-commit 765a4baf8b47311dee476f40b7229b187be3c798
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 10:46:48 2012 +0200
-
-    Added a tox configuration file to ease the python 3 port
-
-commit 73039fa27f6d387366d10580d3fda80d8cf8628f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 24 09:29:29 2012 +0200
-
-    Fix the README.rst filename
-
-commit 4133c0b080aae71f288335a175a1bac6704a0bf1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 23:23:12 2012 +0200
-
-    Correct a sentence
-
-commit 8b33c216b2da4a7bf480d79675325134777db9ae
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 23:15:35 2012 +0200
-
-    Change a bit the short description to make it more explicit
-
-commit 8dfecc06bb52c86d4d6055616bdfdf906cb5d593
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 11:48:15 2012 +0200
-
-    Add a link to the Changelog in the main description
-
-commit f6ffca36e876aa62c455e5326fa5997fb301d218
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 11:44:40 2012 +0200
-
-    Update the TODO list
-
-commit dd658840677f656f443bce80ed916ee1beb32eb3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 11:34:18 2012 +0200
-
-    Adding the precise Python versions and implementation classifiers
-
-commit 583a9b8855736cce17e4502e5fdc9b16a3e8b55d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 11:29:33 2012 +0200
-
-    Add a missing indent
-
-commit 61593d98bcfa46eed017b34f65cbe60d71ba3ac9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 11:28:40 2012 +0200
-
-    Make the examples more compact
-
-commit e7ad3d8bbdeab6cfb5f33a79747a34a7cccd6c86
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 11:20:30 2012 +0200
-
-    Remove the .. highlight:: directives to remains plain-rst compatible
-
-commit ac30cd20ef4007a1bd21d7c615ddb1ba6625957b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 11:17:47 2012 +0200
-
-    Attempt a rename of README to README.rst to force bb rendering
-    
-    --HG--
-    rename : README => README.rst
-
-commit 726d556e614848b25aae6c1e12ade3488225be70
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Apr 23 11:15:42 2012 +0200
-
-    Add a small code sample at the very beginning of the documentation
-
-commit 68a4616f79b595511c8722513d341970b1bd6764
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Apr 20 15:52:11 2012 +0200
-
-    Added tag 0.3 for changeset 603c8586b076
-
-commit bc0118b2443ec8867f214b054c34351aef7f5842
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Apr 20 15:49:15 2012 +0200
-
-    Preparing the 0.3 release
-
-commit f74dff5ad6a7d65d51779850f8317f61149289df
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Apr 20 15:39:04 2012 +0200
-
-    Update the changelog
-
-commit fd60166af894686968cdacff0f43007bbdcd9c3b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Apr 20 15:28:25 2012 +0200
-
-    The function documenter now add parameters and return value samples
-
-commit 5d7b65cc6bc5c15ea8e7304d43efb364a49173da
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 19 14:33:36 2012 +0200
-
-    Reached 100% test coverage of wsme.utils, which makes an overall coverage of 98% for the wsme module
-
-commit f111d608c4f4ce8454927b77060d171aa6bdb423
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 19 14:11:53 2012 +0200
-
-    wsme.types is now 100% covered by unit tests
-
-commit f85ec8f5b2941dfedaf56d4b4b4a67f5051c23e1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 19 13:49:11 2012 +0200
-
-    Slightly improve wsme.root coverage
-
-commit 188d015e638bd92824204e3c292205cc8127a6fe
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 19 13:36:28 2012 +0200
-
-    Fixed nil date/time decoding from xml
-
-commit 561da5697d51ae9a27bd8a6f8e95b1e7efe074ab
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 19 13:36:14 2012 +0200
-
-    restxml now has a decent code coverage
-
-commit 9c9747edc7ecc58e64d5c3704ada8a59f9fe08da
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 18 15:50:10 2012 +0200
-
-    simplejson and native json dumps formated output behave differently. Adapting the unittest that depends on it
-
-commit 749079d71f6c40cd8acd2f9432af557168fece15
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 18 15:15:35 2012 +0200
-
-    More tests and coverage
-
-commit b71d833d7f219a998e6a013b5e32aaffc46efeeb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 18 14:55:05 2012 +0200
-
-    Now check for unknown arguments in request params
-
-commit c73d2078efd07fb3bd20acb390ebfc427ddc78ad
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 18 14:19:24 2012 +0200
-
-    Enable code coverage by default
-
-commit 77749ca7066b36bc4b68bcf60e334bd0fed4c7db
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Apr 18 14:01:20 2012 +0200
-
-    Improve wsme.protocols.rest code coverage
-
-commit 39d38daa5a5f54bb77e91048b65f37bf11bd4ad6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 17 16:05:10 2012 +0200
-
-    100% test coverage for wsme.protocols.commons
-
-commit f5abdb915c48b16c4e9bac857d73a36888c07fc4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 17 15:44:00 2012 +0200
-
-    Improve detection of double-exposed functions + added a unittest
-
-commit 6e47f1732ae28fff24debc563b98c06eea39185a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 17 15:17:12 2012 +0200
-
-    Improve documentation on types
-
-commit cce0135c736eb10489a5877fa14f091656db0964
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 17 14:25:23 2012 +0200
-
-    Mention toggle.css and toggle.js installation in the documentation
-
-commit 32be7baa65e1df5cea0cbdd27b301e26e1eda02e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Apr 17 14:14:38 2012 +0200
-
-    Change version
-
-commit 4a9708d2d94381d8a2cf18932ed9b2d5f9952326
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Apr 5 10:46:32 2012 +0200
-
-    Update the sentense about Sphinx integration features
-    
-    --HG--
-    extra : rebase_source : 52cee810aaa4dabac7089fe9b130d2578e71e3dd
-
-commit 6eb1531894fed3d525b8b5e3f002cb55d708d114
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Mar 30 19:29:37 2012 +0200
-
-    handle_signature should return a value
-
-commit 8ddd9f10a655042cb88b01d3b8b3362c2ab21f5a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Mar 30 19:08:35 2012 +0200
-
-    Start implementing xref on types
-
-commit 50278d0c4a90f06b9fd3311cb31e144fe8197de6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Mar 30 17:41:33 2012 +0200
-
-    Remove debug print statements
-
-commit 1d659b7a20a0946ab8dbea4d9169893f917e07a1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Mar 30 17:40:59 2012 +0200
-
-    Implements webpath and namespace detection
-
-commit 0827942bf8a53c2150e7e791b3c90dd1a061dc19
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Mar 30 16:35:56 2012 +0200
-
-    The service directive now handle a namespace
-
-commit 5675e07c39822bfa5f6f1540f58bfe5deace8355
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Mar 30 15:20:21 2012 +0200
-
-    Now auto document the function parameters
-
-commit 83d5af664b53af73ec86e1e4ea2c8358777852a9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Mar 30 11:29:32 2012 +0200
-
-    Document a bit the sphinx extension
-
-commit f2fbde0d6ff8f6c39925e6902734a085d7820286
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 20:48:44 2012 +0200
-
-    The sphinx ext is now able to basicaly autodocument the functions (just retrivieve the docstrings for now
-
-commit f894097536e6a97af1b1fe8ad6d1f3c700e70ffb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 18:52:12 2012 +0200
-
-    load wsme/release.py in a python 3 friendly way
-
-commit 3d77a5e692277c301cd4562861eac6fa8b6fb8dd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 18:31:16 2012 +0200
-
-    Now add data samples for the wanted protocols on the data types
-
-commit bcf76e7075858a69e4dfb2ff8d68f1247ed125fc
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 18:30:50 2012 +0200
-
-    Introduce a Protocol base class, and add a method to render a sample data (used by the documentation tool)
-
-commit 9acfdd044cefadbc150c19b23f0214b04e758239
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 17:40:54 2012 +0200
-
-    Use the agogo theme options instead of overloading the css
-
-commit f8c53d5ed08f5b1fd42dd30803d6fe2c2dff6848
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 15:44:05 2012 +0200
-
-    Re-put the agogo theme (sphinxdoc was just a test
-
-commit 55cc205ebdbe5afa3ea65a9cd569b74c5e92e411
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 15:27:03 2012 +0200
-
-    Start working on the sphinx extension
-
-commit 9e4df7b40718f50e18e6466e1ad4b095f030cf39
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 12:09:07 2012 +0200
-
-    Add the release dates
-
-commit 0cd042b6e06bc283e7b4399d1e75bc2975953d59
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 12:04:04 2012 +0200
-
-    Added tag 0.3b2 for changeset d5eab01bf491
-
-commit cf6d439a5433c91ca8ca08731a0625c3eee555c9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Mar 29 12:03:55 2012 +0200
-
-    Prepare the next release
-
-commit 8083ba94c3dc66f0ac99c5c27b1161c134dc4ca3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Mar 28 15:18:32 2012 +0200
-
-    TG1 server.webpath mechanics makes it impossible to use a filter on the controller itself. So we put it on the root controller and carrefully change the WSRoot webpath so that everything works properly
-
-commit f4884b3480671b0e45f9a0d8842106e8f5429de9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 27 18:29:41 2012 +0200
-
-    BugFix: if no Content-Type header is present, read_arguments would fail
-
-commit 96ccea60f17d8ac4613bbdef3308d30c30bf05aa
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 27 16:26:02 2012 +0200
-
-    Completing the changelog.
-
-commit 70c187e26402b1770ea7ec1786ac6e44e829bcbd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 27 16:20:55 2012 +0200
-
-    Better handling of errors on protocol selection
-    
-    --HG--
-    extra : rebase_source : 2ee3e9995b355c603244e36b925936940a3f8ad8
-
-commit f70f2536f19449f3c047d11f4765a44f1389dc0e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 27 16:20:37 2012 +0200
-
-    Don't stop if the body is application/x-www-form-urlencoded encoded and the request has params (for other encoding it would mean both params and a body were provided)
-    
-    --HG--
-    extra : rebase_source : 20629a4f623859320121e4afd283fc1aab28b421
-
-commit fcab9c257c24c148dd2e1fad071669100e54a2b5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 27 16:16:46 2012 +0200
-
-    Add a cherrypy filter in the tg1 adapter so that the body is not parsed by cherrypy. This makes Webob happier when reading itself the body
-    
-    --HG--
-    extra : rebase_source : 066702f288150f7fccc8ad265100b4ce42436b25
-
-commit 392ef4148f477105610bb95d62e6f5685ed38501
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Mar 27 15:22:00 2012 +0200
-
-    Fix response status code transmission in the TG1 adapter
-    
-    --HG--
-    extra : rebase_source : 99de2b9beb0ebb61fcd87291faede89e150454fe
-
-commit 1bc806dd90a721ba892ac8735cd9afa38553593b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Feb 20 11:40:40 2012 +0100
-
-    :class:`wsattr` now takes a 'default' parameter
-
-commit 15dd8b0206257eb2dbfccbad193e8525f8971001
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Feb 20 11:37:46 2012 +0100
-
-    Fix nested dict/list structures
-
-commit 06b41a720755b7c3b7b95f21548ab92994b1dee0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Feb 16 19:04:55 2012 +0100
-
-    Change version number
-
-commit 907c5fdf09d9ab0351d0fbb47f4a72cb3d7a0ca5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Feb 16 19:02:47 2012 +0100
-
-    Update the documentation
-
-commit ff919cbba56f8fb3da27c7fb0cfd99d4898935fb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Feb 16 19:01:28 2012 +0100
-
-    handle dict and UserType as input from forms
-
-commit dddf0c4896ecb7b3d83abd2a2d2a300c95fdef52
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Jan 19 16:26:16 2012 +0100
-
-    Added tag 0.3b1 for changeset ebe2c6f228ad
-
-commit 391165d8122abeecbb571d0fbc1e1cec381ae8ce
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 18 20:04:00 2012 +0100
-
-    Avoid using a weakref.proxy for CallContext.request because we need to get a real ref to the request at some point in the tests
-
-commit 4fbfa8109926400c86e09415fd9736400e67dfc7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 18 19:45:27 2012 +0100
-
-    Test the 'division by zero' message in a smarter way so it adapts itself to the python version
-
-commit 09d94eb01a7b70639ebb57c5768fed61a3d6e9cc
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 18 18:57:34 2012 +0100
-
-    Fix the test_enum test (the error message now contains the attribute name
-
-commit eb49f823ad4f02407e93888fae20cbb7179d3c13
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 18 18:25:44 2012 +0100
-
-    Rename WSRoot.transaction to WSRoot._transaction to avoid scan_api failure in some cases
-
-commit 771f30092f2aec2aea05d07a75242a80905cab95
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 18 17:57:58 2012 +0100
-
-    Add a per-call transaction management
-
-commit 3f905d5b1fb91b4456fcfdd54b6b424718653398
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 18 17:57:41 2012 +0100
-
-    Remove an empty file
-
-commit f66ef98ba6d03e69f59922fc4ff6c0cf2095aab0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Jan 4 10:48:07 2012 +0100
-
-    Make the int and long types validation interchangeable
-
-commit 000d35d17706d82e4879d825a5faf957709969ca
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Dec 13 12:46:02 2011 +0100
-
-    Fix dictionnary values validation
-
-commit 5b28cbc5e5e718df059f70b8a2f9e03cab0e78bb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 30 15:29:37 2011 +0100
-
-    Fix: the dict attributes were not registered correctly
-
-commit d61c32e7561ddafceae93b53b681253f54a70159
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 30 15:06:35 2011 +0100
-
-    Now supports dictionnaries in addition to arrays
-
-commit 3bc2746dc23c2ac8da8606dd9ee3401c4f1723d4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 23:22:37 2011 +0100
-
-    Mention the doc in the changes
-
-commit fc94201b0cf6f17e30bd1cf9a7ad0060ad139db5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 23:21:52 2011 +0100
-
-    Document a bit
-
-commit 3f6796f3bbcd1fed0ba66d4160b87b7383f18d3a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 22:35:19 2011 +0100
-
-    Preparing next release
-
-commit 5aa8cf367a9adaf2f9a03033c4ed5a48a037860c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 18:51:31 2011 +0100
-
-    The restjson return values are not nested in the result attribute of an object. The former behavior can be obtained with the nest_result protocol option
-
-commit 4b5d37a32f9bea49c21b31050f17dd7a52e58f54
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 18:41:47 2011 +0100
-
-    Code cleaning (thanks to flake8)
-
-commit 6f5784e516f2f523ce83ab3fe4e7dda9d7f6b602
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 18:34:22 2011 +0100
-
-    Add a setperson function to test complex function arguments
-
-commit 3e49c50db6a5c34afd30fc1e866726e72ac1f4cb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 18:32:51 2011 +0100
-
-    Better handling of function arguments as params (POST or GET)
-
-commit d24ea244a694be924a72d7dfc85347bcb3e55e39
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 18:32:03 2011 +0100
-
-    Don't output Unset values
-
-commit 68890490d8718f9e65f44572cf31013f710cbe39
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 28 18:30:57 2011 +0100
-
-    Fix the named attributes dump in restxml tests
-
-commit fae851ab1bd616562be86cea3b76527d63cd8718
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 23 19:01:03 2011 +0100
-
-    Fix the test_setnamedattrsobj test
-
-commit 9e832dcd707cf3c25b04c3bb5f27ad9ba7981722
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 23 18:54:36 2011 +0100
-
-    Code cleaning
-
-commit 4478e91d942d44b13b41fbba8c57937764cd9aff
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 23 18:53:45 2011 +0100
-
-    Implement and test the named attributes in the rest protocols
-
-commit 075e9be047d315529e954316e722648a4e185862
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 23 18:06:29 2011 +0100
-
-    Add a 'name' attribute on wsattr and wsproperty.
-
-commit d2b90ddd126745e01698257cf0582b00ae663d38
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 23 17:42:54 2011 +0100
-
-    Unset now evaluate as False when converted to bool
-
-commit 8b127d0564d0a349bcfd5aed48a23104e463f431
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Nov 8 13:43:02 2011 +0100
-
-    Add the ShinningPanda jenkins URL
-
-commit 7865f35a98a9787172f9cc31886575d5c4dbf7ba
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Nov 8 13:38:41 2011 +0100
-
-    Fix user types, str and None values encoding/decoding
-
-commit 19e5df51d8dfc6cd55fc0056f809be76f1dbbeee
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Nov 8 13:03:34 2011 +0100
-
-    Fix registering of class inheriting from an already registerd class
-
-commit a0f2c5db5f6eafe2b6252d7b54257c785bb49329
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 7 18:57:23 2011 +0100
-
-    Reproduce a bug when a Child complex type is registered after its Parent (it's not actually).
-
-commit c180ddfd6a01a6d35aa89444b9d3cda9797922f8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 7 12:32:55 2011 +0100
-
-    Fix Unset values validation
-
-commit 03dd583c8d75b2b588079c69b517c2510eba71db
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 7 11:56:05 2011 +0100
-
-    Add 'Unset' to the wsme module
-
-commit 54d74575831ec271baf56a8ac0278844ca622928
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Nov 7 11:10:00 2011 +0100
-
-    Fix parse_[date][time] that were using the Invalid exception from formencode
-
-commit e51a406912cce47f1080d9ece15bc2b9a584fbdd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Nov 2 11:34:18 2011 +0100
-
-    Fix array attributes validation
-
-commit 8d4fa3c8e8feb48226bef2e03b8dcedc3f726aa4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 29 00:24:51 2011 +0200
-
-    updated the todo list
-
-commit 637d3909c3c63b3ed09f11512acfe95a9706c80f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 29 00:18:49 2011 +0200
-
-    Added tag 0.2.0 for changeset cfb5efc624f5
-
-commit 983a4341e6b97e9420080822bb93bf2a1ef41ed9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 29 00:15:02 2011 +0200
-
-    Time for a 0.2.0
-
-commit f93d716e04bb9bacd32e1a1a65df036a70d01975
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 29 00:09:37 2011 +0200
-
-    Documented REST+XML and a bit SOAP
-
-commit b8005e26a77063e2e9a3b1c493c6c95bfd016773
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 23:34:39 2011 +0200
-
-    Document REST+Json
-
-commit 41c2d4a46fac72eff97f6b7cb0793e226cc5414f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 19:41:33 2011 +0200
-
-    More documentation for the next release
-
-commit a1983697c79fd333d0dae8733e2dd47bec05bc88
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 18:19:00 2011 +0200
-
-    Enum now takes values as args instead of a list
-
-commit d867bd92db2cac7da495af580a84161da77ecf32
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 17:45:50 2011 +0200
-
-    binary is now a UserType, which simplify most of the protocols implementation
-
-commit 87f442c872f28e04313eb1d07110ef77a94e0c8c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 17:16:41 2011 +0200
-
-    Now supports user types (non-complex types that are base on native types), the first on being Enum
-
-commit 190faf8e82107ed9ee9b34a00802845b7ec92de7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 12:43:54 2011 +0200
-
-    Documented the ExtDirect protocol
-
-commit 2d70d5656f1f159ef2d5680119f0d04053894b7d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 12:43:28 2011 +0200
-
-    Completed the change list
-
-commit 45016290b4f329f2a3e9c29f3d83cd91f781c0bd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 12:24:15 2011 +0200
-
-    Add type validation on complex type attributes assignment
-
-commit c2354eff9fed8c3a6e4fb16ed6579a74c5a4ba6c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 12:04:18 2011 +0200
-
-    pep8 now likes wsme
-
-commit a06989e1a50b058896d3fcaeed44246902c637ce
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 11:59:30 2011 +0200
-
-    Split the controller module into api, protocols and root.
-    
-    --HG--
-    rename : wsme/rest.py => wsme/protocols/rest.py
-    rename : wsme/tests/test_controller.py => wsme/tests/test_api.py
-
-commit 436dab1b52da67762bd19b0afe8a32e62a44bd4d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 11:34:34 2011 +0200
-
-    Improved the complex type handling by using python Descriptors for attributes. They also carry the attribute name, so that the _wsme_attributes is now a list of wsattr/wsproperty instead of a list of (name, wsattr/wsproperty)
-
-commit a4290c7ae9a5dfa8fbeaf16a20e53e657037f5ab
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 28 09:47:33 2011 +0200
-
-    Bugfix: a complex type used only in validate and never in expose was not registered
-
-commit a05ff59e33a85dff062a00f5815a70bc0e0b84cb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 27 20:00:05 2011 +0200
-
-    The decorators now wrap the exposed function so that children classes can expose the parent functions with different signatures
-
-commit ebd9a27e48518078e0b2f7affb328a636943327d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 25 22:21:18 2011 +0200
-
-    Fix DummyProtocol
-
-commit 625814baba4cab1120463b5836347ba6e82e3cf8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 25 18:04:50 2011 +0200
-
-    Fix: Complex types normal properties were not ignored.
-
-commit 5e4939c4b2c437d1b184c08f5d6367a751b19fed
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 25 13:01:19 2011 +0200
-
-    Completed the change list
-
-commit bf0be392ec49dd64f9ddf4a7c154b4a9f59f3583
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 25 12:56:30 2011 +0200
-
-    Completed the change list.
-    version -> 0.2.0
-
-commit 6e48ce443d94cc2b80a27aa1b7b3a9cac3d9c9db
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 25 12:38:23 2011 +0200
-
-    Protocols can now implement batch-calls
-
-commit b70bb7a04ee1656ab548d8e05122062c3dd5884b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 24 18:05:42 2011 +0200
-
-    Add a function to retrieve an attribute definition of a complex type
-
-commit fd3475a9f3bb5fbf669b0da17cf7d79947541bd6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 24 16:42:54 2011 +0200
-
-    Fix self reference complex type registration
-
-commit bbe98838ffd88c1e411b2527adff71df307e95b7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 22 16:48:15 2011 +0200
-
-    Add a pyramid integration example
-
-commit 6dd2e67a2d80707f6eb7abdbc8ab081daa339916
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 22 16:36:31 2011 +0200
-
-    Add a link to the documentation
-
-commit e8fdc3c341e48c666af71cd741603d0bc847b30c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 22 16:32:11 2011 +0200
-
-    Move the links to the README file
-
-commit 37e2c412479a08d8a61cebb31632a4c13d7f12e4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 22 16:30:01 2011 +0200
-
-    Move the titles to the README file
-
-commit 9ddfc01efb7afa54682cb8c0b89a43b9490bc054
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 22 15:59:24 2011 +0200
-
-    Now read the long_description and the doc introduction from the README file.
-
-commit 259f94d8e8455dcb626336a1844ed04e2f8f533a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 21 18:51:32 2011 +0200
-
-    Fix inspection of classes with inheritance
-
-commit 974885de97dc2e2c40a306c44d93d73829ae7303
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 21 18:42:55 2011 +0200
-
-    The complex types attribute are now reset to 'Unset' when inspected
-
-commit 9ad63122c9fd43a179d1d0dee1acc6b1a37a79a6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 20 15:14:45 2011 +0200
-
-    Add the authentication question to the todo list
-
-commit 2350ccf1bd8530f4ee18a6ec2806b5c9d9368d2c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 20 15:12:16 2011 +0200
-
-    Update to todo list
-
-commit 3db840f0192263fc412a10bfa9681dd44c587bcf
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 20 15:06:36 2011 +0200
-
-    The ziphtml target now zip the doc in _build instead of _build/html
-
-commit d01ed2f6f54f4bc17ece8c211c551e47a037313b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 20 14:59:51 2011 +0200
-
-    Added tag 0.1.1 for changeset c17de432c185
-
-commit b47d7196133542be2d71b4a7bc6259234f3df8bb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 20 14:59:47 2011 +0200
-
-    Prepare the 0.1.1 release
-
-commit 830a1fe941d4de5ecc5c4387891a65d2566e6114
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 20 14:57:03 2011 +0200
-
-    Include the soap client example in the documentation
-
-commit aecf045fb0a76e4afc72efaeb72840af83eb32a1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 20 14:41:08 2011 +0200
-
-    Completed the soap client example now that wsme-soap seems to work
-
-commit 308390bdd15c9a4abc79b567577b160c8e4adfab
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 19 14:37:45 2011 +0200
-
-    Add a dependency on WSME-Soap
-
-commit 65a3953c241cfe5b3c7af8bfd7e32d0e253a59f5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 19 14:21:12 2011 +0200
-
-    Add misc test functions
-
-commit d366efec11167be1b99e92d100d0b161fa6df2ec
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 19 14:13:35 2011 +0200
-
-    Test nested controllers
-
-commit 7bb637acb14c9300e1024ce358371b4905c2b9bf
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 19 13:35:49 2011 +0200
-
-    The function path now contains the function name
-
-commit 66f8a5305fcf7e65ab13eb905857904885d6ac16
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 19 13:18:32 2011 +0200
-
-    Remove the path attribute of FunctionDefinition, since a same FunctionDefinition could appears at different paths in an api tree
-
-commit ced239de1bbe02059da69f77c67af0955f98c0a9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 19 11:43:02 2011 +0200
-
-    Rename list_calls to iter_calls and makes it an iterator.
-
-commit d22a6a9eb3afb18daa9338db633bb1672c35b82c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 18 20:20:13 2011 +0200
-
-    Prepare next release (should be soon)
-
-commit 63e91ba32296b6106068aa1d4e857efd741bc645
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 18 16:56:37 2011 +0200
-
-    Fix the little demo
-
-commit 08ffc0f71c61b72e08bf0327e376b087ca030292
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 18 16:56:25 2011 +0200
-
-    Use addprotocol to that the protocol tests can pass options at instanciation
-
-commit c4605c451653e812de78325002e184cdbd991fa8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 18 16:25:18 2011 +0200
-
-    We now have a CallContext that follows a function execution from the path extraction to the result encoding.
-
-commit 40a6bb296f8975796a6c3ab2bdd666dd71fb3579
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 17 18:11:39 2011 +0200
-
-    Fix the mandatory/default argument properties detection, and make the content-type detection more permissive
-
-commit 5daf8f8a6edd5143e0e9ea05ce64ee3070f5c1d6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 17 16:28:12 2011 +0200
-
-    array attributes were potentially not registered
-
-commit 0befb6d04af8674baa3f04e45e751443a97bd370
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 16 12:52:00 2011 +0200
-
-    Rectify the integration examples
-
-commit ac728ecf93bd8fbfa775ca4636a093cb079f8435
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 15 23:10:57 2011 +0200
-
-    More test coverage + code cleaning
-
-commit 3850d3dffba9ae83e1eb55a0e1b224b7c3a86ca4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 15 21:53:11 2011 +0200
-
-    Fix a test
-
-commit 95d99bce68db47da9dcf6e46ec4f09d5fe92098f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 14 18:23:22 2011 +0200
-
-    add WSRoot members doc
-
-commit 4a5edd7e64e6dd74789e84b3ac43b368e653c125
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 14 18:23:04 2011 +0200
-
-    Update change list
-
-commit 8ac0edf9786e5a39136076853633f6b5be64e9fa
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 14 18:16:04 2011 +0200
-
-    Added tag 0.1.0 for changeset b0019e486c80
-
-commit 15174e8ee40d56399cd08df2863e66d0d53ef75c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 14 18:15:58 2011 +0200
-
-    Going 0.1.0 now that at least 1 application is runnging wsme. We are still in alpha state though.
-
-commit cfd98b8ee449928ea61a415590daf82cdd283a7f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 14 18:14:43 2011 +0200
-
-    Protocols are now stored in a list so that the order is considered when selecting the right protocol for a request.
-
-commit 23b2874cdb60fd83fa2a6f7eb93180c502539b25
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 14 11:53:14 2011 +0200
-
-    expose now takes extra options that can be used by the protocols
-
-commit 4f97494c6ab8614bec86c7d2a3582cee319db3ad
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 13 17:04:10 2011 +0200
-
-    getprotocol now takes the options as named arguments, which make it easier to use from outside
-
-commit 3de7a3a1e755f44ba495725131fcf820f3b87e0c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 13 16:59:34 2011 +0200
-
-    Remove the soap protocol (I am moving it to wsme-soap
-
-commit 05d62db7bd886bef9463a239aa634bb65d84e001
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 13 13:53:31 2011 +0200
-
-    Fix doc
-
-commit 3d150d8ae51e8b8008d7eb27591cff67e467b46d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Oct 13 13:53:02 2011 +0200
-
-    WSRoot.addprotocol now takes keywords parameters and transmit them to getprotocol for instanciating the protocol
-
-commit 288ace4bd6a6088a95924e9d860b18c16f248ca1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 12 23:38:12 2011 +0200
-
-    Update the change list and clean the demo
-
-commit 6c4f15250f409358902b0b6f5f5731c164225b03
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 12 23:33:22 2011 +0200
-
-    Added tag 0.1.0a4 for changeset b38c56a2b913
-
-commit 3f2ad12016b8a4b9e7214aa86bef9beccdf8e9ed
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 12 23:30:13 2011 +0200
-
-    Update the doc and the version number
-
-commit e051877a5a848d432a2e2238696cabfe51c845fd
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Oct 12 23:18:27 2011 +0200
-
-    Protocols are now found through entry points
-
-commit 1bc2b779ebb0161292734a3c592295909e84a41e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 22:51:21 2011 +0200
-
-    Change the way framework adapters works. Now the adapter modules have a simple adapt function that adapt a :class:`wsme.WSRoot` instance. This way a same root can be integrated in several framework.
-
-commit 07e8820e448b226ce7d1177065ebd46cd6b279bf
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 18:18:12 2011 +0200
-
-    Add the todo page to the index
-
-commit 023b2ef293e697c770b7bc3ddcfd871baeccbc89
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 17:34:43 2011 +0200
-
-    Completing the changes list for 0.1.0a3
-
-commit 5fde53734d601e0dcfb8420e92001835e2108ae4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 17:31:22 2011 +0200
-
-    Add a little 'Install' section
-
-commit dc8916968f4087aca70b07a181603d94b4d02207
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 17:29:54 2011 +0200
-
-    Add a ziphtml target for preparing the documentation to be uploaded to pypi
-
-commit 88142393b6b743f342a392518c4e1c5145974a0b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 17:26:33 2011 +0200
-
-    Added tag 0.1.0a3 for changeset 86466da44f44
-
-commit 001764d723a52d94f6cb36d35eb154eec7f20c0f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 17:26:02 2011 +0200
-
-    Add links to the source code and issue tracker
-
-commit 338dfcdd0709c373ed9ee9e65542a9a33f351738
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 17:19:07 2011 +0200
-
-    Make the feature-list clearer and add the mailing list address
-
-commit 30b6a5364dc22261a4d47aec2e0a77e0c5b8ccd4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 16:29:45 2011 +0200
-
-    Update the contact mail and version
-
-commit 22f9ea3d67c4e9723c73ee020ba120b9c4b1a93b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 16:15:13 2011 +0200
-
-    Documented most of the api
-
-commit f3e8a2435bacc6acf201db16578612faff660988
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 14:06:41 2011 +0200
-
-    Improve code coverage of restjson
-
-commit e734bbf2a04429a770430b3df1ca1d7b2d1bad51
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 13:49:57 2011 +0200
-
-    Improve ClientSideError interface + raise wsme.exc coverage to 100%
-
-commit fe12f239e52330985e688822e57de41a5e247dec
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 13:30:02 2011 +0200
-
-    wswe.controller code coverage is back to 100%
-
-commit 4ce24d6b5c4c633ca8dd21e5579ca9881aa699c3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 12:51:47 2011 +0200
-
-    More code coverage, and fixed a bug with wsme.wsgi.WSRoot.clone
-
-commit bc420e6316f9ebeedbeb0827aee9da495157f8e8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 11:35:01 2011 +0200
-
-    More documentation
-
-commit 6973868bd3b1c1aed7fbe8e02a89fcc30c2840fa
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 11 11:08:10 2011 +0200
-
-    Add a WSGI adapter
-
-commit e16ae8e34a57e72e96090dacdef4f650f87ec472
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 10 23:13:41 2011 +0200
-
-    Added an adapter for TG1
-
-commit c6688c93e073bbe7b849dd1033734953cb5dfd81
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 7 22:57:35 2011 +0200
-
-    Added tag 0.1.0a2 for changeset 0eae00db9384
-
-commit 6313fd8a1001997a9ee7a80033176a13e487caa7
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 7 21:51:23 2011 +0200
-
-    Prepare a new release
-    
-    --HG--
-    extra : rebase_source : ca48d7b8a44501bdb0087b7ba5a27fc58e5d4da7
-
-commit 5ff7cc9d31d228c04bebf91d068209e101f16a6e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 7 15:52:44 2011 +0200
-
-    Cleaning my test
-
-commit 32d909a2086511322f7f28576fcc5e70a8389ca8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 7 15:16:21 2011 +0200
-
-    Add arrays support in soap
-
-commit dba4451f747fa0aa92157b9734e7a34ba0a9a31f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 7 13:21:23 2011 +0200
-
-    Add array support to restxml
-
-commit cbd645fb7b1bdd926cc5452d997a217b248d6f6e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Oct 7 13:14:42 2011 +0200
-
-    Add array support to restjson
-
-commit ca4f5d9e644752abe850c4fc22e9db0902ec8a1d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 4 21:50:01 2011 +0200
-
-    Added tag 0.1.0a1 for changeset 2bd203a084dc
-
-commit 2c81354ba3b3954649c1f511578509c2f0455808
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Oct 4 21:48:38 2011 +0200
-
-    Going 0.1.0a1
-
-commit 13ecee4fb9d1ca69c53cb2b73256dd4d4fc51e13
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Oct 3 16:44:51 2011 +0200
-
-    Fix README filename
-    
-    --HG--
-    rename : REAME => README
-
-commit 393c1fefcf27c12a2914102294df24381a04f2d1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 2 22:05:41 2011 +0200
-
-    Add a reame file
-
-commit bbdc711ce00e6a22dcf7da10413e7c62e2f2687b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 2 22:03:53 2011 +0200
-
-    Completed the packaging, we should now be able to do an alpha release
-
-commit bb94db2f0fc03493540cddf35ffb3d02c7098010
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 2 21:45:41 2011 +0200
-
-    Documenting
-
-commit 9b5e130c8779e40a6828a5a289e20235ee8ca525
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 2 21:36:17 2011 +0200
-
-    Add a setup.cfg
-
-commit 459b2fe099400822cefc09e85ccafa2c7220c41b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 2 21:34:05 2011 +0200
-
-    Completing setup.py
-
-commit 088a28f79b163066106a9968530ca17f05e21e44
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Oct 2 21:30:57 2011 +0200
-
-    Initial documentation
-
-commit 843c6a3d0f04c73d737c8e236c5ded245797607c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 1 20:16:57 2011 +0200
-
-    Move the protocols to a dedicated module, and their activation more explicit
-    
-    --HG--
-    rename : wsme/restjson.py => wsme/protocols/restjson.py
-    rename : wsme/restxml.py => wsme/protocols/restxml.py
-    rename : wsme/soap.py => wsme/protocols/soap.py
-    rename : wsme/templates/__init__.py => wsme/protocols/templates/__init__.py
-    rename : wsme/templates/fault.html => wsme/protocols/templates/fault.html
-    rename : wsme/templates/soap.html => wsme/protocols/templates/soap.html
-    rename : wsme/templates/wsdl.html => wsme/protocols/templates/wsdl.html
-
-commit ffd8758b90819059dd1fdbdde1f8f189a9c7c07c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Oct 1 14:15:44 2011 +0200
-
-    completed the setup informations
-
-commit a08a53a1c499f0ba1395d430dabbca3913b6a7ab
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 26 10:42:22 2011 +0200
-
-    Made the demo work with suds
-
-commit 446d1489d7f9c9b7e5b69fafcbd79108db5f94d5
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Sep 25 21:24:07 2011 +0200
-
-    Add a complex type to the demo
-
-commit 7f50ca6d385b7bcc204bbee08a60ed917f667088
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Sep 24 22:49:59 2011 +0200
-
-    Add a small soap client for the demo app, so that we can see the wsdl generation is _not_ working properly... to be continued
-
-commit d24f84d940e9d752b0cdcd40a4e62fc2bf36da95
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Sep 24 22:41:24 2011 +0200
-
-    Adapt the rest xml tests
-
-commit 44e86b5cb44058a526ed3dbb587e9068af135889
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Sep 24 22:21:03 2011 +0200
-
-    Adapted the restjson tests to the changes I made for the soap tests
-
-commit d9b7e4ef5dc8498e72e88bfe2af12d7cc5ff832a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sat Sep 24 22:04:45 2011 +0200
-
-    The soap test case now fully pass. We are getting closer to a working implementation, but I think I messed up the namespaces.
-
-commit 6706ff4ee8d2e43105dce1eb6c14fadc39dcd3aa
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 21:12:11 2011 +0200
-
-    Start implementing a 'fromsoap' set of functions
-
-commit 1c4646edd95fb5635407130ee2adcbda5724a15d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 21:03:10 2011 +0200
-
-    A few more fixes on tests and return values in soap before diving into arguments feeding
-
-commit 64886dd161d9455b3dc645ad2a5da008acbffa4c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 20:42:47 2011 +0200
-
-    Missing arguments are now detected by the controller
-
-commit 66c34fe9357e6caec0afa4b2b472cdc0468be44f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 20:42:07 2011 +0200
-
-    Fix a few tests
-
-commit 480dba7bdb28b89710debf365a25099236fd20d0
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 20:33:10 2011 +0200
-
-    A few utility functions
-
-commit 95a48f4596cdde4386c2cf4c0b5c9229267f330a
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 20:32:54 2011 +0200
-
-    Most of the return types now works with soap
-
-commit 0125de0a79d99e6dcd9f7b90ea7a67718ba367eb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 17:48:33 2011 +0200
-
-    Making progress on the soap implementation. Will have to choose between Genshi and ElementTree though, it is getting anoying to juggle with both
-
-commit 7343e158e61d5bfd2ae7204035e1d4bc39b90c64
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 14:43:02 2011 +0200
-
-    Adapt the rest protocol implementation to the changes I did for the soap protocol
-
-commit ec0eaa163605ffd8e2eb30f0dec1a4990a8b5625
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 13:18:10 2011 +0200
-
-    Working on the soap protocol
-
-commit 6dfbe90429d7afd68c556f8c67b5c4c1188b5ac9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Fri Sep 23 10:37:44 2011 +0200
-
-    Fix a few dummy errors
-
-commit b5eaa27a9aea7b5a5b13d0fd0f3dbfe8e523cfbb
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Sep 22 23:29:57 2011 +0200
-
-    Worked on the wsdl generation. It looks like it should although it lacks the basic types handling and arrays definitions
-
-commit 2f08df38b976c08816f7901ef553189271c19d4c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Sep 22 17:49:22 2011 +0200
-
-    Embedded the wsdl genshi template from tgws + start testing the soap protocol
-
-commit 5ca78e896f507cfffec9171f0a5a9997ee0e1e09
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Thu Sep 22 17:04:33 2011 +0200
-
-    Start working on the soap protocol
-
-commit 732626c17655d2de1be01211e350320bf2f2c361
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 22:25:11 2011 +0200
-
-    PEP8fying
-
-commit 3a2280bd6a9bea9fbf3ab3c2eb5b4cee3b198e99
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 22:20:50 2011 +0200
-
-    Move as much as possible the request handling code out of the protocol
-
-commit b3c35012553bfefade57b038cb737086ff3599f1
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 19:12:57 2011 +0200
-
-    One can now test the rest api with a web browser
-
-commit e3abb2ed806f1df8500bc31096d8d525caa08be9
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 17:52:59 2011 +0200
-
-    Share more code between restjson and restxml
-
-commit cbfd17491f3442809bdf668e5f917dad45e00194
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 17:18:41 2011 +0200
-
-    Fix some issues with encoding
-
-commit 585c6d703f194476274fd1a54a3e7a5af2210374
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 16:55:29 2011 +0200
-
-    Add a small demo, and fix a few problems
-
-commit d77a4ef8a03fbc135ce4bb914d97514e8693303d
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 15:10:38 2011 +0200
-
-    PEP8 compliance
-
-commit aa67f1df5fc57584cbd06187af0623a7a59d4ae3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 15:09:38 2011 +0200
-
-    Most of the types now works as argument and return type in rest+xml and rest+json
-
-commit 9ffba71b368e8e58cd81c4c07e60c9f3dfc1405f
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 13:59:16 2011 +0200
-
-    PEP8 compliance
-
-commit db326ab2eac540dc4e1322cc65b1eb24a2aa1e53
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 13:53:12 2011 +0200
-
-    Handle binary and decimal return types
-
-commit 0df7044bf2c697fe87ea82e4e82ae8895c7fa4a6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 13:39:54 2011 +0200
-
-    Use generic to prepare the json output so that non-structured custom types can be added
-
-commit 215ed15db531698063a88f848d0a9a0709bacf6e
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 13:31:38 2011 +0200
-
-    rest+xml now handle the basic return types
-
-commit 70f576e9012a919ec6ec7ec7894625ef87356fca
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Wed Sep 21 12:23:28 2011 +0200
-
-    Add unittests for rest+xml
-
-commit e48d4311c0a35365ef50ddb22f188d7170d60d92
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Sep 20 20:11:42 2011 +0200
-
-    Continue working on the rest-xml tests and implementation +  changed the RestProtocol interface
-
-commit e96235f73a08d07bd31430f3344f9fdda01e24bc
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Sep 20 17:46:42 2011 +0200
-
-    Start working on the rest-xml tests and implementation
-
-commit c1ff76f17bd4865a25cf4ba75d87e50f3ab4c4ab
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Sep 20 16:26:52 2011 +0200
-
-    better testing (+ fixes) of sort_attributes
-
-commit 7ccf51bb988b0d62c4eb175a3157f36e5641f2c3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Sep 20 13:24:19 2011 +0200
-
-    test & fix the forced attribute order feature.
-
-commit 9f9c15cae3211e8052e9eb973689f21093888b0b
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Sep 20 13:21:29 2011 +0200
-
-    pep8
-
-commit ee40938d6450a7925528d0969c24ef327541d2df
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Sep 20 12:28:15 2011 +0200
-
-    Structured types basically work with rest+json
-
-commit 8fe674922f7529837bda8886ca08aaff46469717
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Tue Sep 20 09:26:45 2011 +0200
-
-    Rename AttrDef to wsattr, and introduce wsproperty
-
-commit d66f1fd8740eb814a7c05c458e4ea4fa8c19aae4
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 19 23:27:24 2011 +0200
-
-    Implementing the structured types inspection
-
-commit eebff1a28a85d966c6762d19da444be4ca1fc715
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 19 22:39:02 2011 +0200
-
-    Start working on the non-trivial types handling
-
-commit cc4dd1cbf8ce958b6313d019a1b35c00ae24d63c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 19 22:14:37 2011 +0200
-
-    rename WSRoot.debug to WSRoot._debug to avoid an infinite recursion when scanning the api (which will need a better implementation anyway)
-
-commit b58a91658859cfc612e982ae229fa05f2265d604
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 19 19:54:32 2011 +0200
-
-    Continuing the rest+json implementation
-
-commit 26d64e5f15f3f51184ff6b6566dc835c333ac6c3
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Mon Sep 19 18:52:54 2011 +0200
-
-    the rest+json protocol starts to work with basic return types
-
-commit dbb730072325c5ccfdea50a0ffc2bcb2961601c3
-Author: Christophe de Vienne <cdevienne@alphacent.com>
-Date:   Mon Sep 19 10:24:56 2011 +0200
-
-    Lowercased the project name
-
-commit 3fa27294debc2440b67599fb98d6e744d64941a6
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Sep 18 22:19:38 2011 +0200
-
-    Start implementing the rest json proto
-    
-    --HG--
-    rename : wsme/tests/__init__.py => wsme/tests/protocol.py
-
-commit e8129df805acd0f13a8c1832d10dbafddc3021f8
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Sep 18 21:48:06 2011 +0200
-
-    Completed the register test so we have 100% of test coverage
-
-commit 61e5980636e2223f0f93c20b7fa41da92ff6388c
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Sep 18 21:43:51 2011 +0200
-
-    Renamed EWS to WSME because ews is already taken on pypi
-    
-    --HG--
-    rename : ews/__init__.py => wsme/__init__.py
-    rename : ews/controller.py => wsme/controller.py
-    rename : ews/rest.py => wsme/rest.py
-    rename : ews/restjson.py => wsme/restjson.py
-    rename : ews/restxml.py => wsme/restxml.py
-    rename : ews/soap.py => wsme/soap.py
-    rename : ews/tests/__init__.py => wsme/tests/__init__.py
-    rename : ews/tests/test_controller.py => wsme/tests/test_controller.py
-
-commit 127a245d7e0c3bf96e0f69e31281c13427324567
-Author: Christophe de Vienne <cdevienne@gmail.com>
-Date:   Sun Sep 18 21:37:40 2011 +0200
-
-    A first working implemetation for the core controller code
+CHANGES
+=======
+
+0.6
+---
+
+* Add 'readonly' parameter to wsattr
+* Fix typos in documents and comments
+* Support dynamic types
+* Support building wheels (PEP-427)
+* Fix a typo in the types documentation
+* Add IntegerType and some classes for validation
+* Use assertRaises() for negative tests
+* Remove the duplicated error message from Enum
+* Drop description from 403 flask test case
+* Fix SyntaxWarning under Python 3
+
+0.5b6
+-----
+
+* Add changes entry for 0.5b6
+* json: convert value to string before encoding
+* Run Flask tests by default
+* Validate body when using Pecan
+* Remove MANIFEST.in
+* Return a ClientSideError if unable to convert data
+* Add custom error code to ClientSideError
+* doc: remove useless validate import
+* Enable and fix Sphinx tests
+* Handle [] {} for body in rest protocols
+* types: fix error return when None is in Enum
+* Add a test environment against pecan's development (master) branch
+* pecantest: remove useless config.py
+* Include Pecan tests in default Python environment
+* Add a test case for wsattr default
+* Handle mandatory attributes
+* Remove various usage of sys.exc_info()
+* Minor code cleanups
+
+0.5b5
+-----
+
+* update the b5 release date
+* Add improved support for HTTP response codes in cornice apps
+* Remove version number from setup.cfg
+
+0.5b4
+-----
+
+* Update tox config to allow packaging jobs to work
+
+0.5b3
+-----
+
+* The cornice adapter will not make it in 0.5b3
+* Completed Changelog
+* Add improved support for HTTP response codes in TG 1.x apps
+* Add improved support for HTTP response codes in flask apps
+* Require the ordereddict package for py26
+* pep8 fixes, including a declaration in tox.ini for running flake8
+* Remove py25 and add 26 support to tox
+* Remove a deprecated flag from tox.ini
+* Changelog for version 0.5b3
+* Fix BaseMeta with six >= 1.4.0
+* Fix for returned status code and .gitignore
+* Add a py33 tox target
+* Fix attributes sorting based on source code
+* Sort set in type exception
+* Switch to pbr
+* Setup a .gitignore file
+* Fix a little syntax error
+* Update README and package metadata to reflect gerrit review process
+* Add .gitreview file
+* Merged in sileht/wsme/sileht/unicode-clientsideerror (pull request #16)
+* Support unicode message in ClientSideError
+* Fix issue #11 in the pecan adapter
+* Add a unittest to reproduce issue #11
+* Require a python2.5 compatible version of Jinja2
+* The Response object can now carry error details. Not sure about this though, it needs refinements
+* Fix inner null objects in the extdirect protocol
+* Fix returning objects with object attributes set to 'None'
+* More --nologcapture to run tests so that suds does not get in the way
+* use --nologcapture to avoid a nasty failure when suds do some logging
+* Use assertEquals so we see what is the wrong value if any
+* Merged in asalkeld/wsme-2 (pull request #15)
+* Test changing the default status_code in pecan
+* Add a test to make sure we can use the Response from pecan
+* Change version to 0.5b3 (may change to 0.5 directly)
+* pecan: Make it possible to use the Response to return non-default status codes
+* Added tag 0.5b2 for changeset d3e5eee0b150
+
+0.5b2
+-----
+
+* Prepare next release
+* Install mini-doc now use pip
+* wsmeext.cornice now handle errors properly
+* Tests cornice resource
+* Include missing files
+* wsmeext.cornice.signature can now decorate resource class methods
+* Pecan adapter: Debug mode (which returns the exception tracebacks to the client) can be enabled by the pecan application configuration
+* Explicitely ignore the routines when scanning a class
+* Fix a problem when a complex type has a 'attr' attribute, due to the DataHolder __slots__ list construction, which leads to a DataHolder having a wsattr
+* Please flake8
+* Changed the way datas of complex types are stored. In previous versions, an attribute was added to the type for each attribute, its name being the attribute name prefixed with '_'
+* Allow a wsme.types.Base child class to override the default 'wsattr' class by having a __wsattrclass__ class attribute
+* If dateutil is present, dateutil.parser is used to aparse the iso dates
+* The rest encodings now use the parse_iso[date|time] functions of wsme.utils
+* Fix ClientSideError constructor
+* The cornice adapter now handle the url matched parameters
+* Fix the ClientSideError constructor so that it is propertly displayed in the backtrace
+* Small documentation improvements
+* Use a cyrilic unicode sample in the demo instead of japanese so that the pdf build is easier
+* Add a chapter on the use of HostRequest
+* Improve the documentation
+* Add the last change to the changelog
+* Move the missing argument verification in a wsme.runtime module so that it can be used in all adapters
+* Move the function documentation code to a separate function
+* A new HostRequest type can be used to have the host framework request object passed to the exposed functions
+* Create some (incomplete) tests for the cornice adapter and fix it
+* Add tests and fix check ordering in flask.py
+* Backed out changeset d6facd75c051
+* Fix typo
+* Fix typo
+* Re-iterate status_code code
+* Merged cdevienne/wsme into default
+* Document the Flask adapter
+* Fix array parameters support in the Flask adapter
+* Fixup support for content types in other places then Headers
+* Support override of response format via request.dataformat
+* Add support for passing status_code or getting it from request
+* Fix the way the TG adapter calls wsme.rest.args.get_args
+* Fix the way the pecan adapter calls wsme.rest.args.get_args
+* Various fixes for the flask adapter
+* Add more tests
+* Downgrade webtest for tg11 and tg15 tests that are python2.5 based
+* Readd webtest for python 3
+* More python2.5 workaround
+* Workaround issues with python2.5 environment tests
+* Fix the serverside error test
+* flask is now part of the default test suite
+* Test & fix Server-side errors
+* Flask simple call now works
+* Remove ipdb
+* New flask adapter + test (run "tox -e flask" to test)
+* update the Changelog for next version + update version number
+* Fix a bug when the only parameter of a function is a 'body' parameter
+* Add a test to reproduce the bug reported by Endre Karlson
+* Add a test for the body= parameter of wsexpose
+* Re add the dev and build tags on version
+* Don't use the validate decorator in the first-page example
+* Remove the WSME-Soap dependency
+* Add missing modules to the packages list
+* Made the summary shorter (see issue #6)
+* Add a google analytics id
+* Added tag 0.5b1 for changeset 359199eb4e09
+
+0.5b1
+-----
+
+* Merging a dead branch (messed up with 'amend'
+* Merging a dead branch (messed up with 'amend')
+* Merging a dead branch (messed up with 'amend')
+* Merging a dead branch (messed up with 'amend')
+* Merging a dead branch (messed up with 'amend')
+* Merging a dead branch (messed up with 'amend')
+* Update the changelog and add a requirements file to give readthedoc a try
+* amends 9c4e1f9a0c129cbb690bdd0459530c793aa3273b
+* Document the tg1x and cornice adapters
+* Document the tg1x and cornice adapters
+* Start documenting the new integration approach
+* Rewrite a bit the introduction text
+* Now use the awesome 'Cloud' sphinx theme
+* Do not test py25 with std json
+* Do not test py32 with sqlalchemy 0.5 anymore
+* Update the dependencies in the documentation
+* Don't install wsme-sqlalchemy and wsme-extdirect to build the doc anymore
+* Fix a python3 w/o lxml issue with binary serialization in the soap protocol
+* Merged in wsme-sqlalchemy
+* Add missing dependencies
+* Now use toxgen to produce the tox.ini file
+* Add missing __init__.py in wsmeext.tests
+* add tests for file property of File
+* fix binary type tests for python 3
+* add tests for file types and fix a python 3 issue with handling files coming from fieldstorage objects
+* add tests for weakref conversions for type references
+* test invalid float values
+* add tests for binary encoding and decoding
+* add tests for ArrayType validation
+* amends a32bd89f8984b13f22a9fe5b66b881c91308e459
+* tox -e doc now produce the zipped html documentation too
+* tox -e doc now produce the zipped html documentation too
+* Tell about the __body__ parameter in the changelog
+* Fix the wsmeext.sphinxext module name
+* Fix the wsmeext.sphinxext module name
+* Add a 'doc' testenv that builds the documentation
+* Add a 'doc' testenv that builds the documentation
+* Complete the changelog for version 0.5b1
+* Complete the changelog for version 0.5b1
+* Set version to 0.5b1
+* Set version to 0.5b1
+* Use nosetests --with-coverage instead of coverage run for testenv that tests wsmeext submodules (I have issues with the namespace module)
+* Simplify __body__ extraction from params
+* Fix unicode values read from json input on python 2.5
+* Don't read the body if content_length is 0-like
+* Choose float values that have no rounding issue on python 2.5 for the float multiplication test
+* Python 3 compatibility
+* Rename the body argument to __body__ in tests + now tests for request body single argument
+* Now rely on wsme.rest.args to parse the parameters, which avoids a lot of code duplication
+* Now handle __body__ parameter, which needed to add a mimetype parameter to the different args_from_* functions
+* amends 1ea5bc68101a7f4075553df49fe58ba0b250316b
+* Add a test for multiply exposed functions
+* Add a test for multiply exposed functions
+* Don't use assertIn as it is supported from python 2.7 only
+* Use assertEquals(a, b) instead of assert a == b
+* Moved non-core features to the wsmeext namespace package
+* Pecan adapter is now at 100% of code coverage
+* Fix code coverage for pecan tests
+* Improve code coverage for the TG 1.5 adapter
+* Code cleaning + better code coverage of the TG1.1 adapter
+* Show missing lines in coverage reports
+* Now generate coverage reports for individual testenv
+* Fix the tg 1.x tests
+* Ignore all the tests reports
+* Merged in cmcdaniel/wsme/empty_strings3 (pull request #11: restxml empty string fixes)
+* Fix Python 3 compatibility
+* restxml empty string fixes
+* Merged in cmcdaniel/wsme/json_strictness (pull request #8: rest protocol detection: test Accept header first; use startswith for Content-Type match)
+* rest protocol detection: test Accept header first; use startswith for Content-Type match
+* Merged in cmcdaniel/wsme/bool_fromsoap (pull request #7: Handle bool from xml properly; add setbool and getbool unit tests.)
+* Handle bool from xml properly; add setbool and getbool unit tests
+* Add a new parameter 'ignore_extra_args' to the @signature decorator (and its frontends @wsexpose)
+* Fix the TG 1.x adapters, the resquest.params are now needed by the get_args function
+* Now supports non-indexed arrays of objects as GET parameters
+* Fix array as input GET parameters in the pecan adapter
+* Update the changelog
+* Mention the additional protocols in the intro
+* Better mentionning of the framework independance
+* Merged in dhellmann/wsme-sphinx (pull request #5)
+* Move the check for an empty body up
+* Add samples_slot option to TypeDocumenter
+* Fixes for sphinxext
+* Add sample() method to ArrayType and DictType
+* Roll back previous change to the root XML tag name for sample data
+* Copy properties to decorator
+* Fix error handling tests for pecan
+* Add a test for client-side errors
+* Allow adapters to use the format_exception function, and use it in the Pecan adapter. /\!\ the response status is not properly changed by the decorator yet
+* Allow the method autodocumenter (.. autofunction) to work without a Service parent (ie without a WSRoot). Added the path & method parameters that NOT considered for now
+* PEP8
+* Update datetypename() to work with DictType and ArrayType instances
+* Merged in dhellmann/wsme-validate (pull request #2)
+* show the docstring for a type before the formatted sample values
+* use tag name 'result' for sample data to match data returned by services
+* tighten up validate_value logic and allow string promotion to integers
+* ignore all coverage output files
+* restrict the types that can be promoted to float
+* ignore emacs temporary files
+* Fix samples for functions parameters and return types
+* Fix xml & json samples by autotype
+* resolve types in pecan.wsexpose. It is a temporary solution
+* resolve types in pecan.wsexpose. It is a temporary solution
+* Merged in dhellmann/wsme-validate (pull request #1)
+* Fix the encode_result call
+* allow type promotion to float
+* Use the new encode_result functions of the rest encoding modules
+* Add unittests for returning array and dict of objects as attributes
+* Add unittests for returning array and dict of objects as attributes
+* Fix the __eq__ operator for ArrayType
+* Fix the __eq__ operator for ArrayType
+* Remove useless imports
+* Remove useless imports
+* Adapter for turbogears 1.1
+* Adding a tg 2.1 test case (not enabled for now)
+* Reorganise the tg1x adapters, and make the tg 1.5 adapter able to handle multiprotocol on 'native' rest
+* The tg1 adapter can now expose rest functions outside the WSRoot _and_ enable other other protocols. Soap is tested
+* Change the scan_api interface. It now yield the original function and static args (typically the 'self' attribute). Thanks to that the lookup_function method of WSRoot can access functions outside the WSRoot
+* Fix the module names
+* args_from_body now ignore empty bodies
+* Python <2.7 compat
+* Python 3 compat
+* Remove the parse_arg tests (parse_arg does not exist anymore), fix the json nest_result option handling, and fix the encode_sample tests and implementations
+* Rework the rest implementation. We now have a single protocol that can manupulate different dataformat thanks to the helpers provided by the xml, json and args modules (which will be used by the adapters too). Some corner cases still don't pass the unittest, and some code cleaning is required
+* Add a test for the pecan adapter
+* Move around the REST implementation : wsme.protocols.commons -> wsme.rest.args, wsme.protocols.rest -> wsme.rest.protocol, wsme.protocols.restxml/json -> wsme.rest.xml/json, wsme.protocols.__init__ -> wsme.protocol
+* Start working on a better tg 1.1 integration. Need to rework the rest implementation to make it easier (especially the body parsing)
+* Don't use wsme.release anymore
+* Change version to avoid dependencies problems in the CI
+* Make DummyProtocol inherit from Protocol because it now needs a 'iter_routes' function
+* wsme.protocols.expose now accept templated paths, and can expose a single function several times
+* Introduce a new decoratore wsme.protocol.expose, which replaces the clumsy former pexpose
+* Reorganise the decorators. expose and validate are now in wsme.rest, and ws.api.signature becomes the raw decorator to declare a function signature. Got rid of the 'pexpose' decorator, which will be replaced later by a better way
+* The pecan adapter is now tested
+* Make json the default format
+* Rename WSRoot.scan_api to WSRoot._scan_api to avoid infinite recursion by scan_api
+* Start working on adding protocols when used as a cornice complement
+* Cornice extension: Fix function args preparation, and choose the renderer based on the 'Accept' header
+* Adapter for cornice
+* Split get_args in several functions to make adapters implementation easier
+* Add a paramter 'multiple_expose' to the expose decorator
+* merge
+* Added tag 0.4 for changeset f06e004ca8e4
+
+0.4
+---
+
+* Add a test for one item long text arrays
+* Get WSME version from the package, not wsme.release
+* Update the changelog
+* Fix the sample include line numbers
+* Remove the b1 tag, 0.4 is about to be released
+* Move the imports to avoid cross-import problems (all this needs some rework)
+* Add a default value to FunctionDefinition.body_type
+* Rest protocols can now take parameters from url + a parameter from the body by adding a parameter body= to expose()
+* Add an adapter for pecan
+* Add a helper function for adapters that need to convert a function arguments
+* Get rid of the function wrapper. The only case it was needed is for exposing a function several times, but this case can be handled differently. I may reintroduce it as an option
+* Introduce a new decorator: 'sig', which combines expose and validate in a single decorator
+* Now use six.with_metaclass to create the Base type in a python 2/3 compatible way
+* spore.getdesc does not take a request anymore but only the host url (it makes the tests simplier)
+* Add a little demo of a SPORE client to call a function of the demo program
+* Fix the spore 'base_url' attribute
+* Fix the request headers log
+* Test SPORE crud function descriptions
+* Python 3 compat
+* Fix the spore test, as some functions were added by restjson
+* Initial implementation of SPORE description of the api (fetch /api.spore to get it)
+* Fix test_default_usertype
+* Test text to bytes auto-conversion
+* text and bytes attributes now convert values from/to bytes/text when needed (ascii only conversion)
+* Remove the now useless test_release (the release module was removed)
+* Still need to specify the requires int the setup.py, as d2to1 does not seem to handle python_version dependant metadata
+* Now using d2to1, which simplifies a lot the setup.py
+* Added tag 0.4b1 for changeset 5ad01afed877
+
+0.4b1
+-----
+
+* Update the change log (preparing release 0.4b1
+* To avoid any array or dict duplication, use set() instead of list() for the registry array_types and dict_types attributes
+* Fix ArrayType __eq__ operator so that array types are not duplicated in the registry
+* Add more list corner cases to test the soap behavior with empty arrays
+* Allow 'None' to be set on an Array attribute
+* Mention the new wsme.types.Base type in the changelog
+* Fix the demo so that we can use the soap client again, and changed the function names in the client (the soap function naming scheme just changed)
+* Fix the array and dict registering. The register() function has to be rethought, as resolve_type is doing more, and the ArrayType and DictType are in the game
+* Mention the wsme.wsgi replacement by wsme.WSRoot.wsgiapp in the changelog
+* Python 3 compatibility
+* Fix the Enum constructor, and document the change
+* Documents the File type
+* Rename FileType to File, and make it a complex type instead of a native one
+* Rest protocols should now accept multipart/form-data posts (see issue #4)
+* New type: FileType. Supports file inputs in forms + documents and demonstrate it in the demo. Should solve issue #4
+* Mention wsme.types.Base
+* The Base type for complex types now has a constructor that takes attribute values as kwargs
+* Now use WSRoot.wsgiapp() instead of wsme.wsgi.adapt()
+* Change the wsgi example to match the new way of obtaining a wsgi app from a WSRoot. Add a bottle integration example
+* completing the wsgiapp docstring
+* funcproxy now copy the function name
+* Remove the wsgi adapter, it is now a function on WSRoot
+* Fix a problem with protocol specific paths
+* Rest protocols now make use of the http method to select the function is needed
+* Use request.content_lenght to check for a request.body existence before accessing it
+* Little english mistake fix
+* resolve_type now always returns regular datatypes, never weak refs. Generally speaking weakrefs should remain inside the registry
+* Registry.lookup does not return weakrefs anymore. resolve_type does it instead
+* Python 3 compatibility
+* Adapt tests and fix remaining issues with the list/dict handling changes
+* Fix various bugs revealed by the soap unit tests
+* Improve dict and array types handling by introducing DictType and ArrayType. Nested structures should have a better behavior
+* Fix the list of complex types handling (dicts are not ok yet, and lists still not complet imo)
+* Test attributes which are lists of complex types
+* Got lost in metaclass __new__/__init__ choice. Yet another attempt using both (needed by wsme-sqlalchemy)
+* My last commit was a mistake : it is better to use __new__, so that the class registering is done the later
+* Use the metaclass __init__ instead of __new__ so that the class inspection occurs later, making it possible to add attributes in a sub-metaclass __new__ of __init__
+* Use py2 & py3 compatible metaclass
+* Attempting a on-demand resolution of datatypes references, so we don't need to call resolve_references anymore. It works with python 2, but not yet python 3 (some weakref issues)
+* Add a type Registry. It mainly allow to have easy cross-referenced types by setting the attribute datatype to the class name instead of the class instance. It may allow to have separate registry for different apis in the future
+* Update the demo to reproduce issue #3
+* Completing the Changelog
+* Add a test for unset attributes
+* Add tests for the sphinx extension, raising the total coverage over 95%
+* Fix Unset attributes serialisation
+* Reproduce a bug with unset attributes serialisation to xml
+* Introduce an adapter for tg 1.5 + unittest. It needs more realistic tests though
+* Add a b1 version tag
+* Now test the tg1 adapter
+* Improve code coverage
+* Simplifie the tox steps (no need for an initial clean)
+* Now cover wsme.protocols.__init__
+* Now tests wsme.release
+* restjson is now 100% covered by tests
+* Add --show-missing to the coverage report
+* Add wsme.tests to the egg dist
+* merge
+* Set version to 0.4, and update the documentation
+* tox now combine code coverage results
+* Point to the jenkins general dashboard instead of the wsme job
+* Make the webob requirements more precise depending on the python version Add Python 3.2 to the classifiers
+* webob 1.2b4 is not out yet..
+* Require the latest WebOb for python 3
+* Completed the python 3 port
+* Python 3 port in progress
+* Remove debug print statement
+* Fix the binary type decoding
+* Clarified the bytes/text types handling. Now all the restjson tests pass on python 2 and 3
+* The syntax is now python 3.2 compliant. A lot of tests still fail, I need to rethink how unicode / non-unicode are handled
+* Remove a debug print statement
+* Porting restjson to Python 3.2 (in progress)
+* Python 3.2 port
+* Python 3.2 port
+* Python 3.2 compat
+* Python 3.2 compat
+* Reduce the default envlist
+* test_types unit tests now successfully pass under python 3.2
+* Added a tox configuration file to ease the python 3 port
+* Fix the README.rst filename
+* Correct a sentence
+* Change a bit the short description to make it more explicit
+* Add a link to the Changelog in the main description
+* Update the TODO list
+* Adding the precise Python versions and implementation classifiers
+* Add a missing indent
+* Make the examples more compact
+* Remove the .. highlight:: directives to remains plain-rst compatible
+* Attempt a rename of README to README.rst to force bb rendering
+* Add a small code sample at the very beginning of the documentation
+* Added tag 0.3 for changeset 603c8586b076
+
+0.3
+---
+
+* Preparing the 0.3 release
+* Update the changelog
+* The function documenter now add parameters and return value samples
+* Reached 100% test coverage of wsme.utils, which makes an overall coverage of 98% for the wsme module
+* wsme.types is now 100% covered by unit tests
+* Slightly improve wsme.root coverage
+* Fixed nil date/time decoding from xml
+* restxml now has a decent code coverage
+* simplejson and native json dumps formated output behave differently. Adapting the unittest that depends on it
+* More tests and coverage
+* Now check for unknown arguments in request params
+* Enable code coverage by default
+* Improve wsme.protocols.rest code coverage
+* 100% test coverage for wsme.protocols.commons
+* Improve detection of double-exposed functions + added a unittest
+* Improve documentation on types
+* Mention toggle.css and toggle.js installation in the documentation
+* Change version
+* Update the sentense about Sphinx integration features
+* handle_signature should return a value
+* Start implementing xref on types
+* Remove debug print statements
+* Implements webpath and namespace detection
+* The service directive now handle a namespace
+* Now auto document the function parameters
+* Document a bit the sphinx extension
+* The sphinx ext is now able to basicaly autodocument the functions (just retrivieve the docstrings for now
+* load wsme/release.py in a python 3 friendly way
+* Now add data samples for the wanted protocols on the data types
+* Introduce a Protocol base class, and add a method to render a sample data (used by the documentation tool)
+* Use the agogo theme options instead of overloading the css
+* Re-put the agogo theme (sphinxdoc was just a test
+* Start working on the sphinx extension
+* Add the release dates
+* Added tag 0.3b2 for changeset d5eab01bf491
+
+0.3b2
+-----
+
+* Prepare the next release
+* TG1 server.webpath mechanics makes it impossible to use a filter on the controller itself. So we put it on the root controller and carrefully change the WSRoot webpath so that everything works properly
+* BugFix: if no Content-Type header is present, read_arguments would fail
+* Completing the changelog
+* Better handling of errors on protocol selection
+* Don't stop if the body is application/x-www-form-urlencoded encoded and the request has params (for other encoding it would mean both params and a body were provided)
+* Add a cherrypy filter in the tg1 adapter so that the body is not parsed by cherrypy. This makes Webob happier when reading itself the body
+* Fix response status code transmission in the TG1 adapter
+* :class:`wsattr` now takes a 'default' parameter
+* Fix nested dict/list structures
+* Change version number
+* Update the documentation
+* handle dict and UserType as input from forms
+* Added tag 0.3b1 for changeset ebe2c6f228ad
+
+0.3b1
+-----
+
+* Avoid using a weakref.proxy for CallContext.request because we need to get a real ref to the request at some point in the tests
+* Test the 'division by zero' message in a smarter way so it adapts itself to the python version
+* Fix the test_enum test (the error message now contains the attribute name
+* Rename WSRoot.transaction to WSRoot._transaction to avoid scan_api failure in some cases
+* Add a per-call transaction management
+* Remove an empty file
+* Make the int and long types validation interchangeable
+* Fix dictionnary values validation
+* Fix: the dict attributes were not registered correctly
+* Now supports dictionnaries in addition to arrays
+* Mention the doc in the changes
+* Document a bit
+* Preparing next release
+* The restjson return values are not nested in the result attribute of an object. The former behavior can be obtained with the nest_result protocol option
+* Code cleaning (thanks to flake8)
+* Add a setperson function to test complex function arguments
+* Better handling of function arguments as params (POST or GET)
+* Don't output Unset values
+* Fix the named attributes dump in restxml tests
+* Fix the test_setnamedattrsobj test
+* Code cleaning
+* Implement and test the named attributes in the rest protocols
+* Add a 'name' attribute on wsattr and wsproperty
+* Unset now evaluate as False when converted to bool
+* Add the ShinningPanda jenkins URL
+* Fix user types, str and None values encoding/decoding
+* Fix registering of class inheriting from an already registerd class
+* Reproduce a bug when a Child complex type is registered after its Parent (it's not actually)
+* Fix Unset values validation
+* Add 'Unset' to the wsme module
+* Fix parse_[date][time] that were using the Invalid exception from formencode
+* Fix array attributes validation
+* updated the todo list
+* Added tag 0.2.0 for changeset cfb5efc624f5
+
+0.2.0
+-----
+
+* Time for a 0.2.0
+* Documented REST+XML and a bit SOAP
+* Document REST+Json
+* More documentation for the next release
+* Enum now takes values as args instead of a list
+* binary is now a UserType, which simplify most of the protocols implementation
+* Now supports user types (non-complex types that are base on native types), the first on being Enum
+* Documented the ExtDirect protocol
+* Completed the change list
+* Add type validation on complex type attributes assignment
+* pep8 now likes wsme
+* Split the controller module into api, protocols and root
+* Improved the complex type handling by using python Descriptors for attributes. They also carry the attribute name, so that the _wsme_attributes is now a list of wsattr/wsproperty instead of a list of (name, wsattr/wsproperty)
+* Bugfix: a complex type used only in validate and never in expose was not registered
+* The decorators now wrap the exposed function so that children classes can expose the parent functions with different signatures
+* Fix DummyProtocol
+* Fix: Complex types normal properties were not ignored
+* Completed the change list
+* Completed the change list. version -> 0.2.0
+* Protocols can now implement batch-calls
+* Add a function to retrieve an attribute definition of a complex type
+* Fix self reference complex type registration
+* Add a pyramid integration example
+* Add a link to the documentation
+* Move the links to the README file
+* Move the titles to the README file
+* Now read the long_description and the doc introduction from the README file
+* Fix inspection of classes with inheritance
+* The complex types attribute are now reset to 'Unset' when inspected
+* Add the authentication question to the todo list
+* Update to todo list
+* The ziphtml target now zip the doc in _build instead of _build/html
+* Added tag 0.1.1 for changeset c17de432c185
+
+0.1.1
+-----
+
+* Prepare the 0.1.1 release
+* Include the soap client example in the documentation
+* Completed the soap client example now that wsme-soap seems to work
+* Add a dependency on WSME-Soap
+* Add misc test functions
+* Test nested controllers
+* The function path now contains the function name
+* Remove the path attribute of FunctionDefinition, since a same FunctionDefinition could appears at different paths in an api tree
+* Rename list_calls to iter_calls and makes it an iterator
+* Prepare next release (should be soon)
+* Fix the little demo
+* Use addprotocol to that the protocol tests can pass options at instanciation
+* We now have a CallContext that follows a function execution from the path extraction to the result encoding
+* Fix the mandatory/default argument properties detection, and make the content-type detection more permissive
+* array attributes were potentially not registered
+* Rectify the integration examples
+* More test coverage + code cleaning
+* Fix a test
+* add WSRoot members doc
+* Update change list
+* Added tag 0.1.0 for changeset b0019e486c80
+
+0.1.0
+-----
+
+* Going 0.1.0 now that at least 1 application is runnging wsme. We are still in alpha state though
+* Protocols are now stored in a list so that the order is considered when selecting the right protocol for a request
+* expose now takes extra options that can be used by the protocols
+* getprotocol now takes the options as named arguments, which make it easier to use from outside
+* Remove the soap protocol (I am moving it to wsme-soap
+* Fix doc
+* WSRoot.addprotocol now takes keywords parameters and transmit them to getprotocol for instanciating the protocol
+* Update the change list and clean the demo
+* Added tag 0.1.0a4 for changeset b38c56a2b913
+
+0.1.0a4
+-------
+
+* Update the doc and the version number
+* Protocols are now found through entry points
+* Change the way framework adapters works. Now the adapter modules have a simple adapt function that adapt a :class:`wsme.WSRoot` instance. This way a same root can be integrated in several framework
+* Add the todo page to the index
+* Completing the changes list for 0.1.0a3
+* Add a little 'Install' section
+* Add a ziphtml target for preparing the documentation to be uploaded to pypi
+* Added tag 0.1.0a3 for changeset 86466da44f44
+
+0.1.0a3
+-------
+
+* Add links to the source code and issue tracker
+* Make the feature-list clearer and add the mailing list address
+* Update the contact mail and version
+* Documented most of the api
+* Improve code coverage of restjson
+* Improve ClientSideError interface + raise wsme.exc coverage to 100%
+* wswe.controller code coverage is back to 100%
+* More code coverage, and fixed a bug with wsme.wsgi.WSRoot.clone
+* More documentation
+* Add a WSGI adapter
+* Added an adapter for TG1
+* Added tag 0.1.0a2 for changeset 0eae00db9384
+
+0.1.0a2
+-------
+
+* Prepare a new release
+* Cleaning my test
+* Add arrays support in soap
+* Add array support to restxml
+* Add array support to restjson
+* Added tag 0.1.0a1 for changeset 2bd203a084dc
+
+0.1.0a1
+-------
+
+* Going 0.1.0a1
+* Fix README filename
+* Add a reame file
+* Completed the packaging, we should now be able to do an alpha release
+* Documenting
+* Add a setup.cfg
+* Completing setup.py
+* Initial documentation
+* Move the protocols to a dedicated module, and their activation more explicit
+* completed the setup informations
+* Made the demo work with suds
+* Add a complex type to the demo
+* Add a small soap client for the demo app, so that we can see the wsdl generation is _not_ working properly... to be continued
+* Adapt the rest xml tests
+* Adapted the restjson tests to the changes I made for the soap tests
+* The soap test case now fully pass. We are getting closer to a working implementation, but I think I messed up the namespaces
+* Start implementing a 'fromsoap' set of functions
+* A few more fixes on tests and return values in soap before diving into arguments feeding
+* Missing arguments are now detected by the controller
+* Fix a few tests
+* A few utility functions
+* Most of the return types now works with soap
+* Making progress on the soap implementation. Will have to choose between Genshi and ElementTree though, it is getting anoying to juggle with both
+* Adapt the rest protocol implementation to the changes I did for the soap protocol
+* Working on the soap protocol
+* Fix a few dummy errors
+* Worked on the wsdl generation. It looks like it should although it lacks the basic types handling and arrays definitions
+* Embedded the wsdl genshi template from tgws + start testing the soap protocol
+* Start working on the soap protocol
+* PEP8fying
+* Move as much as possible the request handling code out of the protocol
+* One can now test the rest api with a web browser
+* Share more code between restjson and restxml
+* Fix some issues with encoding
+* Add a small demo, and fix a few problems
+* PEP8 compliance
+* Most of the types now works as argument and return type in rest+xml and rest+json
+* PEP8 compliance
+* Handle binary and decimal return types
+* Use generic to prepare the json output so that non-structured custom types can be added
+* rest+xml now handle the basic return types
+* Add unittests for rest+xml
+* Continue working on the rest-xml tests and implementation + changed the RestProtocol interface
+* Start working on the rest-xml tests and implementation
+* better testing (+ fixes) of sort_attributes
+* test & fix the forced attribute order feature
+* pep8
+* Structured types basically work with rest+json
+* Rename AttrDef to wsattr, and introduce wsproperty
+* Implementing the structured types inspection
+* Start working on the non-trivial types handling
+* rename WSRoot.debug to WSRoot._debug to avoid an infinite recursion when scanning the api (which will need a better implementation anyway)
+* Continuing the rest+json implementation
+* the rest+json protocol starts to work with basic return types
+* Lowercased the project name
+* Start implementing the rest json proto
+* Completed the register test so we have 100% of test coverage
+* Renamed EWS to WSME because ews is already taken on pypi
+* A first working implemetation for the core controller code

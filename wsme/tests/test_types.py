@@ -1,3 +1,4 @@
+import re
 try:
     import unittest2 as unittest
 except ImportError:
@@ -182,7 +183,7 @@ class TestTypes(unittest.TestCase):
 
         self.assertRaisesRegexp(exc.InvalidInput,
                                 "Invalid input for field/attribute a. \
-Value: 'v3'. Invalid value \(should be one of: v., v.\)",
+Value: 'v3'. Value should be one of: v., v.",
                                 setattr,
                                 obj,
                                 'a',
@@ -253,19 +254,13 @@ Value: 'v3'. Invalid value \(should be one of: v., v.\)",
     def test_validate_dict(self):
         assert types.validate_value({int: str}, {1: '1', 5: '5'})
 
-        try:
-            types.validate_value({int: str}, [])
-            assert False, "No ValueError raised"
-        except ValueError:
-            pass
+        self.assertRaises(ValueError, types.validate_value,
+                          {int: str}, [])
 
         assert types.validate_value({int: str}, {'1': '1', 5: '5'})
 
-        try:
-            types.validate_value({int: str}, {1: 1, 5: '5'})
-            assert False, "No ValueError raised"
-        except ValueError:
-            pass
+        self.assertRaises(ValueError, types.validate_value,
+                          {int: str}, {1: 1, 5: '5'})
 
     def test_validate_list_valid(self):
         assert types.validate_value([int], [1, 2])
@@ -279,43 +274,83 @@ Value: 'v3'. Invalid value \(should be one of: v., v.\)",
         assert v.validate(None) is None
 
     def test_validate_list_invalid_member(self):
-        try:
-            assert types.validate_value([int], ['not-a-number'])
-            assert False, "No ValueError raised"
-        except ValueError:
-            pass
+        self.assertRaises(ValueError, types.validate_value, [int],
+                          ['not-a-number'])
 
     def test_validate_list_invalid_type(self):
-        try:
-            assert types.validate_value([int], 1)
-            assert False, "No ValueError raised"
-        except ValueError:
-            pass
+        self.assertRaises(ValueError, types.validate_value, [int], 1)
 
     def test_validate_float(self):
         self.assertEqual(types.validate_value(float, 1), 1.0)
         self.assertEqual(types.validate_value(float, '1'), 1.0)
         self.assertEqual(types.validate_value(float, 1.1), 1.1)
-        try:
-            types.validate_value(float, [])
-            assert False, "No ValueError raised"
-        except ValueError:
-            pass
-        try:
-            types.validate_value(float, 'not-a-float')
-            assert False, "No ValueError raised"
-        except ValueError:
-            pass
+        self.assertRaises(ValueError, types.validate_value, float, [])
+        self.assertRaises(ValueError, types.validate_value, float,
+                          'not-a-float')
 
     def test_validate_int(self):
         self.assertEqual(types.validate_value(int, 1), 1)
         self.assertEqual(types.validate_value(int, '1'), 1)
         self.assertEqual(types.validate_value(int, six.u('1')), 1)
-        try:
-            types.validate_value(int, 1.1)
-            assert False, "No ValueError raised"
-        except ValueError:
-            pass
+        self.assertRaises(ValueError, types.validate_value, int, 1.1)
+
+    def test_validate_integer_type(self):
+        v = types.IntegerType(minimum=1, maximum=10)
+        v.validate(1)
+        v.validate(5)
+        v.validate(10)
+        self.assertRaises(ValueError, v.validate, 0)
+        self.assertRaises(ValueError, v.validate, 11)
+
+    def test_validate_string_type(self):
+        v = types.StringType(min_length=1, max_length=10,
+                             pattern='^[a-zA-Z0-9]*$')
+        v.validate('1')
+        v.validate('12345')
+        v.validate('1234567890')
+        self.assertRaises(ValueError, v.validate, '')
+        self.assertRaises(ValueError, v.validate, '12345678901')
+
+        # Test a pattern validation
+        v.validate('a')
+        v.validate('A')
+        self.assertRaises(ValueError, v.validate, '_')
+
+    def test_validate_string_type_precompile(self):
+        precompile = re.compile('^[a-zA-Z0-9]*$')
+        v = types.StringType(min_length=1, max_length=10,
+                             pattern=precompile)
+
+        # Test a pattern validation
+        v.validate('a')
+        v.validate('A')
+        self.assertRaises(ValueError, v.validate, '_')
+
+    def test_validate_ipv4_address_type(self):
+        v = types.IPv4AddressType()
+        v.validate('127.0.0.1')
+        v.validate('192.168.0.1')
+        self.assertRaises(ValueError, v.validate, '')
+        self.assertRaises(ValueError, v.validate, 'foo')
+        self.assertRaises(ValueError, v.validate,
+                          '2001:0db8:bd05:01d2:288a:1fc0:0001:10ee')
+
+    def test_validate_ipv6_address_type(self):
+        v = types.IPv6AddressType()
+        v.validate('0:0:0:0:0:0:0:1')
+        v.validate('2001:0db8:bd05:01d2:288a:1fc0:0001:10ee')
+        self.assertRaises(ValueError, v.validate, '')
+        self.assertRaises(ValueError, v.validate, 'foo')
+        self.assertRaises(ValueError, v.validate, '192.168.0.1')
+
+    def test_validate_uuid_type(self):
+        v = types.UuidType()
+        v.validate('6a0a707c-45ef-4758-b533-e55adddba8ce')
+        v.validate('6a0a707c45ef4758b533e55adddba8ce')
+        self.assertRaises(ValueError, v.validate, '')
+        self.assertRaises(ValueError, v.validate, 'foo')
+        self.assertRaises(ValueError, v.validate,
+                          '6a0a707c-45ef-4758-b533-e55adddba8ce-a')
 
     def test_register_invalid_array(self):
         self.assertRaises(ValueError, types.register_type, [])
@@ -335,11 +370,7 @@ Value: 'v3'. Invalid value \(should be one of: v., v.\)",
 
         assert not hasattr(MyType, '_wsme_attributes')
 
-        try:
-            types.list_attributes(MyType)
-            assert False, "TypeError was not raised"
-        except TypeError:
-            pass
+        self.assertRaises(TypeError, types.list_attributes, MyType)
 
         assert not hasattr(MyType, '_wsme_attributes')
 
@@ -492,3 +523,107 @@ Value: 'v3'. Invalid value \(should be one of: v., v.\)",
                 return 'from-file'
         f = types.File(content=six.b('from-content'))
         assert f.file.read() == six.b('from-content')
+
+    def test_unregister(self):
+        class TempType(object):
+            pass
+        types.registry.register(TempType)
+        v = types.registry.lookup('TempType')
+        self.assertIs(v, TempType)
+        types.registry._unregister(TempType)
+        after = types.registry.lookup('TempType')
+        self.assertIs(after, None)
+
+    def test_unregister_twice(self):
+        class TempType(object):
+            pass
+        types.registry.register(TempType)
+        v = types.registry.lookup('TempType')
+        self.assertIs(v, TempType)
+        types.registry._unregister(TempType)
+        # Second call should not raise an exception
+        types.registry._unregister(TempType)
+        after = types.registry.lookup('TempType')
+        self.assertIs(after, None)
+
+    def test_unregister_array_type(self):
+        class TempType(object):
+            pass
+        t = [TempType]
+        types.registry.register(t)
+        self.assertNotEqual(types.registry.array_types, set())
+        types.registry._unregister(t)
+        self.assertEqual(types.registry.array_types, set())
+
+    def test_unregister_array_type_twice(self):
+        class TempType(object):
+            pass
+        t = [TempType]
+        types.registry.register(t)
+        self.assertNotEqual(types.registry.array_types, set())
+        types.registry._unregister(t)
+        # Second call should not raise an exception
+        types.registry._unregister(t)
+        self.assertEqual(types.registry.array_types, set())
+
+    def test_unregister_dict_type(self):
+        class TempType(object):
+            pass
+        t = {str: TempType}
+        types.registry.register(t)
+        self.assertNotEqual(types.registry.dict_types, set())
+        types.registry._unregister(t)
+        self.assertEqual(types.registry.dict_types, set())
+
+    def test_unregister_dict_type_twice(self):
+        class TempType(object):
+            pass
+        t = {str: TempType}
+        types.registry.register(t)
+        self.assertNotEqual(types.registry.dict_types, set())
+        types.registry._unregister(t)
+        # Second call should not raise an exception
+        types.registry._unregister(t)
+        self.assertEqual(types.registry.dict_types, set())
+
+    def test_reregister(self):
+        class TempType(object):
+            pass
+        types.registry.register(TempType)
+        v = types.registry.lookup('TempType')
+        self.assertIs(v, TempType)
+        types.registry.reregister(TempType)
+        after = types.registry.lookup('TempType')
+        self.assertIs(after, TempType)
+
+    def test_reregister_and_add_attr(self):
+        class TempType(object):
+            pass
+        types.registry.register(TempType)
+        attrs = types.list_attributes(TempType)
+        self.assertEqual(attrs, [])
+        TempType.one = str
+        types.registry.reregister(TempType)
+        after = types.list_attributes(TempType)
+        self.assertNotEqual(after, [])
+
+    def test_dynamicbase_add_attributes(self):
+        class TempType(types.DynamicBase):
+            pass
+        types.registry.register(TempType)
+        attrs = types.list_attributes(TempType)
+        self.assertEqual(attrs, [])
+        TempType.add_attributes(one=str)
+        after = types.list_attributes(TempType)
+        self.assertEqual(len(after), 1)
+
+    def test_dynamicbase_add_attributes_second(self):
+        class TempType(types.DynamicBase):
+            pass
+        types.registry.register(TempType)
+        attrs = types.list_attributes(TempType)
+        self.assertEqual(attrs, [])
+        TempType.add_attributes(one=str)
+        TempType.add_attributes(two=int)
+        after = types.list_attributes(TempType)
+        self.assertEqual(len(after), 2)
