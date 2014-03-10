@@ -17,6 +17,7 @@ Build-Depends: debhelper (>= 9),
                python3-setuptools
 Build-Depends-Indep: python-cherrypy3,
                      python-flask,
+                     python-ipaddr,
                      python-lxml,
                      python-nose,
                      python-pecan,
@@ -28,6 +29,7 @@ Build-Depends-Indep: python-cherrypy3,
                      python-transaction,
                      python-webob,
                      python-webtest,
+                     python3-ipaddr,
                      python3-lxml,
                      python3-nose,
                      python3-simplegeneric,
@@ -43,7 +45,8 @@ Homepage: http://pythonhosted.org/WSME/
 Package: python-wsme
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: python-jinja2,
+Depends: python-ipaddr,
+         python-jinja2,
          python-simplegeneric,
          python-simplejson,
          python-six,
@@ -71,7 +74,8 @@ Description: Web Services Made Easy: implement multi-protocol webservices - Pyth
 Package: python3-wsme
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: python3-jinja2,
+Depends: python-ipaddr,
+         python3-jinja2,
          python3-simplegeneric,
          python3-simplejson,
          python3-six,
