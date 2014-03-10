@@ -27,6 +27,7 @@ Build-Depends-Indep: python-cherrypy3,
                      python-suds,
                      python-testtools,
                      python-transaction,
+                     python-turbogears2,
                      python-webob,
                      python-webtest,
                      python3-ipaddr,
@@ -36,7 +37,6 @@ Build-Depends-Indep: python-cherrypy3,
                      python3-six,
                      python3-testtools,
                      python3-webob
-# python-cornice, python-colander
 Standards-Version: 3.9.4
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/python-wsme.git
 Vcs-Git: git://anonscm.debian.org/openstack/python-wsme.git
