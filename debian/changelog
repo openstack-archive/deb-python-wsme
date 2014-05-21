@@ -1,3 +1,11 @@
+python-wsme (0.6-3) unstable; urgency=medium
+
+  * Drop depends on the removed python3-ipaddr if not building in Wheezy, and
+    rely on ipaddress included in python3.3 and later (Closes: #748472). Thanks
+    to Scott Kitterman <debian@kitterman.com> for his report and help.
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 21 May 2014 18:55:35 +0800
+
 python-wsme (0.6-2) unstable; urgency=medium
 
   * Uploading to unstable.

@@ -32,3 +32,10 @@ override_dh_auto_test:
 #	done
 	nosetests || true
 endif
+
+override_dh_gencontrol:
+	if [ `lsb_release -a | grep Release | awk '{print $$2}'` = "7.0" ] ; then \
+		dh_gencontrol -- -T$(CURDIR)/debian/wheezy_deps ; \
+	else \
+		dh_gencontrol ; \
+	fi
