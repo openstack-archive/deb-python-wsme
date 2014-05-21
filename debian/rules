@@ -34,8 +34,9 @@ override_dh_auto_test:
 endif
 
 override_dh_gencontrol:
-	if [ `lsb_release -a | grep Release | awk '{print $$2}'` = "7.0" ] ; then \
-		dh_gencontrol -- -T$(CURDIR)/debian/wheezy_deps ; \
-	else \
-		dh_gencontrol ; \
-	fi
+	RELCODE=`lsb_release -a | grep Codename | awk '{print $$2}'` && \
+		if [ $$RELCODE = "wheezy" ] || [ $$RELCODE = "precise" ] ; then \
+			dh_gencontrol -- -T$(CURDIR)/debian/wheezy_deps ; \
+		else \
+			dh_gencontrol ; \
+		fi
