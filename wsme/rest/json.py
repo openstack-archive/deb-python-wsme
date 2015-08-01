@@ -12,7 +12,7 @@ from simplegeneric import generic
 from wsme.types import Unset
 import wsme.types
 import wsme.utils
-from wsme.exc import UnknownArgument, InvalidInput
+from wsme.exc import ClientSideError, UnknownArgument, InvalidInput
 
 
 try:
@@ -27,6 +27,8 @@ accept_content_types = [
     'text/javascript',
     'application/javascript'
 ]
+ENUM_TRUE = ('true', 't', 'yes', 'y', 'on', '1')
+ENUM_FALSE = ('false', 'f', 'no', 'n', 'off', '0')
 
 
 @generic
@@ -169,9 +171,9 @@ def dict_fromjson(datatype, value):
 
 @fromjson.when_object(six.binary_type)
 def str_fromjson(datatype, value):
-    if (isinstance(value, six.string_types)
-            or isinstance(value, six.integer_types)
-            or isinstance(value, float)):
+    if (isinstance(value, six.string_types) or
+            isinstance(value, six.integer_types) or
+            isinstance(value, float)):
         return six.text_type(value).encode('utf8')
 
 
@@ -180,6 +182,28 @@ def text_fromjson(datatype, value):
     if value is not None and isinstance(value, wsme.types.bytes):
         return wsme.types.text(value)
     return value
+
+
+@fromjson.when_object(*six.integer_types + (float,))
+def numeric_fromjson(datatype, value):
+    """Convert string object to built-in types int, long or float."""
+    if value is None:
+        return None
+    return datatype(value)
+
+
+@fromjson.when_object(bool)
+def bool_fromjson(datatype, value):
+    """Convert to bool, restricting strings to just unambiguous values."""
+    if value is None:
+        return None
+    if isinstance(value, six.integer_types + (bool,)):
+        return bool(value)
+    if value in ENUM_TRUE:
+        return True
+    if value in ENUM_FALSE:
+        return False
+    raise ValueError("Value not an unambiguous boolean: %s" % value)
 
 
 @fromjson.when_object(decimal.Decimal)
@@ -211,15 +235,21 @@ def datetime_fromjson(datatype, value):
 
 
 def parse(s, datatypes, bodyarg, encoding='utf8'):
-    if hasattr(s, 'read'):
-        jdata = json.load(s)
-    else:
+    jload = json.load
+    if not hasattr(s, 'read'):
         if six.PY3 and isinstance(s, six.binary_type):
             s = s.decode(encoding)
-        jdata = json.loads(s)
+        jload = json.loads
+    try:
+        jdata = jload(s)
+    except ValueError:
+        raise ClientSideError("Request is not in valid JSON format")
     if bodyarg:
         argname = list(datatypes.keys())[0]
-        kw = {argname: fromjson(datatypes[argname], jdata)}
+        try:
+            kw = {argname: fromjson(datatypes[argname], jdata)}
+        except ValueError as e:
+            raise InvalidInput(argname, jdata, e.args[0])
     else:
         kw = {}
         extra_args = []
@@ -227,7 +257,10 @@ def parse(s, datatypes, bodyarg, encoding='utf8'):
             if key not in datatypes:
                 extra_args.append(key)
             else:
-                kw[key] = fromjson(datatypes[key], jdata[key])
+                try:
+                    kw[key] = fromjson(datatypes[key], jdata[key])
+                except ValueError as e:
+                    raise InvalidInput(key, jdata[key], e.args[0])
         if extra_args:
             raise UnknownArgument(', '.join(extra_args))
     return kw
@@ -262,8 +295,6 @@ def encode_sample_params(params, format=False):
 
 def encode_sample_result(datatype, value, format=False):
     r = tojson(datatype, value)
-    #if self.nest_result:
-        #r = {'result': r}
     content = json.dumps(r, ensure_ascii=False, indent=4 if format else 0,
                          sort_keys=format)
     return ('javascript', content)

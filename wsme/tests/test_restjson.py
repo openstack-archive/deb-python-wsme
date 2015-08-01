@@ -9,10 +9,11 @@ try:
 except:
     import json  # noqa
 
-from wsme.rest.json import fromjson, tojson
+from wsme.rest.json import fromjson, tojson, parse
 from wsme.utils import parse_isodatetime, parse_isotime, parse_isodate
-from wsme.types import isarray, isdict, isusertype, register_type
+from wsme.types import isarray, isdict, isusertype, register_type, UserType
 from wsme.rest import expose, validate
+from wsme.exc import ClientSideError, InvalidInput
 
 
 import six
@@ -87,6 +88,11 @@ def prepare_result(value, datatype):
         print(type(value), datatype)
         return datatype(value)
     return value
+
+
+class CustomInt(UserType):
+    basetype = int
+    name = "custom integer"
 
 
 class Obj(wsme.types.Base):
@@ -243,6 +249,15 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
         print(r)
         assert json.loads(r.text) == 2
 
+    def test_invalid_json_body(self):
+        r = self.app.post('/argtypes/setint.json', '{"value": 2',
+                          headers={"Content-Type": "application/json"},
+                          expect_errors=True)
+        print(r)
+        assert r.status_int == 400
+        assert json.loads(r.text)['faultstring'] == \
+            "Request is not in valid JSON format"
+
     def test_unknown_arg(self):
         r = self.app.post('/returntypes/getint.json', '{"a": 2}',
                           headers={"Content-Type": "application/json"},
@@ -259,6 +274,24 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
         assert json.loads(r.text)['faultstring'].startswith(
             "Unknown argument:"
         )
+
+    def test_set_custom_object(self):
+        r = self.app.post(
+            '/argtypes/setcustomobject',
+            '{"value": {"aint": 2, "name": "test"}}',
+            headers={"Content-Type": "application/json"}
+        )
+        self.assertEqual(r.status_int, 200)
+        self.assertEqual(r.json, {'aint': 2, 'name': 'test'})
+
+    def test_set_extended_int(self):
+        r = self.app.post(
+            '/argtypes/setextendedint',
+            '{"value": 3}',
+            headers={"Content-Type": "application/json"}
+        )
+        self.assertEqual(r.status_int, 200)
+        self.assertEqual(r.json, 3)
 
     def test_unset_attrs(self):
         class AType(object):
@@ -287,6 +320,161 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
         for dt in (str, int, datetime.date, datetime.time, datetime.datetime,
                    decimal.Decimal, [int], {int: int}):
             assert fromjson(dt, None) is None
+
+    def test_parse_valid_date(self):
+        j = parse('{"a": "2011-01-01"}', {'a': datetime.date}, False)
+        assert isinstance(j['a'], datetime.date)
+
+    def test_invalid_date_fromjson(self):
+        jdate = "2015-01-invalid"
+        try:
+            parse('{"a": "%s"}' % jdate, {'a': datetime.date}, False)
+            assert False
+        except Exception as e:
+            assert isinstance(e, InvalidInput)
+            assert e.fieldname == 'a'
+            assert e.value == jdate
+            assert e.msg == "'%s' is not a legal date value" % jdate
+
+    def test_parse_valid_date_bodyarg(self):
+        j = parse('"2011-01-01"', {'a': datetime.date}, True)
+        assert isinstance(j['a'], datetime.date)
+
+    def test_invalid_date_fromjson_bodyarg(self):
+        jdate = "2015-01-invalid"
+        try:
+            parse('"%s"' % jdate, {'a': datetime.date}, True)
+            assert False
+        except Exception as e:
+            assert isinstance(e, InvalidInput)
+            assert e.fieldname == 'a'
+            assert e.value == jdate
+            assert e.msg == "'%s' is not a legal date value" % jdate
+
+    def test_valid_str_to_builtin_fromjson(self):
+        types = six.integer_types + (bool, float)
+        value = '2'
+        for t in types:
+            for ba in True, False:
+                jd = '%s' if ba else '{"a": %s}'
+                i = parse(jd % value, {'a': t}, ba)
+                self.assertEqual(
+                    i, {'a': t(value)},
+                    "Parsed value does not correspond for %s: "
+                    "%s != {'a': %s}" % (
+                        t, repr(i), repr(t(value))
+                    )
+                )
+                self.assertIsInstance(i['a'], t)
+
+    def test_valid_int_fromjson(self):
+        value = 2
+        for ba in True, False:
+            jd = '%d' if ba else '{"a": %d}'
+            i = parse(jd % value, {'a': int}, ba)
+            self.assertEqual(i, {'a': 2})
+            self.assertIsInstance(i['a'], int)
+
+    def test_valid_num_to_float_fromjson(self):
+        values = 2, 2.3
+        for v in values:
+            for ba in True, False:
+                jd = '%f' if ba else '{"a": %f}'
+                i = parse(jd % v, {'a': float}, ba)
+                self.assertEqual(i, {'a': float(v)})
+                self.assertIsInstance(i['a'], float)
+
+    def test_invalid_str_to_buitin_fromjson(self):
+        types = six.integer_types + (float, bool)
+        value = '2a'
+        for t in types:
+            for ba in True, False:
+                jd = '"%s"' if ba else '{"a": "%s"}'
+                try:
+                    parse(jd % value, {'a': t}, ba)
+                    assert False, (
+                        "Value '%s' should not parse correctly for %s." %
+                        (value, t)
+                    )
+                except ClientSideError as e:
+                    self.assertIsInstance(e, InvalidInput)
+                    self.assertEqual(e.fieldname, 'a')
+                    self.assertEqual(e.value, value)
+
+    def test_ambiguous_to_bool(self):
+        amb_values = ('', 'randomstring', '2', '-32', 'not true')
+        for value in amb_values:
+            for ba in True, False:
+                jd = '"%s"' if ba else '{"a": "%s"}'
+                try:
+                    parse(jd % value, {'a': bool}, ba)
+                    assert False, (
+                        "Value '%s' should not parse correctly for %s." %
+                        (value, bool)
+                    )
+                except ClientSideError as e:
+                    self.assertIsInstance(e, InvalidInput)
+                    self.assertEqual(e.fieldname, 'a')
+                    self.assertEqual(e.value, value)
+
+    def test_true_strings_to_bool(self):
+        true_values = ('true', 't', 'yes', 'y', 'on', '1')
+        for value in true_values:
+            for ba in True, False:
+                jd = '"%s"' if ba else '{"a": "%s"}'
+                i = parse(jd % value, {'a': bool}, ba)
+                self.assertIsInstance(i['a'], bool)
+                self.assertTrue(i['a'])
+
+    def test_false_strings_to_bool(self):
+        false_values = ('false', 'f', 'no', 'n', 'off', '0')
+        for value in false_values:
+            for ba in True, False:
+                jd = '"%s"' if ba else '{"a": "%s"}'
+                i = parse(jd % value, {'a': bool}, ba)
+                self.assertIsInstance(i['a'], bool)
+                self.assertFalse(i['a'])
+
+    def test_true_ints_to_bool(self):
+        true_values = (1, 5, -3)
+        for value in true_values:
+            for ba in True, False:
+                jd = '%d' if ba else '{"a": %d}'
+                i = parse(jd % value, {'a': bool}, ba)
+                self.assertIsInstance(i['a'], bool)
+                self.assertTrue(i['a'])
+
+    def test_false_ints_to_bool(self):
+        value = 0
+        for ba in True, False:
+            jd = '%d' if ba else '{"a": %d}'
+            i = parse(jd % value, {'a': bool}, ba)
+            self.assertIsInstance(i['a'], bool)
+            self.assertFalse(i['a'])
+
+    def test_valid_simple_custom_type_fromjson(self):
+        value = 2
+        for ba in True, False:
+            jd = '"%d"' if ba else '{"a": "%d"}'
+            i = parse(jd % value, {'a': CustomInt()}, ba)
+            self.assertEqual(i, {'a': 2})
+            self.assertIsInstance(i['a'], int)
+
+    def test_invalid_simple_custom_type_fromjson(self):
+        value = '2b'
+        for ba in True, False:
+            jd = '"%s"' if ba else '{"a": "%s"}'
+            try:
+                i = parse(jd % value, {'a': CustomInt()}, ba)
+                self.assertEqual(i, {'a': 2})
+            except ClientSideError as e:
+                self.assertIsInstance(e, InvalidInput)
+                self.assertEqual(e.fieldname, 'a')
+                self.assertEqual(e.value, value)
+                self.assertEqual(
+                    e.msg,
+                    "invalid literal for int() with base 10: '%s'" % value
+                )
 
     def test_nest_result(self):
         self.root.protocols[0].nest_result = True
@@ -330,14 +518,6 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
         )
         assert r[0] == 'javascript', r[0]
         assert r[1] == '''2'''
-        #self.root.protocols[0].nest_result = True
-        #r = wsme.rest.json.encode_sample_result(
-            #int, 2, True
-        #)
-        #assert r[0] == 'javascript', r[0]
-        #assert r[1] == '''{
-    #"result": 2
-#}'''
 
     def test_PUT(self):
         data = {"id": 1, "name": u("test")}
@@ -359,7 +539,7 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
 
     def test_GET(self):
         headers = {
-            'Content-Type': 'application/json',
+            'Accept': 'application/json',
         }
         res = self.app.get(
             '/crud?ref.id=1',
@@ -370,7 +550,58 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
         print(result)
         assert result['data']['id'] == 1
         assert result['data']['name'] == u("test")
-        assert result['message'] == "read"
+
+    def test_GET_complex_accept(self):
+        headers = {
+            'Accept': 'text/html,application/xml;q=0.9,*/*;q=0.8'
+        }
+        res = self.app.get(
+            '/crud?ref.id=1',
+            headers=headers,
+            expect_errors=False)
+        print("Received:", res.body)
+        result = json.loads(res.text)
+        print(result)
+        assert result['data']['id'] == 1
+        assert result['data']['name'] == u("test")
+
+    def test_GET_complex_choose_xml(self):
+        headers = {
+            'Accept': 'text/html,text/xml;q=0.9,*/*;q=0.8'
+        }
+        res = self.app.get(
+            '/crud?ref.id=1',
+            headers=headers,
+            expect_errors=False)
+        print("Received:", res.body)
+        assert res.content_type == 'text/xml'
+
+    def test_GET_complex_accept_no_match(self):
+        headers = {
+            'Accept': 'text/html,application/xml;q=0.9'
+        }
+        res = self.app.get(
+            '/crud?ref.id=1',
+            headers=headers,
+            status=406)
+        print("Received:", res.body)
+        assert res.body == b("Unacceptable Accept type: "
+                             "text/html, application/xml;q=0.9 not in "
+                             "['application/json', 'text/javascript', "
+                             "'application/javascript', 'text/xml']")
+
+    def test_GET_bad_simple_accept(self):
+        headers = {
+            'Accept': 'text/plain',
+        }
+        res = self.app.get(
+            '/crud?ref.id=1',
+            headers=headers,
+            status=406)
+        print("Received:", res.body)
+        assert res.body == b("Unacceptable Accept type: text/plain not in "
+                             "['application/json', 'text/javascript', "
+                             "'application/javascript', 'text/xml']")
 
     def test_POST(self):
         headers = {
@@ -388,6 +619,20 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
         assert result['data']['name'] == u("test")
         assert result['message'] == "update"
 
+    def test_POST_bad_content_type(self):
+        headers = {
+            'Content-Type': 'text/plain',
+        }
+        res = self.app.post(
+            '/crud',
+            json.dumps(dict(data=dict(id=1, name=u('test')))),
+            headers=headers,
+            status=415)
+        print("Received:", res.body)
+        assert res.body == b("Unacceptable Content-Type: text/plain not in "
+                             "['application/json', 'text/javascript', "
+                             "'application/javascript', 'text/xml']")
+
     def test_DELETE(self):
         res = self.app.delete(
             '/crud.json?ref.id=1',
@@ -401,7 +646,7 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
 
     def test_extra_arguments(self):
         headers = {
-            'Content-Type': 'application/json',
+            'Accept': 'application/json',
         }
         res = self.app.get(
             '/crud?ref.id=1&extraarg=foo',

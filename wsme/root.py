@@ -145,11 +145,11 @@ class WSRoot(object):
         log.debug("Selecting a protocol for the following request :\n"
                   "headers: %s\nbody: %s", request.headers.items(),
                   request.content_length and (
-                      request.content_length > 512
-                      and request.body[:512]
-                      or request.body)
-                  or '')
+                      request.content_length > 512 and
+                      request.body[:512] or
+                      request.body) or '')
         protocol = None
+        error = ClientSideError(status_code=406)
         path = str(request.path)
         assert path.startswith(self._webpath)
         path = path[len(self._webpath) + 1:]
@@ -158,9 +158,16 @@ class WSRoot(object):
         else:
 
             for p in self.protocols:
-                if p.accept(request):
-                    protocol = p
-                    break
+                try:
+                    if p.accept(request):
+                        protocol = p
+                        break
+                except ClientSideError as e:
+                    error = e
+            # If we could not select a protocol, we raise the last exception
+            # that we got, or the default one.
+            if not protocol:
+                raise error
         return protocol
 
     def _do_call(self, protocol, context):
@@ -231,20 +238,29 @@ class WSRoot(object):
 
         try:
             msg = None
+            error_status = 500
             protocol = self._select_protocol(request)
+        except ClientSideError as e:
+            error_status = e.code
+            msg = e.faultstring
+            protocol = None
         except Exception as e:
-            msg = ("Error while selecting protocol: %s" % str(e))
+            msg = ("Unexpected error while selecting protocol: %s" % str(e))
             log.exception(msg)
             protocol = None
+            error_status = 500
 
         if protocol is None:
-            if msg is None:
+            if not msg:
                 msg = ("None of the following protocols can handle this "
                        "request : %s" % ','.join((
                            p.name for p in self.protocols)))
-            res.status = 500
+            res.status = error_status
             res.content_type = 'text/plain'
-            res.text = u(msg)
+            try:
+                res.text = u(msg)
+            except TypeError:
+                res.text = msg
             log.error(msg)
             return res
 
@@ -283,6 +299,10 @@ class WSRoot(object):
             else:
                 res.status = protocol.get_response_status(request)
                 res_content_type = protocol.get_response_contenttype(request)
+        except ClientSideError as e:
+            request.server_errorcount += 1
+            res.status = e.code
+            res.text = e.faultstring
         except Exception:
             infos = wsme.api.format_exception(sys.exc_info(), self._debug)
             request.server_errorcount += 1

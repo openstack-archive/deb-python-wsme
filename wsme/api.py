@@ -2,6 +2,7 @@ import traceback
 import functools
 import inspect
 import logging
+import six
 
 import wsme.exc
 import wsme.types
@@ -112,10 +113,11 @@ class FunctionDefinition(object):
             arg.resolve_type(registry)
 
     def set_options(self, body=None, ignore_extra_args=False, status_code=200,
-                    **extra_options):
+                    rest_content_types=('json', 'xml'), **extra_options):
         self.body_type = body
         self.status_code = status_code
         self.ignore_extra_args = ignore_extra_args
+        self.rest_content_types = rest_content_types
         self.extra_options = extra_options
 
     def set_arg_types(self, argspec, arg_types):
@@ -139,14 +141,14 @@ class FunctionDefinition(object):
 
 
 class signature(object):
-    """
-    Decorator that specify the argument types of an exposed function.
+
+    """Decorator that specify the argument types of an exposed function.
 
     :param return_type: Type of the value returned by the function
     :param argN: Type of the Nth argument
     :param body: If the function takes a final argument that is supposed to be
                  the request body by itself, its type.
-    :param status: HTTP return status code of the function.
+    :param status_code: HTTP return status code of the function.
     :param ignore_extra_args: Allow extra/unknow arguments (default to False)
 
     Most of the time this decorator is not supposed to be used directly,
@@ -156,6 +158,7 @@ class signature(object):
     decororator, either a new decorator named @wsexpose that takes the same
     parameters (it will in addition expose the function, hence its name).
     """
+
     def __init__(self, *types, **options):
         self.return_type = types[0] if types else None
         self.arg_types = []
@@ -186,7 +189,8 @@ class Response(object):
     """
     Object to hold the "response" from a view function
     """
-    def __init__(self, obj, status_code=None, error=None):
+    def __init__(self, obj, status_code=None, error=None,
+                 return_type=wsme.types.Unset):
         #: Store the result object from the view
         self.obj = obj
 
@@ -198,21 +202,27 @@ class Response(object):
         #: faultstring and an optional debuginfo
         self.error = error
 
+        #: Return type
+        #: Type of the value returned by the function
+        #: If the return type is wsme.types.Unset it will be ignored
+        #: and the default return type will prevail.
+        self.return_type = return_type
+
 
 def format_exception(excinfo, debug=False):
     """Extract informations that can be sent to the client."""
     error = excinfo[1]
     code = getattr(error, 'code', None)
     if code and utils.is_valid_code(code) and utils.is_client_error(code):
-        faultstring = error.faultstring if hasattr(error, 'faultstring') \
-            else str(error)
+        faultstring = (error.faultstring if hasattr(error, 'faultstring')
+                       else six.text_type(error))
         r = dict(faultcode="Client",
                  faultstring=faultstring)
-        log.warning("Client-side error: %s" % r['faultstring'])
+        log.debug("Client-side error: %s" % r['faultstring'])
         r['debuginfo'] = None
         return r
     else:
-        faultstring = str(error)
+        faultstring = six.text_type(error)
         debuginfo = "\n".join(traceback.format_exception(*excinfo))
 
         log.error('Server-side error: "%s". Detail: \n%s' % (

@@ -122,7 +122,7 @@ def scan_services(service, path=[]):
                 has_functions = True
         if inspect.isclass(a):
             continue
-        if len(path) > wsme.api.APIPATH_MAXLEN:
+        if len(path) > wsme.rest.APIPATH_MAXLEN:
             raise ValueError("Path is too long: " + str(path))
         for value in scan_services(a, path + [name]):
             yield value
@@ -449,7 +449,9 @@ def document_function(funcdef, docstrings=None, protocols=['restjson']):
                 u'',
             ])
             codesamples.extend((
-                u' ' * 12 + line for line in sample.split('\n')))
+                u' ' * 12 + line
+                for line in six.text_type(sample).split('\n')
+            ))
 
         if funcdef.return_type:
             codesamples.extend([
@@ -467,7 +469,9 @@ def document_function(funcdef, docstrings=None, protocols=['restjson']):
                     u'',
                 ])
                 codesamples.extend((
-                    u' ' * 12 + line for line in sample.split('\n')))
+                    u' ' * 12 + line
+                    for line in six.text_type(sample).split('\n')
+                ))
 
     docstrings[0:0] = [codesamples]
     return docstrings
@@ -486,8 +490,8 @@ class FunctionDocumenter(autodoc.MethodDocumenter):
 
     @staticmethod
     def can_document_member(member, membername, isattr, parent):
-        return (isinstance(parent, ServiceDocumenter)
-                and wsme.api.iswsmefunction(member))
+        return (isinstance(parent, ServiceDocumenter) and
+                wsme.api.iswsmefunction(member))
 
     def import_object(self):
         ret = super(FunctionDocumenter, self).import_object()
@@ -556,9 +560,11 @@ class WSMEDomain(Domain):
     }
 
     def clear_doc(self, docname):
-        for name, value in self.data['types'].items():
+        keys = list(self.data['types'].keys())
+        for key in keys:
+            value = self.data['types'][key]
             if value == docname:
-                del self.data['types'][name]
+                del self.data['types'][key]
 
     def resolve_xref(self, env, fromdocname, builder,
                      type, target, node, contnode):

@@ -71,6 +71,11 @@ class Criterion(Base):
 
 class AuthorsController(RestController):
 
+    _custom_actions = {
+        'json_only': ['GET'],
+        'xml_only': ['GET']
+    }
+
     books = BooksController()
 
     @wsmeext.pecan.wsexpose([Author], [six.text_type], [Criterion])
@@ -106,6 +111,12 @@ class AuthorsController(RestController):
         if id == 911:
             return wsme.api.Response(Author(),
                                      status_code=401)
+        if id == 912:
+            return wsme.api.Response(None, status_code=204)
+
+        if id == 913:
+            return wsme.api.Response('foo', status_code=200, return_type=text)
+
         author = Author()
         author.id = id
         author.firstname = u"aname"
@@ -129,3 +140,11 @@ class AuthorsController(RestController):
     @wsmeext.pecan.wsexpose(Book, int, body=Author)
     def put(self, author_id, author=None):
         return author
+
+    @wsmeext.pecan.wsexpose([Author], rest_content_types=('json',))
+    def json_only(self):
+        return [Author(id=1, firstname=u"aname", books=[])]
+
+    @wsmeext.pecan.wsexpose([Author], rest_content_types=('xml',))
+    def xml_only(self):
+        return [Author(id=1, firstname=u"aname", books=[])]

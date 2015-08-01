@@ -175,6 +175,22 @@ class TestWS(FunctionalTest):
         self.assertEqual(res.status_int, expected_status_code)
         self.assertEqual(res.status, expected_status)
 
+    def test_non_default_response_return_type(self):
+        res = self.app.get(
+            '/authors/913',
+        )
+        self.assertEqual(res.status_int, 200)
+        self.assertEqual(res.body, b'"foo"')
+        self.assertEqual(res.content_length, 5)
+
+    def test_non_default_response_return_type_no_content(self):
+        res = self.app.get(
+            '/authors/912',
+        )
+        self.assertEqual(res.status_int, 204)
+        self.assertEqual(res.body, b'')
+        self.assertEqual(res.content_length, 0)
+
     def test_serversideerror(self):
         expected_status_code = 500
         expected_status = http_response_messages[expected_status_code]
@@ -193,6 +209,24 @@ class TestWS(FunctionalTest):
         a = json.loads(res.body.decode('utf-8'))
         assert a['faultcode'] == 'Server'
         assert a['debuginfo'].startswith('Traceback (most recent call last):')
+
+    def test_json_only(self):
+        res = self.app.get('/authors/json_only.json')
+        assert res.status_int == 200
+        body = json.loads(res.body.decode('utf-8'))
+        assert len(body) == 1
+        assert body[0]['firstname'] == u"aname"
+        assert body[0]['books'] == []
+        assert body[0]['id'] == 1
+        res = self.app.get('/authors/json_only.xml', expect_errors=True)
+
+    def test_xml_only(self):
+        res = self.app.get('/authors/xml_only.xml')
+        assert res.status_int == 200
+        assert '<id>1</id>' in res.body.decode('utf-8')
+        assert '<firstname>aname</firstname>' in res.body.decode('utf-8')
+        assert '<books />' in res.body.decode('utf-8')
+        res = self.app.get('/authors/xml_only.json', expect_errors=True)
 
     def test_body_parameter(self):
         res = self.app.put(

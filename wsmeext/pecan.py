@@ -15,10 +15,12 @@ from wsme.utils import is_valid_code
 
 
 class JSonRenderer(object):
-    def __init__(self, path, extra_vars):
+    @staticmethod
+    def __init__(path, extra_vars):
         pass
 
-    def render(self, template_path, namespace):
+    @staticmethod
+    def render(template_path, namespace):
         if 'faultcode' in namespace:
             return wsme.rest.json.encode_error(None, namespace)
         return wsme.rest.json.encode_result(
@@ -28,10 +30,12 @@ class JSonRenderer(object):
 
 
 class XMLRenderer(object):
-    def __init__(self, path, extra_vars):
+    @staticmethod
+    def __init__(path, extra_vars):
         pass
 
-    def render(self, template_path, namespace):
+    @staticmethod
+    def render(template_path, namespace):
         if 'faultcode' in namespace:
             return wsme.rest.xml.encode_error(None, namespace)
         return wsme.rest.xml.encode_result(
@@ -42,22 +46,23 @@ class XMLRenderer(object):
 pecan.templating._builtin_renderers['wsmejson'] = JSonRenderer
 pecan.templating._builtin_renderers['wsmexml'] = XMLRenderer
 
+pecan_json_decorate = pecan.expose(
+    template='wsmejson:',
+    content_type='application/json',
+    generic=False)
+pecan_xml_decorate = pecan.expose(
+    template='wsmexml:',
+    content_type='application/xml',
+    generic=False
+)
+pecan_text_xml_decorate = pecan.expose(
+    template='wsmexml:',
+    content_type='text/xml',
+    generic=False
+)
+
 
 def wsexpose(*args, **kwargs):
-    pecan_json_decorate = pecan.expose(
-        template='wsmejson:',
-        content_type='application/json',
-        generic=False)
-    pecan_xml_decorate = pecan.expose(
-        template='wsmexml:',
-        content_type='application/xml',
-        generic=False
-    )
-    pecan_text_xml_decorate = pecan.expose(
-        template='wsmexml:',
-        content_type='text/xml',
-        generic=False
-    )
     sig = wsme.signature(*args, **kwargs)
 
     def decorate(f):
@@ -67,6 +72,8 @@ def wsexpose(*args, **kwargs):
 
         @functools.wraps(f)
         def callfunction(self, *args, **kwargs):
+            return_type = funcdef.return_type
+
             try:
                 args, kwargs = wsme.rest.args.get_args(
                     funcdef, args, kwargs, pecan.request.params, None,
@@ -80,6 +87,17 @@ def wsexpose(*args, **kwargs):
                 pecan.response.status = funcdef.status_code
                 if isinstance(result, wsme.api.Response):
                     pecan.response.status = result.status_code
+
+                    # NOTE(lucasagomes): If the return code is 204
+                    # (No Response) we have to make sure that we are not
+                    # returning anything in the body response and the
+                    # content-length is 0
+                    if result.status_code == 204:
+                        return_type = None
+                    elif not isinstance(result.return_type,
+                                        wsme.types.UnsetType):
+                        return_type = result.return_type
+
                     result = result.obj
 
             except:
@@ -101,19 +119,21 @@ def wsexpose(*args, **kwargs):
 
                 return data
 
-            if funcdef.return_type is None:
+            if return_type is None:
                 pecan.request.pecan['content_type'] = None
                 pecan.response.content_type = None
                 return ''
 
             return dict(
-                datatype=funcdef.return_type,
+                datatype=return_type,
                 result=result
             )
 
-        pecan_xml_decorate(callfunction)
-        pecan_text_xml_decorate(callfunction)
-        pecan_json_decorate(callfunction)
+        if 'xml' in funcdef.rest_content_types:
+            pecan_xml_decorate(callfunction)
+            pecan_text_xml_decorate(callfunction)
+        if 'json' in funcdef.rest_content_types:
+            pecan_json_decorate(callfunction)
         pecan.util._cfg(callfunction)['argspec'] = inspect.getargspec(f)
         callfunction._wsme_definition = funcdef
         return callfunction

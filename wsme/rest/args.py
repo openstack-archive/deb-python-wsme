@@ -18,7 +18,7 @@ ARRAY_MAX_SIZE = 1000
 
 @generic
 def from_param(datatype, value):
-    return datatype(value) if value else None
+    return datatype(value) if value is not None else None
 
 
 @from_param.when_object(datetime.date)
@@ -165,16 +165,28 @@ def dict_from_params(datatype, params, path, hit_paths):
         for key in keys))
 
 
+@from_params.when_type(UserType)
+def usertype_from_params(datatype, params, path, hit_paths):
+    value = from_params(datatype.basetype, params, path, hit_paths)
+    if value is not Unset:
+        return datatype.frombasetype(value)
+    return Unset
+
+
 def args_from_args(funcdef, args, kwargs):
     newargs = []
     for argdef, arg in zip(funcdef.arguments[:len(args)], args):
         try:
             newargs.append(from_param(argdef.datatype, arg))
         except Exception:
+            if isinstance(argdef.datatype, UserType):
+                datatype_name = argdef.datatype.name
+            else:
+                datatype_name = argdef.datatype.__name__
             raise InvalidInput(
                 argdef.name,
                 arg,
-                "unable to convert to %s" % argdef.datatype.__name__)
+                "unable to convert to %s" % datatype_name)
     newkwargs = {}
     for argname, value in kwargs.items():
         newkwargs[argname] = from_param(
@@ -219,7 +231,7 @@ def args_from_body(funcdef, body, mimetype):
     elif mimetype in restxml.accept_content_types:
         dataformat = restxml
     else:
-        raise ValueError("Unknow mimetype: %s" % mimetype)
+        raise ValueError("Unknown mimetype: %s" % mimetype)
 
     try:
         kw = dataformat.parse(
@@ -228,6 +240,7 @@ def args_from_body(funcdef, body, mimetype):
     except UnknownArgument:
         if not funcdef.ignore_extra_args:
             raise
+        kw = {}
 
     return (), kw
 

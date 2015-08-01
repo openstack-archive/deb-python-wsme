@@ -1,6 +1,64 @@
 Changes
 =======
 
+0.7.0 (2015-05-13)
+------------------
+
+* Ensure UserType objects are converted to basetype
+* Convert built-in types when passed as strings
+* Multiple protocol accept or content-type matching
+* Raise an InvalidInput if you get a ValueError from JSON data
+* Remove unsupported python versions from setup.cfg
+* Clean up setup.py and add requirements.txt
+* Add full MIT license
+* Fix i18n when formatting exception
+* Cleanup up logging
+* Make it possible to use the Response to return a non-default return type
+* several fixes for SOAP protocol
+
+0.6.4 (2014-11-20)
+------------------
+
+- Include tests in the source distribution
+
+0.6.3 (2014-11-19)
+------------------
+
+- Disable universal wheels
+
+0.6.2 (2014-11-18)
+------------------
+
+* Flask adapter complex types now supports flask.ext.restful
+* Allow disabling complex types auto-register
+* Documentation edits
+* Various documentation build fixes
+* Fix passing Dict and Array based UserType as params
+
+0.6.1 (2014-05-02)
+------------------
+
+* Fix error: variable 'kw' referenced before assignment
+* Fix default handling for zero values
+* Fixing spelling mistakes
+* A proper check of UuidType
+* pecan: cleanup, use global vars and staticmethod
+* args_from_args() to work with an instance of UserType
+
+0.6 (2014-02-06)
+----------------
+
+* Add 'readonly' parameter to wsattr
+* Fix typos in documents and comments
+* Support dynamic types
+* Support building wheels (PEP-427)
+* Fix a typo in the types documentation
+* Add IntegerType and some classes for validation
+* Use assertRaises() for negative tests
+* Remove the duplicated error message from Enum
+* Drop description from 403 flask test case
+* Fix SyntaxWarning under Python 3
+
 0.5b6 (2013-10-16)
 ------------------
 

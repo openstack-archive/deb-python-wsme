@@ -3,16 +3,12 @@ import datetime
 import decimal
 import inspect
 import logging
+import netaddr
 import re
 import six
 import sys
 import uuid
 import weakref
-
-try:
-    import ipaddress
-except ImportError:
-    import ipaddr as ipaddress
 
 from wsme import exc
 
@@ -69,7 +65,7 @@ class ArrayType(object):
 class DictType(object):
     def __init__(self, key_type, value_type):
         if key_type not in pod_types:
-            raise ValueError("Dictionnaries key can only be a pod type")
+            raise ValueError("Dictionaries key can only be a pod type")
         self.key_type = key_type
         if iscomplex(value_type):
             self._value_type = weakref.ref(value_type)
@@ -218,7 +214,7 @@ class StringType(UserType):
             raise ValueError(error)
 
         if self.pattern is not None and not self.pattern.search(value):
-            error = 'Value should match the pattern %s' % self.pattern
+            error = 'Value should match the pattern %s' % self.pattern.pattern
             raise ValueError(error)
 
         return value
@@ -234,15 +230,19 @@ class IPv4AddressType(UserType):
     @staticmethod
     def validate(value):
         try:
-            ipaddress.IPv4Address(value)
-        except ipaddress.AddressValueError:
+            netaddr.IPAddress(value, version=4, flags=netaddr.INET_PTON)
+        except netaddr.AddrFormatError:
             error = 'Value should be IPv4 format'
             raise ValueError(error)
+        else:
+            return value
 
 
 class IPv6AddressType(UserType):
     """
     A simple IPv6 type.
+
+    This type represents IPv6 addresses in the short format.
     """
     basetype = six.string_types
     name = "ipv6address"
@@ -250,10 +250,12 @@ class IPv6AddressType(UserType):
     @staticmethod
     def validate(value):
         try:
-            ipaddress.IPv6Address(value)
-        except ipaddress.AddressValueError:
+            netaddr.IPAddress(value, version=6, flags=netaddr.INET_PTON)
+        except netaddr.AddrFormatError:
             error = 'Value should be IPv6 format'
             raise ValueError(error)
+        else:
+            return value
 
 
 class UuidType(UserType):
@@ -270,7 +272,7 @@ class UuidType(UserType):
     @staticmethod
     def validate(value):
         try:
-            uuid.UUID(value)
+            return six.text_type((uuid.UUID(value)))
         except (TypeError, ValueError, AttributeError):
             error = 'Value should be UUID format'
             raise ValueError(error)
@@ -586,8 +588,8 @@ def inspect_class(class_):
             attrdef = attr
         else:
             if attr not in native_types and (
-                    inspect.isclass(attr)
-                    or isinstance(attr, (list, dict))):
+                    inspect.isclass(attr) or
+                    isinstance(attr, (list, dict))):
                 register_type(attr)
             attrdef = getattr(class_, '__wsattrclass__', wsattr)(attr)
 
@@ -754,7 +756,7 @@ class BaseMeta(type):
         return type.__new__(cls, name, bases, dct)
 
     def __init__(cls, name, bases, dct):
-        if bases and bases[0] is not object:
+        if bases and bases[0] is not object and cls.__registry__:
             cls.__registry__.register(cls)
 
 
