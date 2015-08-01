@@ -6,15 +6,14 @@ Uploaders: Julien Danjou <acid@debian.org>,
            Thomas Goirand <zigo@debian.org>,
            Mehdi Abaakouk <sileht@sileht.net>
 Build-Depends: debhelper (>= 9),
+               dh-python,
                openstack-pkg-tools,
-               python-all (>= 2.6.6-3~),
-               python-d2to1,
-               python-pbr (>= 0.5.21),
+               python-all,
+               python-pbr,
                python-setuptools,
                python3-all,
-               python3-d2to1,
-               python3-pbr (>= 0.5.21),
-               python3-setuptools
+               python3-pbr,
+               python3-setuptools,
 Build-Depends-Indep: lsb-release,
                      python-cherrypy3,
                      python-flask,
@@ -29,6 +28,7 @@ Build-Depends-Indep: lsb-release,
                      python-testtools,
                      python-transaction,
                      python-turbogears2,
+                     python-tz,
                      python-webob,
                      python-webtest,
                      python3-all (>= 3.3) | python3-ipaddr,
@@ -37,6 +37,7 @@ Build-Depends-Indep: lsb-release,
                      python3-simplegeneric,
                      python3-six,
                      python3-testtools,
+                     python3-tz,
                      python3-webob
 Standards-Version: 3.9.4
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/python-wsme.git
@@ -45,12 +46,12 @@ Homepage: http://pythonhosted.org/WSME/
 
 Package: python-wsme
 Architecture: all
-Pre-Depends: dpkg (>= 1.15.6~)
 Depends: python-ipaddr,
          python-jinja2,
          python-simplegeneric,
          python-simplejson,
          python-six,
+         python-tz,
          python-webob,
          ${misc:Depends},
          ${python:Depends}
@@ -74,11 +75,11 @@ Description: Web Services Made Easy: implement multi-protocol webservices - Pyth
 
 Package: python3-wsme
 Architecture: all
-Pre-Depends: dpkg (>= 1.15.6~)
 Depends: python3-jinja2,
          python3-simplegeneric,
          python3-simplejson,
          python3-six,
+         python3-tz,
          python3-webob,
          ${misc:Depends},
          ${python3:Depends},

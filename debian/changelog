@@ -1,3 +1,9 @@
+python-wsme (0.7.0-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Thomas Goirand <zigo@debian.org>  Sat, 01 Aug 2015 09:39:22 +0200
+
 python-wsme (0.6-3) unstable; urgency=medium
 
   * Drop depends on the removed python3-ipaddr if not building in Wheezy, and
