@@ -1,4 +1,0 @@
-six
-simplegeneric
-WebOb
-ipaddr
