@@ -1,6 +1,7 @@
 python-wsme (0.7.0-1) experimental; urgency=medium
 
   * New upstream release.
+  * Removed all patches, now obsolete in Jessie.
 
  -- Thomas Goirand <zigo@debian.org>  Sat, 01 Aug 2015 09:39:22 +0200
 
