@@ -20,6 +20,7 @@ override_dh_auto_install:
 		python$$pyvers setup.py install --install-layout=deb \
 			--root $(CURDIR)/debian/python3-wsme; \
 	done
+	rm -f $(CURDIR)/debian/python*/usr/lib/python*/dist-packages/*.pth
 
 override_dh_clean:
 	dh_clean -O--buildsystem=python_distutils
