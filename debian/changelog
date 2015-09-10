@@ -1,8 +1,9 @@
-python-wsme (0.7.0-2) UNRELEASED; urgency=medium
+python-wsme (0.8.0-1) experimental; urgency=medium
 
+  * New upstream release.
   * debian/rules removes the .pth file.
 
- -- Thomas Goirand <zigo@debian.org>  Tue, 11 Aug 2015 23:50:09 +0200
+ -- Thomas Goirand <zigo@debian.org>  Thu, 10 Sep 2015 22:18:18 +0200
 
 python-wsme (0.7.0-1) experimental; urgency=medium
 
