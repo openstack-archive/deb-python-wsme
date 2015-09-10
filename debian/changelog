@@ -2,6 +2,7 @@ python-wsme (0.8.0-1) experimental; urgency=medium
 
   * New upstream release.
   * debian/rules removes the .pth file.
+  * Added missing python3-webtest build-depends.
 
  -- Thomas Goirand <zigo@debian.org>  Thu, 10 Sep 2015 22:18:18 +0200
 
