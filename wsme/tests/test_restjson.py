@@ -11,7 +11,8 @@ except:
 
 from wsme.rest.json import fromjson, tojson, parse
 from wsme.utils import parse_isodatetime, parse_isotime, parse_isodate
-from wsme.types import isarray, isdict, isusertype, register_type, UserType
+from wsme.types import isarray, isdict, isusertype, register_type
+from wsme.types import UserType, ArrayType, DictType
 from wsme.rest import expose, validate
 from wsme.exc import ClientSideError, InvalidInput
 
@@ -98,6 +99,10 @@ class CustomInt(UserType):
 class Obj(wsme.types.Base):
     id = int
     name = wsme.types.text
+
+
+class NestedObj(wsme.types.Base):
+    o = Obj
 
 
 class CRUDResult(object):
@@ -249,6 +254,15 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
         print(r)
         assert json.loads(r.text) == 2
 
+    def test_invalid_content_type_body(self):
+        r = self.app.post('/argtypes/setint.json', '{"value": 2}',
+                          headers={"Content-Type": "application/invalid"},
+                          expect_errors=True)
+        print(r)
+        assert r.status_int == 415
+        assert json.loads(r.text)['faultstring'] == \
+            "Unknown mimetype: application/invalid"
+
     def test_invalid_json_body(self):
         r = self.app.post('/argtypes/setint.json', '{"value": 2',
                           headers={"Content-Type": "application/json"},
@@ -324,6 +338,36 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
     def test_parse_valid_date(self):
         j = parse('{"a": "2011-01-01"}', {'a': datetime.date}, False)
         assert isinstance(j['a'], datetime.date)
+
+    def test_invalid_root_dict_fromjson(self):
+        try:
+            parse('["invalid"]', {'a': ArrayType(str)}, False)
+            assert False
+        except Exception as e:
+            assert isinstance(e, ClientSideError)
+            assert e.msg == "Request must be a JSON dict"
+
+    def test_invalid_list_fromjson(self):
+        jlist = "invalid"
+        try:
+            parse('{"a": "%s"}' % jlist, {'a': ArrayType(str)}, False)
+            assert False
+        except Exception as e:
+            assert isinstance(e, InvalidInput)
+            assert e.fieldname == 'a'
+            assert e.value == jlist
+            assert e.msg == "Value not a valid list: %s" % jlist
+
+    def test_invalid_dict_fromjson(self):
+        jdict = "invalid"
+        try:
+            parse('{"a": "%s"}' % jdict, {'a': DictType(str, str)}, False)
+            assert False
+        except Exception as e:
+            assert isinstance(e, InvalidInput)
+            assert e.fieldname == 'a'
+            assert e.value == jdict
+            assert e.msg == "Value not a valid dict: %s" % jdict
 
     def test_invalid_date_fromjson(self):
         jdate = "2015-01-invalid"
@@ -475,6 +519,37 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
                     e.msg,
                     "invalid literal for int() with base 10: '%s'" % value
                 )
+
+    def test_parse_unexpected_attribute(self):
+        o = {
+            "id": "1",
+            "name": "test",
+            "other": "unknown",
+            "other2": "still unknown",
+        }
+        for ba in True, False:
+            jd = o if ba else {"o": o}
+            try:
+                parse(json.dumps(jd), {'o': Obj}, ba)
+                raise AssertionError("Object should not parse correcty.")
+            except wsme.exc.UnknownAttribute as e:
+                self.assertEqual(e.attributes, set(['other', 'other2']))
+
+    def test_parse_unexpected_nested_attribute(self):
+        no = {
+            "o": {
+                "id": "1",
+                "name": "test",
+                "other": "unknown",
+            },
+        }
+        for ba in False, True:
+            jd = no if ba else {"no": no}
+            try:
+                parse(json.dumps(jd), {'no': NestedObj}, ba)
+            except wsme.exc.UnknownAttribute as e:
+                self.assertEqual(e.attributes, set(['other']))
+                self.assertEqual(e.fieldname, "no.o")
 
     def test_nest_result(self):
         self.root.protocols[0].nest_result = True
@@ -658,6 +733,33 @@ class TestRestJson(wsme.tests.protocol.RestOnlyProtocolTestCase):
         assert result['data']['id'] == 1
         assert result['data']['name'] == u("test")
         assert result['message'] == "read"
+
+    def test_unexpected_extra_arg(self):
+        headers = {
+            'Content-Type': 'application/json',
+        }
+        data = {"id": 1, "name": "test"}
+        content = json.dumps({"data": data, "other": "unexpected"})
+        res = self.app.put(
+            '/crud',
+            content,
+            headers=headers,
+            expect_errors=True)
+        self.assertEqual(res.status_int, 400)
+
+    def test_unexpected_extra_attribute(self):
+        """Expect a failure if we send an unexpected object attribute."""
+        headers = {
+            'Content-Type': 'application/json',
+        }
+        data = {"id": 1, "name": "test", "other": "unexpected"}
+        content = json.dumps({"data": data})
+        res = self.app.put(
+            '/crud',
+            content,
+            headers=headers,
+            expect_errors=True)
+        self.assertEqual(res.status_int, 400)
 
     def test_body_arg(self):
         headers = {
