@@ -31,8 +31,8 @@ override_dh_auto_test:
 #	set -e && for pyvers in $(PYTHON3S); do \
 #		python$$pyvers setup.py test; \
 #	done
-	nosetests -v || true
-	nosetests3 -v || true
+	PYTHONPATH=. nosetests -v || true
+	PYTHONPATH=. nosetests3 -v || true
 endif
 
 override_dh_gencontrol:

@@ -2,6 +2,7 @@ python-wsme (0.8.0-2) unstable; urgency=medium
 
   * Uploading to unstable.
   * Added missing python-netaddr (build-)depends.
+  * Added PYTHONPATH=. when running unit tests.
 
  -- Thomas Goirand <zigo@debian.org>  Fri, 16 Oct 2015 06:56:50 +0000
 
