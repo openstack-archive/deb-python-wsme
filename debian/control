@@ -9,9 +9,11 @@ Build-Depends: debhelper (>= 9),
                python-all,
                python-pbr,
                python-setuptools,
+               python-sphinx,
                python3-all,
                python3-pbr,
                python3-setuptools,
+               python3-sphinx,
 Build-Depends-Indep: lsb-release,
                      python-cherrypy3,
                      python-flask,
@@ -22,7 +24,7 @@ Build-Depends-Indep: lsb-release,
                      python-pecan,
                      python-simplegeneric,
                      python-six,
-                     python-sphinx,
+                     python-sqlalchemy,
                      python-suds,
                      python-testtools,
                      python-transaction,
@@ -30,12 +32,16 @@ Build-Depends-Indep: lsb-release,
                      python-tz,
                      python-webob,
                      python-webtest,
-                     python3-all (>= 3.3) | python3-ipaddr,
+                     python3-flask,
                      python3-lxml,
+                     python3-netaddr,
                      python3-nose,
+                     python3-pecan,
                      python3-simplegeneric,
                      python3-six,
+                     python3-sqlalchemy,
                      python3-testtools,
+                     python3-transaction,
                      python3-tz,
                      python3-webob,
                      python3-webtest,
@@ -55,8 +61,8 @@ Depends: python-ipaddr,
          python-tz,
          python-webob,
          ${misc:Depends},
-         ${python:Depends}
-Recommends: ${python:Recommends}
+         ${python:Depends},
+Recommends: ${python:Recommends},
 Description: Web Services Made Easy: implement multi-protocol webservices - Python 2.x
  Web Service Made Easy (WSME) simplify the writing of REST web services by
  providing simple yet powerful typing which removes the need to directly
@@ -76,7 +82,8 @@ Description: Web Services Made Easy: implement multi-protocol webservices - Pyth
 
 Package: python3-wsme
 Architecture: all
-Depends: python3-jinja2,
+Depends: python-netaddr (>= 0.7.12),
+         python3-jinja2,
          python3-simplegeneric,
          python3-simplejson,
          python3-six,
@@ -84,8 +91,8 @@ Depends: python3-jinja2,
          python3-webob,
          ${misc:Depends},
          ${python3:Depends},
-         ${wheezy-added-deps}
-Recommends: ${python3:Recommends}
+         ${wheezy-added-deps},
+Recommends: ${python3:Recommends},
 Description: Web Services Made Easy: implement multi-protocol webservices - Python 3.x
  Web Service Made Easy (WSME) simplify the writing of REST web services by
  providing simple yet powerful typing which removes the need to directly
