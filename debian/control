@@ -45,7 +45,7 @@ Build-Depends-Indep: lsb-release,
                      python3-tz,
                      python3-webob,
                      python3-webtest,
-Standards-Version: 3.9.4
+Standards-Version: 3.9.6
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/python-wsme.git
 Vcs-Git: git://anonscm.debian.org/openstack/python-wsme.git
 Homepage: http://pythonhosted.org/WSME/
