@@ -2,6 +2,7 @@ python-wsme (0.8.0-3) UNRELEASED; urgency=medium
 
   * Fixed VCS URLs (https).
   * d/rules: Changed UPSTREAM_GIT to new URL
+  * d/copyright: Changed source URL to new one
 
  -- Ondřej Nový <novy@ondrej.org>  Sun, 28 Feb 2016 15:53:10 +0100
 
