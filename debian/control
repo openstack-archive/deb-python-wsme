@@ -45,7 +45,7 @@ Build-Depends-Indep: lsb-release,
                      python3-tz,
                      python3-webob,
                      python3-webtest,
-Standards-Version: 3.9.6
+Standards-Version: 3.9.8
 Vcs-Browser: https://git.openstack.org/cgit/openstack/deb-python-wsme?h=debian%2Fnewton
 Vcs-Git: https://git.openstack.org/openstack/deb-python-wsme -b debian/newton
 Homepage: http://pythonhosted.org/WSME/
